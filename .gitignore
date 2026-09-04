@@ -10,3 +10,8 @@ _source/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Инструмент impeccable — вендорится локально, в портфолио-репозиторий не нужен
+# (иначе уедет в публикацию на GitHub Pages вместе с сайтом)
+.claude/skills/
+.claude/agents/
