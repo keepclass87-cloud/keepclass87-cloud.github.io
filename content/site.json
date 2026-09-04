@@ -1,0 +1,267 @@
+{
+  "_readme": "Все тексты интерфейса. Блок shared — общий для двух языков (ссылки, инструменты). Блоки ru и en должны иметь одинаковую структуру: массивы services.items и process.steps сопоставляются по порядку.",
+
+  "shared": {
+    "tools": [
+      "Blender",
+      "After Effects",
+      "Photoshop",
+      "Illustrator",
+      "InDesign",
+      "Figma"
+    ],
+    "contacts": [
+      {
+        "label": { "ru": "Почта", "en": "Email" },
+        "value": "hello@tepsuevvv.com",
+        "href": "mailto:hello@tepsuevvv.com"
+      },
+      {
+        "label": { "ru": "Телеграм", "en": "Telegram" },
+        "value": "@tepsuevvv",
+        "href": "https://t.me/tepsuevvv"
+      },
+      {
+        "label": { "ru": "Behance", "en": "Behance" },
+        "value": "behance.net/tepsuevvv",
+        "href": "https://www.behance.net/tepsuevvv"
+      }
+    ]
+  },
+
+  "ru": {
+    "meta": {
+      "title": "tepsuevvv — печатный дизайн, 2D и 3D анимация",
+      "description": "Портфолио tepsuevvv: печатный дизайн, 2D- и 3D-анимационные ролики. Работы, услуги и контакты."
+    },
+
+    "nav": {
+      "home": "Главная",
+      "works": "Работы",
+      "services": "Услуги",
+      "about": "Обо мне",
+      "contact": "Контакты"
+    },
+
+    "hero": {
+      "kicker": "Портфолио · печать · моушн · 3D",
+      "tagline": "Печатный дизайн, 2D- и 3D-анимационные ролики",
+      "scroll": "Листайте"
+    },
+
+    "tv": {
+      "signal": "Сигнал есть",
+      "hello": "Привет.",
+      "subtitle": "print · motion · 3d",
+      "nowPlaying": "В эфире"
+    },
+
+    "marquee": [
+      "Печать",
+      "2D-анимация",
+      "3D-анимация",
+      "Айдентика",
+      "Моушн-дизайн",
+      "Препресс",
+      "Рендер"
+    ],
+
+    "statement": "Хорошая печать не прощает небрежности. Хорошая анимация не прощает скуки. Я делаю и то, и другое — чтобы вас поняли с первого кадра и вспомнили после последнего.",
+
+    "works": {
+      "title": "Работы",
+      "lead": "Наведите на карточку — работа появится на экране телевизора. Нажмите, чтобы открыть целиком.",
+      "all": "Все",
+      "empty": "В этой категории пока пусто."
+    },
+
+    "services": {
+      "title": "Услуги",
+      "lead": "Три направления. Каждое можно взять отдельно или собрать в один проект — от макета до готового ролика.",
+      "items": [
+        {
+          "title": "Печатный дизайн",
+          "text": "Макеты, готовые к типографии: без сюрпризов на выводе.",
+          "list": [
+            "Постеры, афиши, обложки",
+            "Фирменный стиль и айдентика",
+            "Буклеты, каталоги, полиграфия",
+            "Препресс: CMYK, вылеты, цветовые профили"
+          ]
+        },
+        {
+          "title": "2D-анимация",
+          "text": "Ролики, которые объясняют и продают — от раскадровки до финального рендера.",
+          "list": [
+            "Explainer-ролики и реклама",
+            "Моушн-логотипы и заставки",
+            "Инфографика в движении",
+            "Нарезки и титры под соцсети"
+          ]
+        },
+        {
+          "title": "3D-анимация",
+          "text": "Объём, свет и материалы там, где плоской картинки уже не хватает.",
+          "list": [
+            "Продуктовая визуализация",
+            "3D-ролики и заставки",
+            "Моделинг, текстуры, освещение",
+            "Рендер под видео и под печать"
+          ]
+        }
+      ]
+    },
+
+    "process": {
+      "title": "Как идёт работа",
+      "steps": [
+        { "name": "Бриф", "text": "Обсуждаем задачу, сроки и бюджет. Собираю референсы и фиксирую объём." },
+        { "name": "Концепция", "text": "Показываю два-три направления. Выбираем одно и утверждаем." },
+        { "name": "Продакшн", "text": "Делаю работу и показываю промежуточные версии — правки не копятся к концу." },
+        { "name": "Сдача", "text": "Отдаю финальные файлы и исходники в нужных форматах." }
+      ]
+    },
+
+    "about": {
+      "title": "Обо мне",
+      "body": "Меня зовут tepsuevvv. Я делаю визуал там, где он должен работать: печатную продукцию, которая не разваливается на выводе, и ролики, которые досматривают до конца. Печать, 2D и 3D — три разных инструмента под одну задачу: чтобы вас поняли и запомнили.",
+      "toolsLabel": "Инструменты"
+    },
+
+    "contact": {
+      "title": "Обсудим проект",
+      "lead": "Напишите, что нужно сделать и к какому сроку — отвечу с оценкой и планом."
+    },
+
+    "footer": {
+      "note": "Сделано вручную, без шаблонов"
+    },
+
+    "a11y": {
+      "skip": "К работам",
+      "close": "Закрыть",
+      "prev": "Предыдущая работа",
+      "next": "Следующая работа",
+      "openWork": "Открыть работу",
+      "video": "Видео"
+    }
+  },
+
+  "en": {
+    "meta": {
+      "title": "tepsuevvv — print design, 2D and 3D animation",
+      "description": "Portfolio of tepsuevvv: print design, 2D and 3D animated films. Works, services and contacts."
+    },
+
+    "nav": {
+      "home": "Home",
+      "works": "Works",
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact"
+    },
+
+    "hero": {
+      "kicker": "Portfolio · print · motion · 3D",
+      "tagline": "Print design, 2D and 3D animated films",
+      "scroll": "Scroll"
+    },
+
+    "tv": {
+      "signal": "Signal locked",
+      "hello": "Hello there.",
+      "subtitle": "print · motion · 3d",
+      "nowPlaying": "Now playing"
+    },
+
+    "marquee": [
+      "Print",
+      "2D animation",
+      "3D animation",
+      "Identity",
+      "Motion design",
+      "Prepress",
+      "Rendering"
+    ],
+
+    "statement": "Good print forgives no carelessness. Good animation forgives no boredom. I do both — so you are understood from the first frame and remembered after the last.",
+
+    "works": {
+      "title": "Works",
+      "lead": "Hover a card and it plays on the TV screen. Click to open it full size.",
+      "all": "All",
+      "empty": "Nothing here yet."
+    },
+
+    "services": {
+      "title": "Services",
+      "lead": "Three disciplines. Take one on its own, or combine them into a single project — from layout to finished film.",
+      "items": [
+        {
+          "title": "Print design",
+          "text": "Artwork that goes to press without surprises.",
+          "list": [
+            "Posters, playbills, covers",
+            "Brand identity systems",
+            "Brochures, catalogues, collateral",
+            "Prepress: CMYK, bleed, colour profiles"
+          ]
+        },
+        {
+          "title": "2D animation",
+          "text": "Films that explain and sell — from storyboard to final render.",
+          "list": [
+            "Explainer films and ads",
+            "Motion logos and idents",
+            "Animated infographics",
+            "Social cutdowns and titles"
+          ]
+        },
+        {
+          "title": "3D animation",
+          "text": "Volume, light and material where a flat image no longer carries the idea.",
+          "list": [
+            "Product visualisation",
+            "3D films and idents",
+            "Modelling, texturing, lighting",
+            "Render for screen and for print"
+          ]
+        }
+      ]
+    },
+
+    "process": {
+      "title": "How the work runs",
+      "steps": [
+        { "name": "Brief", "text": "We agree the task, deadline and budget. I gather references and lock the scope." },
+        { "name": "Concept", "text": "I show two or three directions. We pick one and sign it off." },
+        { "name": "Production", "text": "I build it and share work in progress — notes don't pile up at the end." },
+        { "name": "Handover", "text": "You get the final files and the source project in the formats you need." }
+      ]
+    },
+
+    "about": {
+      "title": "About",
+      "body": "I'm tepsuevvv. I make visuals where they have to do a job: print that survives the press, and films people watch to the end. Print, 2D and 3D are three different tools for one purpose — being understood, and being remembered.",
+      "toolsLabel": "Tools"
+    },
+
+    "contact": {
+      "title": "Let's talk",
+      "lead": "Tell me what you need and by when — I'll come back with an estimate and a plan."
+    },
+
+    "footer": {
+      "note": "Handmade, no templates"
+    },
+
+    "a11y": {
+      "skip": "Skip to works",
+      "close": "Close",
+      "prev": "Previous work",
+      "next": "Next work",
+      "openWork": "Open work",
+      "video": "Video"
+    }
+  }
+}

@@ -1,0 +1,1245 @@
+/* ============================================================================
+   scenes.css — hero-сцена с параллаксом, телевизор, галерея, лайтбокс
+   ========================================================================= */
+
+/* ==========================================================================
+   1. HERO: многоплановая сцена
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ink-000);
+}
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1500px;
+  perspective-origin: 50% 45%;
+  transform-style: preserve-3d;
+}
+
+.plane {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Планы, залитые фоном во всю площадь, намеренно больше вьюпорта: при сдвиге
+   у краёв не должно появляться щелей. Амплитуда ~46px, запас 8% её покрывает.
+   Планам с центрированным содержимым это не нужно — там запас только мешал бы
+   считать вертикальные отступы. */
+.plane--bg,
+.plane--haze,
+.plane--wordmark,
+.plane--glow {
+  inset: -8%;
+}
+
+/* Единственный план, с которым можно взаимодействовать */
+.plane--tv,
+.plane--copy { pointer-events: none; }
+.plane--tv .tv,
+.plane--copy .hero__copy { pointer-events: auto; }
+
+/* --- Дальний план: комната ------------------------------------------------ */
+
+.plane--bg {
+  background:
+    radial-gradient(120% 90% at 50% 42%,
+      rgba(var(--amber-rgb), 0.07) 0%,
+      rgba(var(--ice-rgb), 0.035) 26%,
+      transparent 62%),
+    radial-gradient(90% 70% at 50% 100%, #0B0E15 0%, transparent 70%),
+    linear-gradient(180deg, #04050A 0%, #070910 45%, #04050A 100%);
+}
+
+/* --- Дымка: два прохода на разной глубине --------------------------------- */
+
+.plane--haze {
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+}
+
+.plane--haze-far {
+  background-image:
+    radial-gradient(38% 26% at 22% 38%, rgba(var(--ice-rgb), 0.16) 0%, transparent 70%),
+    radial-gradient(44% 30% at 80% 30%, rgba(var(--ice-rgb), 0.11) 0%, transparent 72%);
+  filter: blur(14px);
+  opacity: 0.85;
+  animation: haze-drift 26s var(--ease-in-out) infinite alternate;
+}
+
+.plane--haze-near {
+  background-image:
+    radial-gradient(30% 22% at 12% 78%, rgba(var(--amber-rgb), 0.10) 0%, transparent 70%),
+    radial-gradient(26% 20% at 92% 70%, rgba(var(--ice-rgb), 0.09) 0%, transparent 72%);
+  filter: blur(26px);
+  opacity: 0.7;
+  animation: haze-drift 34s var(--ease-in-out) -8s infinite alternate-reverse;
+}
+
+@keyframes haze-drift {
+  from { transform: translate3d(-2%, 1%, 0) scale(1); }
+  to   { transform: translate3d(3%, -2%, 0) scale(1.08); }
+}
+
+/* --- Огромная надпись за телевизором -------------------------------------- */
+
+.plane--wordmark { overflow: hidden; }
+
+.wordmark {
+  display: flex;
+  width: max-content;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 17vw, 17rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(143, 179, 212, 0.16);
+  opacity: 0.55;
+  animation: wordmark-scroll 44s linear infinite;
+}
+
+.wordmark__track { display: block; padding-right: 0.2em; }
+
+@keyframes wordmark-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* --- Свечение экрана: следует за курсором через --glow-x/--glow-y --------- */
+
+.plane--glow {
+  background: radial-gradient(
+    34% 30% at calc(50% + var(--glow-x, 0px)) calc(46% + var(--glow-y, 0px)),
+    rgba(var(--amber-rgb), 0.30) 0%,
+    rgba(var(--amber-rgb), 0.10) 34%,
+    transparent 68%
+  );
+  filter: blur(30px);
+  mix-blend-mode: screen;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+/* --- Ближний план: искры -------------------------------------------------- */
+
+.spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, var(--amber-300) 0%, rgba(var(--amber-rgb), 0.4) 40%, transparent 70%);
+  filter: blur(1px);
+  animation: spark-float 7s var(--ease-in-out) infinite alternate;
+}
+
+.spark--a { top: 34%; left: 26%; }
+.spark--b { top: 58%; left: 74%; width: 7px; height: 7px; animation-delay: -3s; }
+
+@keyframes spark-float {
+  from { transform: translate3d(0, 0, 0); opacity: 0.35; }
+  to   { transform: translate3d(6px, -14px, 0); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plane--haze-far,
+  .plane--haze-near,
+  .wordmark,
+  .spark { animation: none; }
+}
+
+/* --- Подпись hero --------------------------------------------------------- */
+
+.plane--copy {
+  align-content: start;
+  padding-top: clamp(4rem, 9vh, 6.5rem);
+}
+
+.hero__copy {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+
+.hero__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--fog-100);
+  /* Имя светится тем же светом, что и экран — один источник в кадре */
+  text-shadow:
+    0 0 40px rgba(var(--amber-rgb), 0.20),
+    0 0 120px rgba(var(--amber-rgb), 0.10);
+}
+
+.hero__tagline {
+  max-width: 32ch;
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  color: var(--fog-300);
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-hero-copy);
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+}
+
+.hero__scroll:hover { color: var(--amber-300); }
+.hero__scroll:hover .label { color: var(--amber-300); }
+
+.hero__scroll-line {
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(to bottom, var(--steel-400), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 40%;
+  background: var(--accent);
+  animation: scroll-hint 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes scroll-hint {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateY(250%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line::after { animation: none; opacity: 0.5; }
+}
+
+/* ==========================================================================
+   2. ТЕЛЕВИЗОР
+   Временная CSS-версия. Когда появятся PNG-слои из Blender, .tv__cabinet
+   заменяется на <img>, разметка планов и data-depth остаются прежними.
+   ========================================================================== */
+
+/* Размер телевизора ограничен и шириной, и высотой окна: на низком экране
+   (ноутбук, ландшафт телефона) он обязан уменьшиться, иначе выдавит имя. */
+.tv {
+  position: relative;
+  width: min(38rem, 42vw, 58vh);
+  min-width: 16rem;
+  transform-style: preserve-3d;
+}
+
+/* Телевизор стоит ниже центра — над ним живут имя и подпись */
+.plane--tv { padding-top: clamp(3rem, 13vh, 8rem); }
+
+.tv__cabinet {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(0.5rem, 1.2vw, 1.1rem);
+  padding: clamp(0.75rem, 1.9vw, 1.6rem);
+  border-radius: clamp(1.4rem, 3.4vw, 3.2rem);
+  background:
+    linear-gradient(158deg,
+      #303747 0%, #1E2430 22%, #12161F 52%, #0A0D13 78%, #161A23 100%);
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, 0.13),
+    inset 0 -3px 2px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 46px 90px -34px #000,
+    0 8px 24px -12px #000;
+}
+
+/* Мягкий блик по верхней грани корпуса */
+.tv__cabinet::after {
+  content: '';
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 42%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent);
+  pointer-events: none;
+}
+
+/* Ячейки расставлены явно: при автоматической раскладке .tv__panel, растянутая
+   на обе колонки, выталкивала ручки в отдельную третью строку и корпус
+   вырастал вдвое. */
+.tv__bezel {
+  grid-column: 1;
+  grid-row: 1;
+  padding: clamp(0.5rem, 1.2vw, 1.05rem);
+  border-radius: clamp(1rem, 2.6vw, 2.4rem);
+  background: linear-gradient(170deg, #10141C 0%, #070A0F 60%, #0C1017 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.9);
+}
+
+.tv__screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(0.6rem, 1.8vw, 1.6rem);
+  overflow: hidden;
+  background: #03050A;
+  box-shadow:
+    inset 0 0 0 2px #05070C,
+    inset 0 0 46px 12px rgba(0, 0, 0, 0.95),
+    0 0 60px rgba(var(--amber-rgb), 0.10);
+  transition: box-shadow var(--dur-slow) var(--ease-out);
+}
+
+.tv.is-on .tv__screen {
+  box-shadow:
+    inset 0 0 0 2px #05070C,
+    inset 0 0 46px 12px rgba(0, 0, 0, 0.8),
+    var(--glow-screen);
+}
+
+/* --- Правая колонка: ручки и вентиляция ---------------------------------- */
+
+.tv__knobs {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: clamp(0.5rem, 1.2vw, 1rem);
+  padding-top: clamp(0.5rem, 1.4vw, 1.2rem);
+}
+
+.tv__knob {
+  width: clamp(1rem, 2.4vw, 2.1rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, #4C5566 0%, #262D3A 44%, #0D1017 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.9),
+    0 3px 8px -2px #000;
+}
+
+.tv__knob--big {
+  width: clamp(1.5rem, 3.4vw, 3rem);
+  background:
+    radial-gradient(circle at 32% 28%, #59637A 0%, #2A3240 40%, #0A0D12 100%);
+}
+
+.tv__vent {
+  width: clamp(0.75rem, 1.8vw, 1.5rem);
+  height: clamp(1.75rem, 4.5vw, 4rem);
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #05070B 0 2px,
+    #1B2029 2px 4px
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* --- Табличка под экраном ------------------------------------------------- */
+
+.tv__panel {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: clamp(0.4rem, 1vw, 0.9rem);
+}
+
+.tv__badge {
+  padding: 0.3em 1.1em;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #1A2029, #0B0E14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.8);
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.95vw, 0.75rem);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--steel-600);
+}
+
+.tv__led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2A1B10;
+  transition: background var(--dur-mid) var(--ease-out),
+              box-shadow var(--dur-mid) var(--ease-out);
+}
+
+.tv.is-on .tv__led {
+  background: var(--amber-500);
+  box-shadow: 0 0 10px rgba(var(--amber-rgb), 0.9);
+}
+
+/* --- Подставка и тень ----------------------------------------------------- */
+
+.tv__stand {
+  width: 32%;
+  height: clamp(0.9rem, 2.4vw, 2.2rem);
+  margin: -2px auto 0;
+  clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #1A1F29 0%, #0A0D13 100%);
+}
+
+.tv__stand::after {
+  content: '';
+  display: block;
+  position: relative;
+  top: 100%;
+  width: 128%;
+  height: clamp(0.4rem, 1vw, 0.8rem);
+  margin-left: -14%;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #232936 0%, #080A10 100%);
+  box-shadow: 0 18px 30px -14px #000;
+}
+
+.tv__shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -6%;
+  width: 88%;
+  height: 8%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, transparent 70%);
+  filter: blur(12px);
+}
+
+/* ==========================================================================
+   3. CRT-ЭКРАН
+   ========================================================================== */
+
+.crt {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 100% at 50% 40%, #0A1018 0%, #04070C 70%, #020407 100%);
+}
+
+.crt__stack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 6%;
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
+}
+
+.tv.is-on .crt__stack { opacity: 1; transform: none; }
+
+/* Содержимое «каналов» --------------------------------------------------- */
+
+.crt__idle {
+  display: grid;
+  justify-items: center;
+  gap: 0.5em;
+  text-align: center;
+  font-family: var(--font-mono);
+  color: var(--amber-300);
+  text-shadow: 0 0 12px rgba(var(--amber-rgb), 0.6);
+}
+
+.crt__hello {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--fog-100);
+  text-shadow: 0 0 22px rgba(var(--amber-rgb), 0.45);
+}
+
+.crt__line {
+  font-size: clamp(0.45rem, 1.05vw, 0.8rem);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.crt__caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  vertical-align: -0.1em;
+  background: var(--amber-400);
+  animation: caret 1.05s steps(1) infinite;
+}
+
+@keyframes caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+/* Канал-превью работы */
+.crt__preview {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.crt__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.75) contrast(1.1) brightness(0.92);
+}
+
+.crt__caption {
+  padding: 0.5em 0.9em;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.88), transparent);
+  font-family: var(--font-mono);
+  font-size: clamp(0.45rem, 1vw, 0.75rem);
+  letter-spacing: var(--tracking-mid);
+  text-transform: uppercase;
+  color: var(--amber-300);
+  text-align: center;
+}
+
+/* Смена канала: короткий сбой развёртки */
+.crt.is-switching .crt__stack {
+  animation: channel-glitch 260ms steps(3) 1;
+}
+
+@keyframes channel-glitch {
+  0%   { transform: translate3d(-3%, 0, 0) scaleY(1.06); filter: brightness(2.4); opacity: 0.5; }
+  50%  { transform: translate3d(2%, 1%, 0) scaleY(0.94); filter: brightness(0.4); opacity: 0.9; }
+  100% { transform: none; filter: none; opacity: 1; }
+}
+
+/* --- Наложения стекла ----------------------------------------------------- */
+
+.crt__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.32) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+
+/* Медленно ползущая полоса развёртки */
+.crt__scanlines::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.045),
+    transparent
+  );
+  animation: rolling-bar 7.5s linear infinite;
+}
+
+@keyframes rolling-bar {
+  from { transform: translateY(-120%); }
+  to   { transform: translateY(560%); }
+}
+
+.crt__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    108% 108% at 50% 50%,
+    transparent 38%,
+    rgba(0, 0, 0, 0.45) 74%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+}
+
+/* Отражение в стекле кинескопа */
+.crt__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    128deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 18%,
+    transparent 42%
+  );
+}
+
+/* --- Включение --------------------------------------------------------- */
+
+.crt__power {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #EAF2FF;
+  opacity: 0;
+  transform: scaleY(0.004);
+}
+
+.tv.is-booting .crt__power {
+  animation: crt-power-on 900ms var(--ease-out) forwards;
+}
+
+@keyframes crt-power-on {
+  0%   { opacity: 0;    transform: scaleY(0.004) scaleX(0.2); }
+  14%  { opacity: 1;    transform: scaleY(0.004) scaleX(1); }
+  46%  { opacity: 0.95; transform: scaleY(1) scaleX(1); }
+  100% { opacity: 0;    transform: scaleY(1) scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crt__scanlines::after,
+  .crt__caret { animation: none; }
+  .tv.is-booting .crt__power { animation: none; opacity: 0; }
+  .crt.is-switching .crt__stack { animation: none; }
+}
+
+/* ==========================================================================
+   4. БЕГУЩАЯ СТРОКА
+   ========================================================================== */
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.25rem, 3.5vh, 2.5rem);
+  border-block: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--ink-000), var(--ink-050));
+}
+
+/* Края ленты растворяются, чтобы слова не обрубались на границе экрана */
+.marquee::before,
+.marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(3rem, 12vw, 11rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee::before {
+  left: 0;
+  background: linear-gradient(to right, var(--ink-050), transparent);
+}
+
+.marquee::after {
+  right: 0;
+  background: linear-gradient(to left, var(--ink-050), transparent);
+}
+
+/* Наклон отдельным слоем: на самой ленте уже висит анимация сдвига,
+   а два transform на одном элементе не уживаются. */
+.marquee__skew {
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: marquee-run 42s linear infinite;
+}
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee-run {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee__item {
+  flex: none;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.4vw, 3.6rem);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  white-space: nowrap;
+  color: var(--fog-100);
+}
+
+/* Разделитель — точка цветом акцента */
+.marquee__item::after {
+  content: '·';
+  margin-inline: clamp(0.6rem, 2.2vw, 1.8rem);
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+}
+
+/* Через одно слово — контурное начертание: лента читается как ритм,
+   а не как сплошная простыня текста */
+.marquee__item:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--steel-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  .marquee__skew { transition: none; }
+}
+
+/* ==========================================================================
+   5. КРУПНОЕ ЗАЯВЛЕНИЕ
+   ========================================================================== */
+
+.statement {
+  padding-block: clamp(5rem, 16vh, 11rem);
+}
+
+.statement__text {
+  max-width: 26ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.2vw, 3.4rem);
+  line-height: 1.28;
+  letter-spacing: var(--tracking-tight);
+  color: var(--fog-100);
+}
+
+/* --w ставит motion.js по мере прохода блока через кадр.
+   Запасное значение 1 — если скрипт не отработал, текст просто виден. */
+.statement__word {
+  display: inline-block;
+  opacity: calc(0.12 + var(--w, 1) * 0.88);
+  transform: translateY(calc((1 - var(--w, 1)) * 0.24em));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statement__word { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   6. ФИЛЬТРЫ И ГАЛЕРЕЯ РАБОТ
+   ========================================================================== */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+}
+
+.filter {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-mid);
+  text-transform: uppercase;
+  color: var(--fog-muted);
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+
+.filter:hover { color: var(--fog-200); border-color: var(--border-strong); }
+
+.filter[aria-pressed='true'] {
+  color: var(--ink-000);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.filter__count { opacity: 0.6; margin-left: 0.5ch; }
+
+.works {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.works__empty {
+  padding: var(--sp-8) 0;
+  text-align: center;
+  color: var(--fog-muted);
+}
+
+.work {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-out),
+              box-shadow var(--dur-mid) var(--ease-out);
+}
+
+.work:hover,
+.work:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Карточка уходит из сетки при смене фильтра */
+.work.is-hidden { display: none; }
+
+.work__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--ink-100);
+}
+
+.work__cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.88);
+  transition: transform var(--dur-slow) var(--ease-out),
+              filter var(--dur-slow) var(--ease-out);
+}
+
+.work:hover .work__cover,
+.work:focus-visible .work__cover {
+  transform: scale(1.05);
+  filter: saturate(1) brightness(1);
+}
+
+/* Заглушка, пока обложки нет */
+.work__cover[data-placeholder] {
+  background:
+    repeating-linear-gradient(45deg, #10131B 0 10px, #0C0F16 10px 20px);
+}
+
+.work__type {
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: rgba(3, 4, 7, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-mid);
+  text-transform: uppercase;
+  color: var(--amber-300);
+}
+
+/* Значок «видео» */
+.work__play {
+  position: absolute;
+  right: var(--sp-3);
+  bottom: var(--sp-3);
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(3, 4, 7, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--amber-300);
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+
+.work:hover .work__play {
+  background: var(--accent);
+  color: var(--ink-000);
+  transform: scale(1.08);
+}
+
+.work__body {
+  display: grid;
+  align-content: start;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+}
+
+.work__title {
+  font-size: var(--fs-h3);
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-strong);
+}
+
+/* Заголовок — настоящая кнопка, но кликается вся карточка: псевдоэлемент
+   растянут на неё целиком. Так и семантика честная, и цель попадания большая. */
+.work__link { text-align: left; }
+
+.work__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.work__link:focus-visible { outline: none; }
+
+.work__link:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.work__desc {
+  font-size: var(--fs-small);
+  color: var(--fog-300);
+  line-height: 1.55;
+}
+
+.work__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5ch;
+  margin-top: var(--sp-2);
+}
+
+/* ==========================================================================
+   7. УСЛУГИ
+   ========================================================================== */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--sp-4);
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+  transition: border-color var(--dur-mid) var(--ease-out),
+              transform var(--dur-mid) var(--ease-out);
+}
+
+/* Свет «падает» на карточку сверху при наведении */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px -1px auto -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+.card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+.card:hover::before { opacity: 1; }
+
+.card__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-strong);
+}
+
+.card__text {
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--fog-300);
+}
+
+.card__list {
+  display: grid;
+  gap: var(--sp-2);
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border);
+}
+
+.card__item {
+  display: grid;
+  grid-template-columns: 1ch 1fr;
+  gap: var(--sp-3);
+  font-size: var(--fs-small);
+  color: var(--fog-300);
+}
+
+.card__item::before {
+  content: '·';
+  color: var(--accent);
+  line-height: 1.4;
+}
+
+/* --- Полоса этапов -------------------------------------------------------- */
+
+.process {
+  margin-top: clamp(3rem, 8vh, 6rem);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.process__title { margin-bottom: var(--sp-5); }
+
+.process__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  counter-reset: step;
+}
+
+.process__step {
+  display: grid;
+  gap: var(--sp-2);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border-strong);
+  counter-increment: step;
+}
+
+.process__step::before {
+  content: '0' counter(step);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+}
+
+.process__name { color: var(--text-strong); font-weight: 500; }
+.process__text { font-size: var(--fs-small); color: var(--fog-300); line-height: 1.55; }
+
+/* ==========================================================================
+   8. ОБО МНЕ
+   ========================================================================== */
+
+.about__body {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 52rem) {
+  .about__body { grid-template-columns: 1.35fr 1fr; }
+}
+
+.about__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.3vw, 1.85rem);
+  line-height: 1.45;
+  letter-spacing: var(--tracking-tight);
+  color: var(--fog-100);
+}
+
+.about__tools { display: grid; gap: var(--sp-4); }
+
+.tools { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.tools li {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-mid);
+  color: var(--fog-300);
+}
+
+/* ==========================================================================
+   9. КОНТАКТЫ
+   ========================================================================== */
+
+.contact { display: grid; gap: var(--sp-5); max-width: 52rem; }
+
+.contact__title {
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tracking-tight);
+}
+
+.contact__lead { max-width: 40ch; }
+
+.contact__links {
+  display: grid;
+  margin-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+
+.contact__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-5) 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding var(--dur-mid) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+
+.contact__link:hover {
+  color: var(--amber-300);
+  padding-inline-start: var(--sp-4);
+}
+
+.contact__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-tight);
+}
+
+.contact__value {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--fog-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.contact__link:hover .contact__value { color: var(--amber-400); }
+
+/* ==========================================================================
+   10. ЛАЙТБОКС
+   ========================================================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-lightbox);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 3, 6, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: fade-in var(--dur-mid) var(--ease-out);
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.lightbox__dialog {
+  position: relative;
+  display: grid;
+  gap: var(--sp-4);
+  width: min(100%, 68rem);
+  max-height: 100%;
+  animation: dialog-in var(--dur-mid) var(--ease-out);
+}
+
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.lightbox__stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--ink-000);
+  border: 1px solid var(--border);
+}
+
+.lightbox__stage img,
+.lightbox__stage video {
+  max-width: 100%;
+  max-height: min(72vh, 100%);
+  width: auto;
+  object-fit: contain;
+}
+
+.lightbox__stage iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.lightbox__meta { display: grid; gap: var(--sp-2); }
+
+.lightbox__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-tight);
+}
+
+.lightbox__desc { font-size: var(--fs-small); color: var(--fog-300); max-width: 60ch; }
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: rgba(6, 7, 11, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--fog-200);
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.lightbox__close:hover,
+.lightbox__nav:hover { color: var(--amber-300); border-color: var(--accent); }
+
+.lightbox__close { top: -1rem; right: 0; }
+
+.lightbox__nav { top: 40%; }
+.lightbox__nav--prev { left: -1.25rem; }
+.lightbox__nav--next { right: -1.25rem; }
+.lightbox__nav[hidden] { display: none; }
+
+@media (max-width: 48rem) {
+  .lightbox__close { top: -0.5rem; right: -0.25rem; }
+  .lightbox__nav--prev { left: 0.25rem; }
+  .lightbox__nav--next { right: 0.25rem; }
+}
+
+/* ==========================================================================
+   11. АДАПТИВ HERO
+   ========================================================================== */
+
+@media (max-width: 48rem) {
+  .tv { width: min(86vw, 30rem); }
+  .plane--copy { padding-top: clamp(4.5rem, 14vh, 7rem); }
+  .hero__tagline { max-width: 26ch; }
+  /* На узком экране надпись за телевизором только мешает читать имя */
+  .wordmark { opacity: 0.3; }
+}
+
+/* Низкая высота (ландшафт на телефоне): сцена не должна расползаться */
+@media (max-height: 34rem) {
+  .hero { min-height: 42rem; }
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tepsuevvv — печатный дизайн, 2D и 3D анимация</title>
+<meta name="description" content="Портфолио tepsuevvv: печатный дизайн, 2D- и 3D-анимационные ролики. Работы, услуги и контакты.">
+<meta name="theme-color" content="#06070B">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="tepsuevvv — печатный дизайн, 2D и 3D анимация">
+<meta property="og:description" content="Портфолио: печатный дизайн, 2D- и 3D-анимационные ролики.">
+<meta property="og:image" content="assets/img/og-cover.jpg">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/scenes.css">
+
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body>
+<a class="skip-link" href="#works" data-i18n="a11y.skip">К работам</a>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ======================================================== шапка ======= -->
+<header class="topbar" data-topbar>
+  <a class="brand" href="#home">
+    <span class="brand__dot" aria-hidden="true"></span>
+    <span>tepsuevvv</span>
+  </a>
+
+  <div class="lang" role="group" aria-label="Язык / Language">
+    <button class="lang__btn" type="button" data-lang="ru" aria-pressed="true">RU</button>
+    <button class="lang__btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<!-- =================================================== навигация ======== -->
+<nav class="sidenav" aria-label="Разделы">
+  <ul class="sidenav__list" data-nav>
+    <li><a class="sidenav__link" href="#home"     data-i18n="nav.home">Главная</a></li>
+    <li><a class="sidenav__link" href="#works"    data-i18n="nav.works">Работы</a></li>
+    <li><a class="sidenav__link" href="#services" data-i18n="nav.services">Услуги</a></li>
+    <li><a class="sidenav__link" href="#about"    data-i18n="nav.about">Обо мне</a></li>
+    <li><a class="sidenav__link" href="#contact"  data-i18n="nav.contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<nav class="mobilenav" aria-label="Разделы">
+  <a class="mobilenav__link" href="#home"     data-i18n="nav.home">Главная</a>
+  <a class="mobilenav__link" href="#works"    data-i18n="nav.works">Работы</a>
+  <a class="mobilenav__link" href="#services" data-i18n="nav.services">Услуги</a>
+  <a class="mobilenav__link" href="#about"    data-i18n="nav.about">Обо мне</a>
+  <a class="mobilenav__link" href="#contact"  data-i18n="nav.contact">Контакты</a>
+</nav>
+
+<main class="shell">
+
+<!-- ========================================================= HERO ======== -->
+<section class="hero" id="home">
+  <div class="hero__stage" data-parallax-scene>
+
+    <!-- Дальний план: фон и градиент комнаты -->
+    <div class="plane plane--bg" data-depth="0.06" aria-hidden="true"></div>
+
+    <!-- Дальняя дымка -->
+    <div class="plane plane--haze plane--haze-far" data-depth="0.14" aria-hidden="true"></div>
+
+    <!-- Огромная надпись за телевизором -->
+    <div class="plane plane--wordmark" data-depth="0.22" aria-hidden="true">
+      <div class="wordmark">
+        <span class="wordmark__track">PRINT&nbsp;·&nbsp;MOTION&nbsp;·&nbsp;3D&nbsp;·&nbsp;</span>
+        <span class="wordmark__track">PRINT&nbsp;·&nbsp;MOTION&nbsp;·&nbsp;3D&nbsp;·&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- Свечение экрана на окружение. Позицией управляет parallax.js -->
+    <div class="plane plane--glow" data-depth="0.30" data-glow aria-hidden="true"></div>
+
+    <!-- ------------------------------------------------ телевизор ------- -->
+    <div class="plane plane--tv" data-depth="0.46" data-tilt>
+      <div class="tv" data-tv>
+        <div class="tv__cabinet">
+          <div class="tv__bezel">
+            <div class="tv__screen">
+              <div class="crt">
+                <div class="crt__stack" data-crt-content></div>
+                <div class="crt__scanlines" aria-hidden="true"></div>
+                <div class="crt__vignette" aria-hidden="true"></div>
+                <div class="crt__glare" aria-hidden="true"></div>
+                <div class="crt__power" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tv__panel">
+            <span class="tv__badge">tepsuevvv</span>
+            <span class="tv__led" data-tv-led aria-hidden="true"></span>
+          </div>
+
+          <div class="tv__knobs" aria-hidden="true">
+            <span class="tv__knob tv__knob--big"></span>
+            <span class="tv__knob"></span>
+            <span class="tv__vent"></span>
+          </div>
+        </div>
+
+        <div class="tv__stand" aria-hidden="true"></div>
+        <div class="tv__shadow" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Ближний план: пыль и блики -->
+    <div class="plane plane--props" data-depth="0.72" aria-hidden="true">
+      <span class="spark spark--a"></span>
+      <span class="spark spark--b"></span>
+    </div>
+
+    <div class="plane plane--haze plane--haze-near" data-depth="0.95" aria-hidden="true"></div>
+
+    <!-- ------------------------------------------------- подпись -------- -->
+    <div class="plane plane--copy" data-depth="0.34">
+      <div class="hero__copy">
+        <p class="label" data-i18n="hero.kicker">Портфолио · 2026</p>
+        <h1 class="hero__name display">tepsuevvv</h1>
+        <p class="hero__tagline" data-i18n="hero.tagline">
+          Печатный дизайн, 2D- и 3D-анимационные ролики
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <a class="hero__scroll" href="#works">
+    <span class="label" data-i18n="hero.scroll">Листайте</span>
+    <span class="hero__scroll-line" aria-hidden="true"></span>
+  </a>
+</section>
+
+<!-- ================================================ БЕГУЩАЯ СТРОКА ====== -->
+<!-- Декоративная: те же навыки перечислены словами в разделе «Услуги»,
+     поэтому от скринридера строка скрыта и дублем не мешает. -->
+<div class="marquee" data-marquee aria-hidden="true">
+  <div class="marquee__skew" data-marquee-skew>
+    <div class="marquee__track" data-marquee-track></div>
+  </div>
+</div>
+
+<!-- ===================================================== ЗАЯВЛЕНИЕ ===== -->
+<section class="section statement">
+  <div class="container">
+    <p class="statement__text" data-statement>
+      Хорошая печать не прощает небрежности. Хорошая анимация не прощает скуки.
+      Я делаю и то, и другое — чтобы вас поняли с первого кадра и вспомнили после последнего.
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================== РАБОТЫ ====== -->
+<section class="section" id="works">
+  <div class="container">
+    <header class="section__head reveal">
+      <p class="label section__index"><span>01</span></p>
+      <h2 class="section__title" data-i18n="works.title">Работы</h2>
+      <p class="lead" data-i18n="works.lead">
+        Наведите на карточку — работа появится на экране телевизора.
+        Нажмите, чтобы открыть целиком.
+      </p>
+    </header>
+
+    <div class="filters reveal" role="group" aria-label="Фильтр по типу работ" data-filters></div>
+
+    <div class="works" data-works>
+      <!-- Карточки рендерит gallery.js из content/works.json -->
+    </div>
+
+    <p class="works__empty" data-works-empty hidden data-i18n="works.empty">
+      В этой категории пока пусто.
+    </p>
+
+    <noscript>
+      <p class="lead">Для просмотра галереи включите JavaScript.</p>
+    </noscript>
+  </div>
+</section>
+
+<!-- ======================================================== УСЛУГИ ====== -->
+<section class="section" id="services">
+  <div class="container">
+    <header class="section__head reveal">
+      <p class="label section__index"><span>02</span></p>
+      <h2 class="section__title" data-i18n="services.title">Услуги</h2>
+      <p class="lead" data-i18n="services.lead">
+        Три направления. Каждое можно взять отдельно или собрать в один проект —
+        от макета до готового ролика.
+      </p>
+    </header>
+
+    <div class="cards" data-services>
+      <!-- Карточки услуг рендерит gallery.js из content/site.json -->
+    </div>
+
+    <div class="process reveal" aria-labelledby="process-title">
+      <h3 class="process__title label" id="process-title" data-i18n="process.title">Как идёт работа</h3>
+      <ol class="process__list" data-process></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= ОБО МНЕ ====== -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about">
+      <header class="section__head reveal">
+        <p class="label section__index"><span>03</span></p>
+        <h2 class="section__title" data-i18n="about.title">Обо мне</h2>
+      </header>
+
+      <div class="about__body reveal">
+        <p class="about__text" data-i18n="about.body">
+          Занимаюсь визуалом там, где он должен работать, а не просто быть красивым:
+          печатная продукция, анимационные ролики и 3D-графика.
+        </p>
+
+        <div class="about__tools">
+          <p class="label" data-i18n="about.toolsLabel">Инструменты</p>
+          <ul class="tools" data-tools></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== КОНТАКТЫ ====== -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact reveal">
+      <p class="label section__index"><span>04</span></p>
+      <h2 class="contact__title display" data-i18n="contact.title">Обсудим проект</h2>
+      <p class="lead contact__lead" data-i18n="contact.lead">
+        Напишите, что нужно сделать и к какому сроку — отвечу с оценкой и планом.
+      </p>
+      <ul class="contact__links" data-contacts></ul>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__row">
+    <p class="label">© <span data-year>2026</span> tepsuevvv</p>
+    <p class="label" data-i18n="footer.note">Сделано вручную, без шаблонов</p>
+  </div>
+</footer>
+
+</main>
+
+<!-- ====================================================== ЛАЙТБОКС ====== -->
+<div class="lightbox" data-lightbox hidden>
+  <div class="lightbox__backdrop" data-lightbox-close></div>
+
+  <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+    <button class="lightbox__close" type="button" data-lightbox-close
+            aria-label="Закрыть" data-i18n-aria="a11y.close">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      </svg>
+    </button>
+
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev
+            aria-label="Предыдущая" data-i18n-aria="a11y.prev">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M15 4L7 12l8 8" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      </svg>
+    </button>
+
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next
+            aria-label="Следующая" data-i18n-aria="a11y.next">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M9 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      </svg>
+    </button>
+
+    <div class="lightbox__stage" data-lightbox-stage></div>
+
+    <div class="lightbox__meta">
+      <h3 class="lightbox__title" id="lightbox-title" data-lightbox-title></h3>
+      <p class="lightbox__desc" data-lightbox-desc></p>
+      <p class="label" data-lightbox-tags></p>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

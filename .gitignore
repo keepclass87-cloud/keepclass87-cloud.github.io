@@ -1,0 +1,12 @@
+# Исходные рендеры из Blender — сотни мегабайт PNG.
+# В репозиторий уезжает только результат работы tools/prepare_hero.py (WebP).
+_source/
+
+# Blender
+*.blend1
+*.blend2
+
+# Системное
+Thumbs.db
+desktop.ini
+.DS_Store

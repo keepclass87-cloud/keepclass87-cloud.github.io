@@ -1,0 +1,99 @@
+{
+  "_readme": "Чтобы добавить работу: положите файлы в assets/img/works (и assets/video для роликов), затем допишите объект в массив works. Код трогать не нужно. Поле media поддерживает три типа: image, video (локальный MP4) и embed (YouTube/Vimeo). Порядок в массиве = порядок на сайте.",
+
+  "categories": [
+    { "id": "print", "label": { "ru": "Печать",      "en": "Print" } },
+    { "id": "2d",    "label": { "ru": "2D анимация", "en": "2D animation" } },
+    { "id": "3d",    "label": { "ru": "3D анимация", "en": "3D animation" } }
+  ],
+
+  "works": [
+    {
+      "id": "demo-poster",
+      "category": "print",
+      "title": { "ru": "Серия афиш", "en": "Poster series" },
+      "desc": {
+        "ru": "Пример карточки. Замените на свою работу: положите картинку в assets/img/works и укажите путь в cover.",
+        "en": "Example card. Replace it with your own work: drop an image into assets/img/works and point cover at it."
+      },
+      "year": 2026,
+      "tools": ["Illustrator", "Photoshop"],
+      "cover": "",
+      "media": []
+    },
+    {
+      "id": "demo-2d",
+      "category": "2d",
+      "title": { "ru": "2D-ролик", "en": "2D spot" },
+      "desc": {
+        "ru": "Пример работы с видео по ссылке. В media укажите type embed и id ролика с YouTube.",
+        "en": "Example of a linked video. In media set type to embed and give the YouTube id."
+      },
+      "year": 2026,
+      "tools": ["After Effects", "Illustrator"],
+      "cover": "",
+      "media": []
+    },
+    {
+      "id": "demo-3d",
+      "category": "3d",
+      "title": { "ru": "3D-шоурил", "en": "3D showreel" },
+      "desc": {
+        "ru": "Пример работы с локальным видео. В media укажите type video, путь к MP4 и постер-кадр.",
+        "en": "Example of a local video. In media set type to video, the MP4 path and a poster frame."
+      },
+      "year": 2026,
+      "tools": ["Blender", "After Effects"],
+      "cover": "",
+      "media": []
+    }
+  ],
+
+  "_examples": {
+    "_note": "Готовые шаблоны для копирования в массив works. Этот блок сайтом не читается.",
+
+    "печатная_работа": {
+      "id": "poster-noir",
+      "category": "print",
+      "title": { "ru": "Серия афиш «Ночь»", "en": "Night poster series" },
+      "desc": { "ru": "Три афиши для кинопоказа.", "en": "Three posters for a film screening." },
+      "year": 2026,
+      "tools": ["Illustrator", "Photoshop"],
+      "cover": "assets/img/works/poster-noir.jpg",
+      "media": [
+        { "type": "image", "src": "assets/img/works/poster-noir-1.jpg" },
+        { "type": "image", "src": "assets/img/works/poster-noir-2.jpg" }
+      ]
+    },
+
+    "локальное_видео": {
+      "id": "reel-3d",
+      "category": "3d",
+      "title": { "ru": "3D-шоурил 2026", "en": "3D showreel 2026" },
+      "desc": { "ru": "Сборка работ за год.", "en": "A year of work in one cut." },
+      "year": 2026,
+      "tools": ["Blender"],
+      "cover": "assets/img/works/reel-3d-poster.jpg",
+      "media": [
+        {
+          "type": "video",
+          "src": "assets/video/reel-3d.mp4",
+          "poster": "assets/img/works/reel-3d-poster.jpg"
+        }
+      ]
+    },
+
+    "видео_по_ссылке": {
+      "id": "spot-2d",
+      "category": "2d",
+      "title": { "ru": "Рекламный ролик", "en": "Ad spot" },
+      "desc": { "ru": "30 секунд для соцсетей.", "en": "A 30-second social cut." },
+      "year": 2026,
+      "tools": ["After Effects"],
+      "cover": "assets/img/works/spot-2d-poster.jpg",
+      "media": [
+        { "type": "embed", "provider": "youtube", "id": "ВСТАВЬТЕ_ID_РОЛИКА" }
+      ]
+    }
+  }
+}
