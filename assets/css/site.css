@@ -608,7 +608,7 @@ body { background: var(--kf-void); overflow-x: hidden; }
   color: transparent; -webkit-text-stroke: 1.25px var(--text-primary);
 }
 
-.kf-signal__lead { max-width: 34ch; font-size: clamp(18px, 2.2vw, 32px); }
+.kf-signal__lead { max-width: 38ch; font-size: clamp(16px, 1.7vw, 25px); }
 
 .kf-signal__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 
