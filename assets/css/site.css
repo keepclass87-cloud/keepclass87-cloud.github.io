@@ -482,13 +482,6 @@ body { background: var(--kf-void); overflow-x: hidden; }
   -webkit-text-stroke: 1.5px rgba(11,11,12,.55);
 }
 
-/* Фотография ритуала поверх контурного слова — по описанию из README */
-.kf-process__photo {
-  position: absolute; right: var(--gutter-section); top: var(--space-9);
-  width: min(38%, 420px); height: auto;
-  pointer-events: none;
-}
-
 .kf-process__lead { max-width: 42ch; margin-top: var(--space-8); padding-bottom: var(--space-9); }
 
 /* ---------------------------------------------------------- ProcessRow --- */
@@ -688,7 +681,6 @@ body { background: var(--kf-void); overflow-x: hidden; }
   .kf-stats { grid-template-columns: 1fr 1fr; }
   .kf-stat { min-height: 380px; }
   .kf-stats > .kf-stat:first-child { grid-column: 1 / -1; }
-  .kf-process__photo { width: 32%; opacity: .9; }
 }
 
 @media (max-width: 900px) {
@@ -730,7 +722,6 @@ body { background: var(--kf-void); overflow-x: hidden; }
   .kf-prow__text { grid-column: 2 / -1; }
 
   .kf-process { margin-top: -80px; }
-  .kf-process__photo { position: static; width: 62%; margin: var(--space-6) 0 0 auto; }
 
   .kf-signal__portrait { opacity: .45; }
   .kf-record__dialog { grid-template-columns: 1fr; max-height: 90svh; }
@@ -747,6 +738,10 @@ body { background: var(--kf-void); overflow-x: hidden; }
 
   /* Крупные кнопки с отступами 26/52 не влезают в узкий экран */
   .kf-btn--lg { padding: 18px 28px; font-size: 13px; }
+
+  /* Заголовок шага в 30px рассыпается на четыре строки — ужимаем */
+  .kf-prow { grid-template-columns: 32px 1fr 20px; gap: var(--space-4); }
+  .kf-prow__title { font-size: 20px; }
   .kf-signal__actions .kf-btn { flex: 1 1 100%; }
 }
 
