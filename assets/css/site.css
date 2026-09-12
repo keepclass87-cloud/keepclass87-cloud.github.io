@@ -159,7 +159,9 @@ body { background: var(--kf-void); overflow-x: hidden; }
 
 .kf-hero {
   position: relative;
-  min-height: 100svh;
+  /* Шапка липкая и занимает место в потоке, поэтому целый экран здесь дал бы
+     блок ровно на её высоту длиннее окна — нижний ряд уезжал за край. */
+  min-height: calc(100svh - var(--nav-height));
   background: var(--kf-void);
   overflow: hidden;
   display: flex; flex-direction: column;
@@ -185,7 +187,7 @@ body { background: var(--kf-void); overflow-x: hidden; }
 .kf-hero__type {
   margin: 0; text-align: center;
   font-family: var(--font-display); font-weight: var(--fw-black);
-  font-size: clamp(42px, 16vw, 236px);
+  font-size: clamp(42px, min(16vw, 26svh), 236px);
   line-height: .82; letter-spacing: var(--ls-display-tight);
   text-transform: uppercase;
   grid-area: 1 / 1;
