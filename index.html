@@ -1,303 +1,352 @@
 <!DOCTYPE html>
-<html lang="ru" class="no-js">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>tepsuevvv — печатный дизайн, 2D и 3D анимация</title>
-<meta name="description" content="Портфолио tepsuevvv: печатный дизайн, 2D- и 3D-анимационные ролики. Работы, услуги и контакты.">
-<meta name="theme-color" content="#06070B">
+<title>KUROFRAME — Digital Folklore Archive</title>
+<meta name="description" content="An archive of five signal-born guardians, shaped by lost rituals, machine memory and the space between.">
+<meta name="theme-color" content="#08080a">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="tepsuevvv — печатный дизайн, 2D и 3D анимация">
-<meta property="og:description" content="Портфолио: печатный дизайн, 2D- и 3D-анимационные ролики.">
-<meta property="og:image" content="assets/img/og-cover.jpg">
+<meta property="og:title" content="KUROFRAME — Digital Folklore Archive">
+<meta property="og:description" content="Five guardians born where ancient form meets machine memory.">
+<meta property="og:image" content="assets/img/signal-portrait.png">
 
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/mark.png" type="image/png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/layout.css">
-<link rel="stylesheet" href="assets/css/scenes.css">
-
-<script>document.documentElement.classList.remove('no-js');</script>
+<link rel="stylesheet" href="assets/css/tokens/fonts.css">
+<link rel="stylesheet" href="assets/css/tokens/colors.css">
+<link rel="stylesheet" href="assets/css/tokens/typography.css">
+<link rel="stylesheet" href="assets/css/tokens/spacing.css">
+<link rel="stylesheet" href="assets/css/tokens/effects.css">
+<link rel="stylesheet" href="assets/css/tokens/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 
 <body>
-<a class="skip-link" href="#works" data-i18n="a11y.skip">К работам</a>
 
-<div class="grain" aria-hidden="true"></div>
-
-<!-- ======================================================== шапка ======= -->
-<header class="topbar" data-topbar>
-  <a class="brand" href="#home">
-    <span class="brand__dot" aria-hidden="true"></span>
-    <span>tepsuevvv</span>
+<!-- ========================================================== НАВИГАЦИЯ === -->
+<header class="kf-nav">
+  <a class="kf-nav__brand" href="#top" aria-label="KUROFRAME — to the top">
+    <img src="assets/img/logo-lockup.png" alt="KUROFRAME">
   </a>
 
-  <div class="lang" role="group" aria-label="Язык / Language">
-    <button class="lang__btn" type="button" data-lang="ru" aria-pressed="true">RU</button>
-    <button class="lang__btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+  <nav class="kf-nav__links" aria-label="Sections">
+    <a class="kf-nav__link" href="#manifesto" data-nav="manifesto">Manifesto</a>
+    <a class="kf-nav__link" href="#archive"   data-nav="archive">Archive</a>
+    <a class="kf-nav__link" href="#process"   data-nav="process">Process</a>
+  </nav>
+
+  <div class="kf-nav__cta">
+    <a class="kf-btn kf-btn--pill" href="#archive">
+      <span>Enter archive</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
+    </a>
   </div>
 </header>
 
-<!-- =================================================== навигация ======== -->
-<nav class="sidenav" aria-label="Разделы">
-  <ul class="sidenav__list" data-nav>
-    <li><a class="sidenav__link" href="#home"     data-i18n="nav.home">Главная</a></li>
-    <li><a class="sidenav__link" href="#works"    data-i18n="nav.works">Работы</a></li>
-    <li><a class="sidenav__link" href="#services" data-i18n="nav.services">Услуги</a></li>
-    <li><a class="sidenav__link" href="#about"    data-i18n="nav.about">Обо мне</a></li>
-    <li><a class="sidenav__link" href="#contact"  data-i18n="nav.contact">Контакты</a></li>
-  </ul>
-</nav>
+<main>
 
-<nav class="mobilenav" aria-label="Разделы">
-  <a class="mobilenav__link" href="#home"     data-i18n="nav.home">Главная</a>
-  <a class="mobilenav__link" href="#works"    data-i18n="nav.works">Работы</a>
-  <a class="mobilenav__link" href="#services" data-i18n="nav.services">Услуги</a>
-  <a class="mobilenav__link" href="#about"    data-i18n="nav.about">Обо мне</a>
-  <a class="mobilenav__link" href="#contact"  data-i18n="nav.contact">Контакты</a>
-</nav>
+<!-- ================================================================ HERO === -->
+<section class="kf-hero kf-grain" id="top">
+  <div class="kf-hero__wash" aria-hidden="true"></div>
 
-<main class="shell">
-
-<!-- ========================================================= HERO ======== -->
-<section class="hero" id="home">
-  <div class="hero__stage" data-parallax-scene>
-
-    <!-- Дальний план: фон и градиент комнаты -->
-    <div class="plane plane--bg" data-depth="0.06" aria-hidden="true"></div>
-
-    <!-- Дальняя дымка -->
-    <div class="plane plane--haze plane--haze-far" data-depth="0.14" aria-hidden="true"></div>
-
-    <!-- Огромная надпись за телевизором -->
-    <div class="plane plane--wordmark" data-depth="0.22" aria-hidden="true">
-      <div class="wordmark">
-        <span class="wordmark__track">PRINT&nbsp;·&nbsp;MOTION&nbsp;·&nbsp;3D&nbsp;·&nbsp;</span>
-        <span class="wordmark__track">PRINT&nbsp;·&nbsp;MOTION&nbsp;·&nbsp;3D&nbsp;·&nbsp;</span>
-      </div>
-    </div>
-
-    <!-- Свечение экрана на окружение. Позицией управляет parallax.js -->
-    <div class="plane plane--glow" data-depth="0.30" data-glow aria-hidden="true"></div>
-
-    <!-- ------------------------------------------------ телевизор ------- -->
-    <div class="plane plane--tv" data-depth="0.46" data-tilt>
-      <div class="tv" data-tv>
-        <div class="tv__cabinet">
-          <div class="tv__bezel">
-            <div class="tv__screen">
-              <div class="crt">
-                <div class="crt__stack" data-crt-content></div>
-                <div class="crt__scanlines" aria-hidden="true"></div>
-                <div class="crt__vignette" aria-hidden="true"></div>
-                <div class="crt__glare" aria-hidden="true"></div>
-                <div class="crt__power" aria-hidden="true"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="tv__panel">
-            <span class="tv__badge">tepsuevvv</span>
-            <span class="tv__led" data-tv-led aria-hidden="true"></span>
-          </div>
-
-          <div class="tv__knobs" aria-hidden="true">
-            <span class="tv__knob tv__knob--big"></span>
-            <span class="tv__knob"></span>
-            <span class="tv__vent"></span>
-          </div>
-        </div>
-
-        <div class="tv__stand" aria-hidden="true"></div>
-        <div class="tv__shadow" aria-hidden="true"></div>
-      </div>
-    </div>
-
-    <!-- Ближний план: пыль и блики -->
-    <div class="plane plane--props" data-depth="0.72" aria-hidden="true">
-      <span class="spark spark--a"></span>
-      <span class="spark spark--b"></span>
-    </div>
-
-    <div class="plane plane--haze plane--haze-near" data-depth="0.95" aria-hidden="true"></div>
-
-    <!-- ------------------------------------------------- подпись -------- -->
-    <div class="plane plane--copy" data-depth="0.34">
-      <div class="hero__copy">
-        <p class="label" data-i18n="hero.kicker">Портфолио · 2026</p>
-        <h1 class="hero__name display">tepsuevvv</h1>
-        <p class="hero__tagline" data-i18n="hero.tagline">
-          Печатный дизайн, 2D- и 3D-анимационные ролики
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <a class="hero__scroll" href="#works">
-    <span class="label" data-i18n="hero.scroll">Листайте</span>
-    <span class="hero__scroll-line" aria-hidden="true"></span>
-  </a>
-</section>
-
-<!-- ================================================ БЕГУЩАЯ СТРОКА ====== -->
-<!-- Декоративная: те же навыки перечислены словами в разделе «Услуги»,
-     поэтому от скринридера строка скрыта и дублем не мешает. -->
-<div class="marquee" data-marquee aria-hidden="true">
-  <div class="marquee__skew" data-marquee-skew>
-    <div class="marquee__track" data-marquee-track></div>
-  </div>
-</div>
-
-<!-- ===================================================== ЗАЯВЛЕНИЕ ===== -->
-<section class="section statement">
-  <div class="container">
-    <p class="statement__text" data-statement>
-      Хорошая печать не прощает небрежности. Хорошая анимация не прощает скуки.
-      Я делаю и то, и другое — чтобы вас поняли с первого кадра и вспомнили после последнего.
+  <div class="kf-hero__top">
+    <p class="kf-label">
+      <span class="kf-label__marker" aria-hidden="true"></span>
+      <span>Digital folklore archive</span>
     </p>
+    <p class="kf-label"><span>Transmission 00&#8212;05</span></p>
   </div>
-</section>
 
-<!-- ======================================================== РАБОТЫ ====== -->
-<section class="section" id="works">
-  <div class="container">
-    <header class="section__head reveal">
-      <p class="label section__index"><span>01</span></p>
-      <h2 class="section__title" data-i18n="works.title">Работы</h2>
-      <p class="lead" data-i18n="works.lead">
-        Наведите на карточку — работа появится на экране телевизора.
-        Нажмите, чтобы открыть целиком.
-      </p>
-    </header>
+  <div class="kf-hero__stage">
+    <h1 class="kf-hero__type">
+      <span class="is-solid">Kuro</span>
+      <!-- Пары букв разведены вручную: у контурного начертания кернинг выключен -->
+      <span class="is-outline">Fr<span style="margin-left:.045em">am</span><span style="margin-left:-.022em">e</span></span>
+    </h1>
 
-    <div class="filters reveal" role="group" aria-label="Фильтр по типу работ" data-filters></div>
+    <img class="kf-hero__figure" src="assets/img/keeper-figure.png" alt="" aria-hidden="true">
 
-    <div class="works" data-works>
-      <!-- Карточки рендерит gallery.js из content/works.json -->
-    </div>
+    <p class="kf-hero__kanji kf-jp" aria-hidden="true">&#35352;&#40658;<br>&#25014;</p>
+  </div>
 
-    <p class="works__empty" data-works-empty hidden data-i18n="works.empty">
-      В этой категории пока пусто.
+  <div class="kf-hero__bottom">
+    <p class="kf-body kf-body--sm kf-hero__note">
+      Five guardians born where ancient form meets machine memory.
     </p>
 
-    <noscript>
-      <p class="lead">Для просмотра галереи включите JavaScript.</p>
-    </noscript>
+    <a class="kf-round" href="#manifesto" aria-label="Enter the archive">&#8595;</a>
+
+    <div style="display:flex;align-items:flex-end;gap:var(--space-6)">
+      <p class="kf-label kf-label--sm"><span>Keeper / 01</span></p>
+      <div class="kf-freq kf-freq--right">
+        <span class="kf-freq__caption">Active frequency</span>
+        <span class="kf-freq__row"><span class="kf-freq__value">87.4</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="kf-hero__band" aria-hidden="true"></div>
+</section>
+
+<!-- =========================================================== MANIFESTO === -->
+<section class="kf-manifesto" id="manifesto" data-kf-ground="bone">
+  <div class="kf-band kf-section-pad">
+    <p class="kf-label" style="margin-bottom:var(--space-8)"><span>A living digital myth</span></p>
+    <h2 class="kf-manifesto__statement">
+      Kuroframe is an archive of signal-born guardians&#8212; shaped by
+      <span class="is-quiet">lost rituals</span>, machine memory and the space between.
+    </h2>
+  </div>
+
+  <div class="kf-hairline" role="separator"></div>
+
+  <div class="kf-manifesto__body kf-section-pad">
+    <figure class="kf-manifesto__figure">
+      <span class="kf-label kf-manifesto__rail">Oracle 02 / memory channel</span>
+      <img src="assets/img/oracle-light.png" alt="Veiled Oracle">
+    </figure>
+
+    <div class="kf-features">
+      <div class="kf-feature">
+        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>
+        <h4 class="kf-feature__title">Original forms</h4>
+        <p class="kf-feature__text">Every guardian is built from an individual silhouette, material system and origin.</p>
+      </div>
+
+      <div class="kf-feature">
+        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2"/></svg>
+        <h4 class="kf-feature__title">Living signals</h4>
+        <p class="kf-feature__text">Motion, sound and responsive details allow each identity to shift over time.</p>
+      </div>
+
+      <div class="kf-feature kf-feature--active">
+        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+        <h4 class="kf-feature__title">Five frequencies</h4>
+        <p class="kf-feature__text">Threshold, memory, structure, connection, return &#8212; one archetype per keeper.</p>
+      </div>
+
+      <div class="kf-feature">
+        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <h4 class="kf-feature__title">Shared memory</h4>
+        <p class="kf-feature__text">Records are written once and read by every form that follows.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ======================================================== УСЛУГИ ====== -->
-<section class="section" id="services">
-  <div class="container">
-    <header class="section__head reveal">
-      <p class="label section__index"><span>02</span></p>
-      <h2 class="section__title" data-i18n="services.title">Услуги</h2>
-      <p class="lead" data-i18n="services.lead">
-        Три направления. Каждое можно взять отдельно или собрать в один проект —
-        от макета до готового ролика.
-      </p>
-    </header>
+<!-- ============================================================= ARCHIVE === -->
+<section class="kf-archive kf-grain" id="archive">
+  <div class="kf-section-pad" style="padding-top:var(--space-10)">
+    <div class="kf-selector" role="group" aria-label="Select a guardian" data-selector></div>
 
-    <div class="cards" data-services>
-      <!-- Карточки услуг рендерит gallery.js из content/site.json -->
-    </div>
-
-    <div class="process reveal" aria-labelledby="process-title">
-      <h3 class="process__title label" id="process-title" data-i18n="process.title">Как идёт работа</h3>
-      <ol class="process__list" data-process></ol>
+    <div class="kf-meta">
+      <div class="kf-meta__field">
+        <div class="kf-meta__label">Selected entity</div>
+        <div class="kf-meta__value" data-meta-name></div>
+      </div>
+      <div class="kf-meta__field">
+        <div class="kf-meta__label">Archetype</div>
+        <div class="kf-meta__value" data-meta-archetype></div>
+      </div>
+      <div class="kf-meta__field">
+        <div class="kf-meta__label">Frequency</div>
+        <div class="kf-meta__value kf-meta__value--signal" data-meta-frequency></div>
+      </div>
+      <div class="kf-meta__action">
+        <button class="kf-btn kf-btn--block" type="button" data-open-record>
+          <span>Open record</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
+        </button>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- ======================================================= ОБО МНЕ ====== -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="about">
-      <header class="section__head reveal">
-        <p class="label section__index"><span>03</span></p>
-        <h2 class="section__title" data-i18n="about.title">Обо мне</h2>
-      </header>
+  <div class="kf-section-pad" style="margin-top:var(--space-11)">
+    <p class="kf-label">
+      <span class="kf-label__marker" aria-hidden="true"></span>
+      <span class="kf-label__index">02.6</span>
+      <span>Frequency map</span>
+    </p>
 
-      <div class="about__body reveal">
-        <p class="about__text" data-i18n="about.body">
-          Занимаюсь визуалом там, где он должен работать, а не просто быть красивым:
-          печатная продукция, анимационные ролики и 3D-графика.
+    <div class="kf-map">
+      <div class="kf-map__glow" aria-hidden="true"></div>
+      <div class="kf-map__ring-outer" aria-hidden="true"></div>
+      <div class="kf-map__ring-mid" aria-hidden="true"></div>
+      <div class="kf-map__ring-in" aria-hidden="true"></div>
+
+      <div class="kf-map__core">
+        <p class="kf-label kf-label--sm" style="color:var(--text-signal)">
+          <span>Selected / <span data-core-index></span></span>
         </p>
+        <h3 class="kf-map__name" data-core-name></h3>
+        <p class="kf-label kf-label--sm"><span><span data-core-archetype></span> frequency</span></p>
+        <p class="kf-label kf-label--sm"><span>Archive signal <span data-core-frequency></span> hz</span></p>
+        <span class="kf-marker" aria-hidden="true"></span>
+        <a class="kf-arrowlink kf-arrowlink--center" href="#archive" data-open-record>
+          <span class="kf-arrowlink__text">Enter frequency<span aria-hidden="true">&#8599;</span></span>
+          <span class="kf-arrowlink__rule" aria-hidden="true"></span>
+        </a>
+      </div>
 
-        <div class="about__tools">
-          <p class="label" data-i18n="about.toolsLabel">Инструменты</p>
-          <ul class="tools" data-tools></ul>
+      <div class="kf-map__slots" data-slots></div>
+
+      <div class="kf-map__nav">
+        <button class="kf-round kf-round--lg" type="button" data-step="-1" aria-label="Previous guardian">&#8592;</button>
+        <p class="kf-label"><span>Drag / select</span></p>
+        <button class="kf-round kf-round--lg" type="button" data-step="1" aria-label="Next guardian">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= PROCESS === -->
+<section class="kf-process" id="process" data-kf-ground="bone">
+  <div class="kf-process__head kf-section-pad">
+    <h2 class="kf-process__title">Ritual</h2>
+    <img class="kf-process__photo" src="assets/img/ritual-process.png" alt="" aria-hidden="true">
+    <p class="kf-body kf-process__lead">
+      The archive is not generated by chance. Each form moves through a deliberate three-part ritual.
+    </p>
+  </div>
+
+  <div class="kf-section-pad" style="padding-bottom:var(--space-12)">
+    <div class="kf-prow">
+      <span class="kf-prow__index">01</span>
+      <span class="kf-prow__title">A form is found</span>
+      <span class="kf-prow__text">Fragments of forgotten ritual are gathered from the edge of the signal.</span>
+      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
+    </div>
+
+    <div class="kf-prow">
+      <span class="kf-prow__index">02</span>
+      <span class="kf-prow__title">A frame is cut</span>
+      <span class="kf-prow__text">Silhouette, material and armour are resolved until the form can hold weight.</span>
+      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
+    </div>
+
+    <div class="kf-prow">
+      <span class="kf-prow__index">03</span>
+      <span class="kf-prow__title">Memory awakens</span>
+      <span class="kf-prow__text">Each guardian receives a frequency, an origin and a reason to persist.</span>
+      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
+    </div>
+
+    <div class="kf-hairline" role="separator"></div>
+
+    <div class="kf-stats">
+      <div class="kf-stat">
+        <div class="kf-stat__caption">Archive pulse / live</div>
+        <svg class="kf-stat__spark" viewBox="0 0 220 130" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <path d="M4 118 C 26 116, 34 92, 56 88 C 76 84, 80 68, 100 62 C 116 57, 118 44, 136 40 C 154 36, 160 46, 176 34 C 192 22, 200 14, 216 8" fill="none" stroke="var(--kf-signal)" stroke-width="0.9" stroke-linecap="round"/>
+          <circle cx="136" cy="40" r="2.6" fill="var(--kf-signal)"/>
+        </svg>
+        <div class="kf-stat__foot">
+          <span class="kf-stat__value">87.4<span class="kf-stat__unit">hz</span></span>
+        </div>
+      </div>
+
+      <div class="kf-stat">
+        <div class="kf-stat__caption">Active forms</div>
+        <div class="kf-stat__foot">
+          <span class="kf-stat__value">05</span>
+          <span class="kf-stat__note">Five entities. Five transmissions.</span>
+        </div>
+      </div>
+
+      <div class="kf-stat kf-stat--invert">
+        <div class="kf-stat__caption">Memory fragments</div>
+        <div class="kf-stat__foot">
+          <span class="kf-stat__value">&#8734;</span>
+          <span class="kf-stat__note">Every record keeps its own memory.</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================== КОНТАКТЫ ====== -->
-<section class="section" id="contact">
-  <div class="container">
-    <div class="contact reveal">
-      <p class="label section__index"><span>04</span></p>
-      <h2 class="contact__title display" data-i18n="contact.title">Обсудим проект</h2>
-      <p class="lead contact__lead" data-i18n="contact.lead">
-        Напишите, что нужно сделать и к какому сроку — отвечу с оценкой и планом.
-      </p>
-      <ul class="contact__links" data-contacts></ul>
+<!-- ============================================================== SIGNAL === -->
+<section class="kf-signal kf-grain" id="signal">
+  <img class="kf-signal__portrait" src="assets/img/signal-portrait.png" alt="Veiled Oracle transmission">
+  <div class="kf-signal__scrim" aria-hidden="true"></div>
+
+  <div class="kf-signal__body kf-section-pad">
+    <p class="kf-label"><span>The archive opens once per cycle</span></p>
+
+    <h2 class="kf-signal__type">
+      <span>The</span>
+      <span class="is-outline">Signal</span>
+    </h2>
+
+    <p class="kf-body kf-body--lg kf-signal__lead">
+      Enter your frequency and the archive will return the guardian that matches it.
+    </p>
+
+    <div class="kf-signal__actions">
+      <a class="kf-btn kf-btn--pill kf-btn--lg" href="#archive">
+        <span>Enter archive</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
+      </a>
+      <a class="kf-btn kf-btn--ghost kf-btn--lg" href="#manifesto"><span>Read manifesto</span></a>
     </div>
   </div>
-</section>
 
-<footer class="footer">
-  <div class="container footer__row">
-    <p class="label">© <span data-year>2026</span> tepsuevvv</p>
-    <p class="label" data-i18n="footer.note">Сделано вручную, без шаблонов</p>
+  <div class="kf-hairline" role="separator"></div>
+
+  <div class="kf-signal__foot kf-section-pad">
+    <p class="kf-label kf-label--sm"><span>Kuroframe &#8212; digital folklore archive</span></p>
+    <p class="kf-label kf-label--sm"><span>Transmission 00&#8212;05 &#183; &#35352;&#25014;</span></p>
   </div>
-</footer>
+</section>
 
 </main>
 
-<!-- ====================================================== ЛАЙТБОКС ====== -->
-<div class="lightbox" data-lightbox hidden>
-  <div class="lightbox__backdrop" data-lightbox-close></div>
+<!-- ============================================================== ЗАПИСЬ === -->
+<div class="kf-record" data-record hidden>
+  <div class="kf-record__dialog" role="dialog" aria-modal="true" aria-labelledby="record-name">
+    <img class="kf-record__img" data-record-img alt="">
 
-  <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
-    <button class="lightbox__close" type="button" data-lightbox-close
-            aria-label="Закрыть" data-i18n-aria="a11y.close">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" fill="none"/>
-      </svg>
-    </button>
+    <div class="kf-record__body">
+      <div class="kf-record__head">
+        <p class="kf-label">
+          <span class="kf-label__marker" aria-hidden="true"></span>
+          <span class="kf-label__index" data-record-index></span>
+          <span>Record open</span>
+        </p>
+        <button class="kf-record__close" type="button" data-close-record aria-label="Close record">&#10005;</button>
+      </div>
 
-    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev
-            aria-label="Предыдущая" data-i18n-aria="a11y.prev">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-        <path d="M15 4L7 12l8 8" stroke="currentColor" stroke-width="1.6" fill="none"/>
-      </svg>
-    </button>
+      <h3 class="kf-record__name" id="record-name" data-record-name></h3>
+      <p class="kf-body" data-record-note></p>
 
-    <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next
-            aria-label="Следующая" data-i18n-aria="a11y.next">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-        <path d="M9 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" fill="none"/>
-      </svg>
-    </button>
+      <div class="kf-hairline" role="separator"></div>
 
-    <div class="lightbox__stage" data-lightbox-stage></div>
+      <div class="kf-record__readouts">
+        <div class="kf-freq kf-freq--sm">
+          <span class="kf-freq__caption">Archive signal</span>
+          <span class="kf-freq__row">
+            <span class="kf-freq__value" data-record-frequency></span>
+            <span class="kf-freq__unit">hz</span>
+          </span>
+        </div>
+        <div>
+          <p class="kf-label kf-label--sm"><span>Archetype</span></p>
+          <div class="kf-title" style="margin-top:8px;font-size:18px" data-record-archetype></div>
+        </div>
+      </div>
 
-    <div class="lightbox__meta">
-      <h3 class="lightbox__title" id="lightbox-title" data-lightbox-title></h3>
-      <p class="lightbox__desc" data-lightbox-desc></p>
-      <p class="label" data-lightbox-tags></p>
+      <div class="kf-record__actions">
+        <button class="kf-btn kf-btn--pill kf-btn--sm" type="button">
+          <span>Transmit</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
+        </button>
+        <button class="kf-btn kf-btn--ghost kf-btn--sm" type="button" data-close-record><span>Return</span></button>
+      </div>
     </div>
   </div>
 </div>
 
-<script type="module" src="assets/js/main.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>

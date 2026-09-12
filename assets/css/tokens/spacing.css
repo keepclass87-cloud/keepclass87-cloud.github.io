@@ -1,0 +1,30 @@
+/* KUROFRAME — spacing + layout. 4px base; sections breathe in 96–160px bands. */
+:root{
+  --space-0:0px;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:32px;
+  --space-8:40px;
+  --space-9:56px;
+  --space-10:72px;
+  --space-11:96px;
+  --space-12:128px;
+  --space-13:160px;
+
+  --gutter-page:clamp(20px,4vw,56px); /* @kind spacing */
+  --gutter-section:clamp(40px,7vw,120px); /* @kind spacing */
+  --max-content:1440px;
+  --max-prose:52ch; /* @kind other */
+  --nav-height:84px;
+  --section-band:clamp(72px,9vw,128px); /* @kind spacing */
+  --grid-columns:12; /* @kind other */
+  --grid-gap:clamp(16px,2vw,32px);
+  --hairline:1px; /* @kind other */
+}
+.kf-page{max-width:var(--max-content);margin:0 auto;padding-inline:var(--gutter-page)}
+.kf-band{padding-block:var(--section-band)}
+.kf-grid{display:grid;grid-template-columns:repeat(var(--grid-columns),minmax(0,1fr));gap:var(--grid-gap)}
