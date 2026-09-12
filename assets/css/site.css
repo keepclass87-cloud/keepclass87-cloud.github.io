@@ -185,13 +185,16 @@ body { background: var(--kf-void); overflow-x: hidden; }
 .kf-hero__type {
   margin: 0; text-align: center;
   font-family: var(--font-display); font-weight: var(--fw-black);
-  font-size: clamp(64px, 17vw, 236px);
+  font-size: clamp(42px, 16vw, 236px);
   line-height: .82; letter-spacing: var(--ls-display-tight);
   text-transform: uppercase;
   grid-area: 1 / 1;
 }
 
-.kf-hero__type span { display: block; }
+/* Только прямые потомки становятся строками. Вложенные span-ы внутри
+   контурной строки разводят пары букв и обязаны остаться строчными —
+   иначе слово распадается на FR / AM / E. */
+.kf-hero__type > span { display: block; white-space: nowrap; }
 .kf-hero__type .is-solid { color: var(--kf-white); }
 
 /* Обводка второй строки. Кернинг выключен намеренно: у контурного
@@ -202,15 +205,6 @@ body { background: var(--kf-void); overflow-x: hidden; }
   font-kerning: none;
   font-feature-settings: "kern" 0, "liga" 0, "calt" 0;
   -webkit-text-stroke: 1.25px rgba(255,255,255,.75);
-}
-
-/* Фигура стража поверх шрифта — по описанию из README ui-кита */
-.kf-hero__figure {
-  grid-area: 1 / 1;
-  place-self: center;
-  max-height: 74svh; width: auto;
-  pointer-events: none;
-  z-index: 1;
 }
 
 .kf-hero__kanji {
@@ -610,11 +604,11 @@ body { background: var(--kf-void); overflow-x: hidden; }
 .kf-signal__type {
   margin: 0;
   font-family: var(--font-display); font-weight: var(--fw-black);
-  font-size: clamp(64px, 13vw, 210px);
+  font-size: clamp(46px, 13vw, 210px);
   line-height: var(--lh-display); letter-spacing: var(--ls-display-tight);
   text-transform: uppercase; color: var(--text-primary);
 }
-.kf-signal__type span { display: block; }
+.kf-signal__type > span { display: block; white-space: nowrap; }
 .kf-signal__type .is-outline {
   color: transparent; -webkit-text-stroke: 1.25px var(--text-primary);
 }
@@ -748,4 +742,13 @@ body { background: var(--kf-void); overflow-x: hidden; }
   .kf-stats { grid-template-columns: 1fr; }
   .kf-stats > .kf-stat:first-child { grid-column: auto; }
   .kf-features { grid-template-columns: 1fr; }
+
+  /* Крупные кнопки с отступами 26/52 не влезают в узкий экран */
+  .kf-btn--lg { padding: 18px 28px; font-size: 13px; }
+  .kf-signal__actions .kf-btn { flex: 1 1 100%; }
 }
+
+/* Совсем узкие экраны: ячейки грида обязаны уметь сжиматься, иначе
+   длинный текст распирает строку и появляется горизонтальная прокрутка. */
+.kf-prow > * { min-width: 0; }
+.kf-prow__text { overflow-wrap: anywhere; }
