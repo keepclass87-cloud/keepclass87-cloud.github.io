@@ -16,3 +16,11 @@ desktop.ini
 # на GitHub Pages из корня, и содержимое .claude оказалось бы в открытом доступе.
 .claude/skills/
 .claude/agents/
+
+# Рабочие файлы, не для публикации: репозиторий уходит на GitHub Pages
+# в открытый доступ, исходники и референсы там не нужны.
+*.af
+*.afdesign
+*.afphoto
+*.mp4
+*.mov
