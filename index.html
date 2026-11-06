@@ -1,346 +1,425 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TEPSUEV STUDIO — печатный дизайн, 2D и 3D анимация</title>
-<meta name="description" content="TEPSUEV STUDIO — студия дизайна: печатная продукция, 2D- и 3D-анимационные ролики.">
-<meta name="theme-color" content="#08080a">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TEPSUEV STUDIO — моушен-дизайн, 2D и 3D анимация</title>
+<meta name="description" content="Студия моушен-дизайна: рекламные ролики, 2D- и 3D-анимация. Шестнадцать работ для кофеен, аптек, магазинов и сервисов.">
+<meta name="theme-color" content="#08080A">
 <meta property="og:type" content="website">
-<meta property="og:title" content="TEPSUEV STUDIO — студия дизайна">
-<meta property="og:description" content="Печатный дизайн, 2D- и 3D-анимация. От первого макета до готового кадра.">
-<meta property="og:image" content="assets/img/signal-portrait.png">
+<meta property="og:title" content="TEPSUEV STUDIO — моушен-дизайн, 2D и 3D анимация">
+<meta property="og:description" content="Шестнадцать роликов для локального бизнеса. Моушен, 2D, 3D.">
+<meta property="og:image" content="assets/img/my-element.webp">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2308080A'/><rect x='4' y='14' width='24' height='4' fill='%23E3121C'/></svg>">
 
-<link rel="icon" href="assets/img/mark.png" type="image/png">
+<link rel="preload" href="assets/fonts/onest-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/onest-latin-800.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link rel="stylesheet" href="assets/css/tokens/fonts.css">
-<link rel="stylesheet" href="assets/css/tokens/colors.css">
-<link rel="stylesheet" href="assets/css/tokens/typography.css">
-<link rel="stylesheet" href="assets/css/tokens/spacing.css">
-<link rel="stylesheet" href="assets/css/tokens/effects.css">
-<link rel="stylesheet" href="assets/css/tokens/base.css">
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="scrollcraft.css">
+<link rel="stylesheet" href="site.css">
 </head>
-
 <body>
 
-<!-- ========================================================== НАВИГАЦИЯ === -->
-<header class="kf-nav">
-  <a class="kf-nav__brand" href="#top" aria-label="KUROFRAME — to the top">
-    <img src="assets/img/logo-lockup.png" alt="KUROFRAME">
-  </a>
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+<a class="skip" href="#works">Перейти к работам</a>
 
-  <nav class="kf-nav__links" aria-label="Sections">
-    <a class="kf-nav__link" href="#manifesto" data-nav="manifesto">Manifesto</a>
-    <a class="kf-nav__link" href="#archive"   data-nav="archive">Archive</a>
-    <a class="kf-nav__link" href="#process"   data-nav="process">Process</a>
-  </nav>
-
-  <div class="kf-nav__cta">
-    <a class="kf-btn kf-btn--pill" href="#archive">
-      <span>Enter archive</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
-    </a>
+<!-- ====================================================== ШАПКА И ЛИНЕЙКА ===
+     Шапка не принадлежит ни одному акту, поэтому именно она держит пик:
+     акты под ней продолжают резать, а линейка разворачивается и держится.
+     Ячейки — обычные ссылки, они работают и без скриптов. -->
+<header class="bar">
+  <div class="bar__row">
+    <a class="bar__mark" href="#top">TEPSUEV&nbsp;STUDIO</a>
+    <nav class="bar__nav" aria-label="Разделы">
+      <a href="#about">Описание</a>
+      <a href="#services">Услуги</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <a class="bar__cta" href="#works">Перейти к проектам</a>
   </div>
 </header>
 
-<main>
+<nav class="rail" data-rail aria-label="Монтажная линейка работ" data-sc-verify-state="x:0|h:0|i:-1">
+  <span class="rail__fill" aria-hidden="true"></span>
+  <span class="rail__head" aria-hidden="true"></span>
+  <a class="rail__cell" href="#w-my-element"          style="--i:0"><span class="sr">01 My Element</span></a>
+  <a class="rail__cell" href="#w-1785-coffee"         style="--i:1"><span class="sr">02 1785 Coffee</span></a>
+  <a class="rail__cell" href="#w-sushi-wow"           style="--i:2"><span class="sr">03 Sushi WOW</span></a>
+  <a class="rail__cell" href="#w-chip-power"          style="--i:3"><span class="sr">04 Chip Power</span></a>
+  <a class="rail__cell" href="#w-turpal-china-export" style="--i:4"><span class="sr">05 China Export</span></a>
+  <a class="rail__cell" href="#w-riviera"             style="--i:5"><span class="sr">06 Riviera Village</span></a>
+  <a class="rail__cell" href="#w-cold-brew-room"      style="--i:6"><span class="sr">07 Room Cold Brew</span></a>
+  <a class="rail__cell" href="#w-mix-daar"            style="--i:7"><span class="sr">08 Mix Daar</span></a>
+  <a class="rail__cell" href="#w-apteki-urus-martan"  style="--i:8"><span class="sr">09 Московские аптеки</span></a>
+  <a class="rail__cell" href="#w-zam-zam"             style="--i:9"><span class="sr">10 ТБ Zam-Zam</span></a>
+  <a class="rail__cell" href="#w-vim-grass"           style="--i:10"><span class="sr">11 WIM Grass</span></a>
+  <a class="rail__cell" href="#w-ne-goyty"            style="--i:11"><span class="sr">12 Novaya Era Гойты</span></a>
+  <a class="rail__cell" href="#w-ochki-oko"           style="--i:12"><span class="sr">13 Око</span></a>
+  <a class="rail__cell" href="#w-luxe-okna"           style="--i:13"><span class="sr">14 Люкс Окна</span></a>
+  <a class="rail__cell" href="#w-svetofor"            style="--i:14"><span class="sr">15 Novaya Era Светофор</span></a>
+  <a class="rail__cell" href="#w-tv-ne"               style="--i:15"><span class="sr">16 Novaya Era ТВ</span></a>
+  <div class="panel" data-panel aria-hidden="true">
+    <p class="panel__head">Монтажный лист · 16 работ</p>
+    <a class="panel__track" href="#w-my-element" style="--i:0"><span class="panel__n">01</span><span class="panel__name">My Element</span><span class="panel__kind">3D-заставка</span><img src="assets/img/my-element.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-1785-coffee" style="--i:1"><span class="panel__n">02</span><span class="panel__name">1785 Coffee Lounge</span><span class="panel__kind">кофейня</span><img src="assets/img/1785-coffee.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-sushi-wow" style="--i:2"><span class="panel__n">03</span><span class="panel__name">Sushi WOW</span><span class="panel__kind">доставка суши</span><img src="assets/img/sushi-wow.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-chip-power" style="--i:3"><span class="panel__n">04</span><span class="panel__name">Chip Power</span><span class="panel__kind">чип-тюнинг</span><img src="assets/img/chip-power.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-turpal-china-export" style="--i:4"><span class="panel__n">05</span><span class="panel__name">China Export by Karuev</span><span class="panel__kind">импорт из Китая</span><img src="assets/img/turpal-china-export.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-riviera" style="--i:5"><span class="panel__n">06</span><span class="panel__name">Riviera Village</span><span class="panel__kind">база отдыха</span><img src="assets/img/riviera.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-cold-brew-room" style="--i:6"><span class="panel__n">07</span><span class="panel__name">Room Cold Brew</span><span class="panel__kind">холодный кофе</span><img src="assets/img/cold-brew-room.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-mix-daar" style="--i:7"><span class="panel__n">08</span><span class="panel__name">Mix Daar</span><span class="panel__kind">доставка еды</span><img src="assets/img/mix-daar.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-apteki-urus-martan" style="--i:8"><span class="panel__n">09</span><span class="panel__name">Московские аптеки</span><span class="panel__kind">аптечная сеть</span><img src="assets/img/apteki-urus-martan.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-zam-zam" style="--i:9"><span class="panel__n">10</span><span class="panel__name">ТБ Zam-Zam</span><span class="panel__kind">товары для фастфуда</span><img src="assets/img/zam-zam.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-vim-grass" style="--i:10"><span class="panel__n">11</span><span class="panel__name">WIM Group · Grass</span><span class="panel__kind">бытовая химия</span><img src="assets/img/vim-grass.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-ne-goyty" style="--i:11"><span class="panel__n">12</span><span class="panel__name">Novaya Era · Гойты</span><span class="panel__kind">наружная реклама</span><img src="assets/img/ne-goyty.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-ochki-oko" style="--i:12"><span class="panel__n">13</span><span class="panel__name">Око</span><span class="panel__kind">оптика, 7680×1440</span><img src="assets/img/ochki-oko.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-luxe-okna" style="--i:13"><span class="panel__n">14</span><span class="panel__name">Люкс Окна</span><span class="panel__kind">производство окон</span><img src="assets/img/luxe-okna.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-svetofor" style="--i:14"><span class="panel__n">15</span><span class="panel__name">Novaya Era</span><span class="panel__kind">наружная реклама</span><img src="assets/img/svetofor.webp" alt="" width="480" height="270" loading="lazy"></a>
+    <a class="panel__track" href="#w-tv-ne" style="--i:15"><span class="panel__n">16</span><span class="panel__name">Novaya Era</span><span class="panel__kind">медиаэкраны</span><img src="assets/img/tv-ne.webp" alt="" width="480" height="270" loading="lazy"></a>
+  </div>
+</nav>
 
-<!-- ================================================================ HERO === -->
-<section class="kf-hero kf-grain" id="top">
-  <div class="kf-hero__wash" aria-hidden="true"></div>
+<main id="top">
 
-  <div class="kf-hero__top">
-    <p class="kf-label">
-      <span class="kf-label__marker" aria-hidden="true"></span>
-      <span>Студия дизайна</span>
-    </p>
-    <p class="kf-label"><span>Портфолио &#8212; 2026</span></p>
+<!-- 1 · УДАР — имя во весь экран и тут же рез. Вход один раз, по входу в кадр:
+     у flow-акта в начале документа p стартует с 0,53, и любое окно ниже
+     этого значения отыграло бы до того, как посетитель тронул колесо. -->
+<section class="hero">
+  <div class="hero__top">
+    <p class="lbl"><i aria-hidden="true"></i>студия дизайна</p>
+    <p class="lbl">портфолио — 2026</p>
   </div>
 
-  <div class="kf-hero__stage">
-    <h1 class="kf-hero__type">
-      <span class="is-solid">Tepsuev</span>
-      <span class="is-outline">Studio</span>
-    </h1>
-  </div>
+  <h1 class="hero__type">
+    <span class="is-solid">Tepsuev</span>
+    <span class="is-outline">Studio</span>
+  </h1>
 
-  <div class="kf-hero__bottom">
-    <p class="kf-body kf-body--sm kf-hero__note">
-      Печатный дизайн, 2D- и 3D-анимация. От первого макета до готового кадра.
-    </p>
-
-    <a class="kf-round" href="#manifesto" aria-label="К работам">&#8595;</a>
-
-    <div style="display:flex;align-items:flex-end;gap:var(--space-6)">
-      <p class="kf-label kf-label--sm"><span>Печать &#183; 2D &#183; 3D</span></p>
-      <div class="kf-freq kf-freq--right">
-        <span class="kf-freq__caption">Направления</span>
-        <span class="kf-freq__row"><span class="kf-freq__value">03</span></span>
-      </div>
+  <div class="hero__bottom">
+    <p class="hero__note">Моушен дизайн, 2D&nbsp;&amp;&nbsp;3D<br>Подробно можно ознакомиться внизу</p>
+    <a class="hero__down" href="#works" aria-label="К работам">&#8595;</a>
+    <div class="hero__freq">
+      <p class="lbl lbl--sm">Моушен · 2D · 3D</p>
+      <span class="freq"><span class="freq__cap">Направления</span><span class="freq__val">03</span></span>
     </div>
   </div>
-
-  <div class="kf-hero__band" aria-hidden="true"></div>
+  <div class="hero__band" aria-hidden="true"></div>
 </section>
 
-<!-- =========================================================== MANIFESTO === -->
-<section class="kf-manifesto" id="manifesto" data-kf-ground="bone">
-  <div class="kf-band kf-section-pad">
-    <p class="kf-label" style="margin-bottom:var(--space-8)"><span>A living digital myth</span></p>
-    <h2 class="kf-manifesto__statement">
-      Kuroframe is an archive of signal-born guardians&#8212; shaped by
-      <span class="is-quiet">lost rituals</span>, machine memory and the space between.
-    </h2>
+<!-- 2 · ЗАЯВКА — три слова вытираются по очереди. -->
+<section class="trio">
+  <div class="wrap trio__in" data-sc-in data-sc-stagger="90">
+    <p class="trio__w">Моушен</p>
+    <p class="trio__w">2D</p>
+    <p class="trio__w">3D</p>
   </div>
+</section>
 
-  <div class="kf-hairline" role="separator"></div>
+<!-- 3 · «СДЕЛАНО РУКАМИ» — scrub ① из двух. Кадры идут под колесом.
+     Без data-sc-dwell: грамматика «монтажного листа» держит его на нуле. -->
+<section id="works" class="scrubact" data-sc-act="scrub" data-sc-span="1.3">
+  <div data-sc-stage class="scrubact__stage" id="w-my-element" data-work>
+    <img class="sc-stage__poster" src="assets/img/my-element.webp" alt="">
+    <video data-sc-scrub data-sc-src="assets/video/my-element.mp4"
+           data-sc-src-mobile="assets/video/my-element-m.mp4" muted playsinline></video>
+    <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+    <div class="sc-copy sc-copy--lead" data-sc-cue="0.04 0.96 0.18 0.18">
+      <p class="lbl lbl--sm">01 · My Element · энергетик</p>
+      <h2 class="scrubact__h">Заставка<br>в 3D</h2>
+    </div>
+  </div>
+</section>
 
-  <div class="kf-manifesto__body kf-section-pad">
-    <figure class="kf-manifesto__figure">
-      <span class="kf-label kf-manifesto__rail">Oracle 02 / memory channel</span>
-      <img src="assets/img/oracle-light.png" alt="Veiled Oracle">
+<!-- 4 · ТЕМП — две плитки, подписи заказчиков. -->
+<section class="pair">
+  <div class="wrap grid2" data-sc-in data-sc-stagger="70">
+
+    <figure class="work" id="w-1785-coffee" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/1785-coffee.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/1785-coffee.mp4"></video>
+      </div>
+      <figcaption class="work__cap">
+        <span class="work__client">1785 Coffee Lounge</span>
+        <span class="work__kind">кофейня · 2D-анимация</span>
+      </figcaption>
     </figure>
 
-    <div class="kf-features">
-      <div class="kf-feature">
-        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>
-        <h4 class="kf-feature__title">Original forms</h4>
-        <p class="kf-feature__text">Every guardian is built from an individual silhouette, material system and origin.</p>
+    <figure class="work" id="w-sushi-wow" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/sushi-wow.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/sushi-wow.mp4"></video>
       </div>
+      <figcaption class="work__cap">
+        <span class="work__client">Sushi WOW</span>
+        <span class="work__kind">доставка суши · 2D-анимация</span>
+      </figcaption>
+    </figure>
 
-      <div class="kf-feature">
-        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2"/></svg>
-        <h4 class="kf-feature__title">Living signals</h4>
-        <p class="kf-feature__text">Motion, sound and responsive details allow each identity to shift over time.</p>
-      </div>
+  </div>
+</section>
 
-      <div class="kf-feature kf-feature--active">
-        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
-        <h4 class="kf-feature__title">Five frequencies</h4>
-        <p class="kf-feature__text">Threshold, memory, structure, connection, return &#8212; one archetype per keeper.</p>
-      </div>
+<!-- 5 · «ИХ МНОГО» — боковой ряд. Не pan: у закреплённого акта при span 1.1
+     остаётся 0,1 высоты экрана хода, и весь ряд проехал бы за 90 пикселей.
+     Сдвиг считается от --sc-p, который движок пишет и на flow-актах тоже. -->
+<section class="railrow" data-sc-act="flow">
+  <p class="wrap lbl lbl--sm railrow__cap">Реклама услуг</p>
+  <div class="railrow__window">
+    <div class="railrow__strip" data-strip>
 
-      <div class="kf-feature">
-        <svg class="kf-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-        <h4 class="kf-feature__title">Shared memory</h4>
-        <p class="kf-feature__text">Records are written once and read by every form that follows.</p>
-      </div>
+      <figure class="work work--row" id="w-chip-power" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/chip-power.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/chip-power.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">Chip Power</span>
+          <span class="work__kind">чип-тюнинг · 2D-анимация</span>
+        </figcaption>
+      </figure>
+
+      <figure class="work work--row" id="w-turpal-china-export" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/turpal-china-export.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/turpal-china-export.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">China Export by Karuev</span>
+          <span class="work__kind">импорт из Китая · 3D-анимация</span>
+        </figcaption>
+      </figure>
+
+      <figure class="work work--row" id="w-riviera" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/riviera.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/riviera.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">Riviera Village</span>
+          <span class="work__kind">база отдыха · 2D-анимация</span>
+        </figcaption>
+      </figure>
+
     </div>
   </div>
 </section>
 
-<!-- ============================================================= ARCHIVE === -->
-<section class="kf-archive kf-grain" id="archive">
-  <div class="kf-section-pad" style="padding-top:var(--space-10)">
-    <div class="kf-selector" role="group" aria-label="Select a guardian" data-selector></div>
-
-    <div class="kf-meta">
-      <div class="kf-meta__field">
-        <div class="kf-meta__label">Selected entity</div>
-        <div class="kf-meta__value" data-meta-name></div>
-      </div>
-      <div class="kf-meta__field">
-        <div class="kf-meta__label">Archetype</div>
-        <div class="kf-meta__value" data-meta-archetype></div>
-      </div>
-      <div class="kf-meta__field">
-        <div class="kf-meta__label">Frequency</div>
-        <div class="kf-meta__value kf-meta__value--signal" data-meta-frequency></div>
-      </div>
-      <div class="kf-meta__action">
-        <button class="kf-btn kf-btn--block" type="button" data-open-record>
-          <span>Open record</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
-        </button>
-      </div>
-    </div>
+<!-- 6 · ПАУЗА — единственный текстовый экран в первой половине.
+     Костяной фон задан прямо на секции: data-sc-drift на странице из
+     пятнадцати коротких актов красит не тот акт. --sc-canvas переопределён
+     локально, иначе градиенты .sc-scrim возьмут цвет от :root. -->
+<section id="about" class="say" data-sc-act="flow">
+  <div class="wrap">
+    <p class="lbl lbl--ink">Описание</p>
+    <h2 class="say__h" data-sc-cue="0.26 1 0.18 0.42" data-sc-kinetic="lines">Делаем рекламные ролики, которые досматривают.</h2>
+    <p class="say__p is-todo" data-sc-cue="0.34 1 0.20 0.40">— заполнить: два-три предложения о студии. Кто вы, сколько лет в работе, чем отличаетесь. От первого лица, без маркетинговых формул —</p>
   </div>
+</section>
 
-  <div class="kf-section-pad" style="margin-top:var(--space-11)">
-    <p class="kf-label">
-      <span class="kf-label__marker" aria-hidden="true"></span>
-      <span class="kf-label__index">02.6</span>
-      <span>Frequency map</span>
+<!-- 7 · ТЕМП -->
+<section class="pair">
+  <div class="wrap grid2" data-sc-in data-sc-stagger="70">
+
+    <figure class="work" id="w-cold-brew-room" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/cold-brew-room.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/cold-brew-room.mp4"></video>
+      </div>
+      <figcaption class="work__cap">
+        <span class="work__client">Room Cold Brew</span>
+        <span class="work__kind">кофе холодного заваривания · <span class="is-todo">— уточнить —</span></span>
+      </figcaption>
+    </figure>
+
+    <figure class="work" id="w-mix-daar" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/mix-daar.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/mix-daar.mp4"></video>
+      </div>
+      <figcaption class="work__cap">
+        <span class="work__client">Mix Daar</span>
+        <span class="work__kind">доставка еды · 2D-анимация</span>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- 8 · ВЕС — единственное число на сайте, и оно проверяемо прямо на странице. -->
+<section class="scale" data-sc-act="flow">
+  <div class="wrap scale__in">
+    <p class="scale__line">
+      <span class="scale__n" data-sc-count="0 16" data-sc-count-at="0.14 0.44">0</span>
+      <span class="scale__t">работ в этом портфолио. Каждая сделана целиком: от раскадровки до финального кадра.</span>
     </p>
+  </div>
+</section>
 
-    <div class="kf-map">
-      <div class="kf-map__glow" aria-hidden="true"></div>
-      <div class="kf-map__ring-outer" aria-hidden="true"></div>
-      <div class="kf-map__ring-mid" aria-hidden="true"></div>
-      <div class="kf-map__ring-in" aria-hidden="true"></div>
+<!-- 9 · РАЗГОН — ряд плотнее предыдущего, четыре работы. -->
+<section class="railrow" data-sc-act="flow">
+  <p class="wrap lbl lbl--sm railrow__cap">Торговля и товары</p>
+  <div class="railrow__window">
+    <div class="railrow__strip" data-strip>
 
-      <div class="kf-map__core">
-        <p class="kf-label kf-label--sm" style="color:var(--text-signal)">
-          <span>Selected / <span data-core-index></span></span>
-        </p>
-        <h3 class="kf-map__name" data-core-name></h3>
-        <p class="kf-label kf-label--sm"><span><span data-core-archetype></span> frequency</span></p>
-        <p class="kf-label kf-label--sm"><span>Archive signal <span data-core-frequency></span> hz</span></p>
-        <span class="kf-marker" aria-hidden="true"></span>
-        <a class="kf-arrowlink kf-arrowlink--center" href="#archive" data-open-record>
-          <span class="kf-arrowlink__text">Enter frequency<span aria-hidden="true">&#8599;</span></span>
-          <span class="kf-arrowlink__rule" aria-hidden="true"></span>
-        </a>
-      </div>
+      <figure class="work work--row" id="w-apteki-urus-martan" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/apteki-urus-martan.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/apteki-urus-martan.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">Московские аптеки</span>
+          <span class="work__kind">аптечная сеть · 2D-анимация</span>
+        </figcaption>
+      </figure>
 
-      <div class="kf-map__slots" data-slots></div>
+      <figure class="work work--row" id="w-zam-zam" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/zam-zam.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/zam-zam.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">ТБ Zam-Zam</span>
+          <span class="work__kind">товары для фастфуда · 2D-анимация</span>
+        </figcaption>
+      </figure>
 
-      <div class="kf-map__nav">
-        <button class="kf-round kf-round--lg" type="button" data-step="-1" aria-label="Previous guardian">&#8592;</button>
-        <p class="kf-label"><span>Drag / select</span></p>
-        <button class="kf-round kf-round--lg" type="button" data-step="1" aria-label="Next guardian">&#8594;</button>
-      </div>
+      <figure class="work work--row" id="w-vim-grass" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/vim-grass.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/vim-grass.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">WIM Group · Grass</span>
+          <span class="work__kind">бытовая химия · 2D-анимация</span>
+        </figcaption>
+      </figure>
+
+      <figure class="work work--row" id="w-ne-goyty" data-work>
+        <div class="work__frame">
+          <video poster="assets/img/ne-goyty.webp" width="1280" height="720"
+                 muted loop playsinline preload="none" disablepictureinpicture
+                 data-src="assets/video/ne-goyty.mp4"></video>
+        </div>
+        <figcaption class="work__cap">
+          <span class="work__client">Novaya Era · Гойты</span>
+          <span class="work__kind">наружная реклама · 2D-анимация</span>
+        </figcaption>
+      </figure>
+
     </div>
   </div>
 </section>
 
-<!-- ============================================================= PROCESS === -->
-<section class="kf-process" id="process" data-kf-ground="bone">
-  <div class="kf-process__head kf-section-pad">
-    <h2 class="kf-process__title">Ritual</h2>
-    <p class="kf-body kf-process__lead">
-      The archive is not generated by chance. Each form moves through a deliberate three-part ritual.
-    </p>
+<!-- 10 · ВДОХ — одна сверхширокая полоса вместо четырёх плиток. 7680×1440.
+     Формат и есть содержание, поэтому окно едет вбок: экран его не вмещает. -->
+<section class="ultra" data-sc-act="flow" id="w-ochki-oko" data-work>
+  <div class="ultra__window">
+    <div class="ultra__strip" data-strip-wide>
+      <video poster="assets/img/ochki-oko.webp" width="2560" height="480"
+             muted loop playsinline preload="none" disablepictureinpicture
+             data-src="assets/video/ochki-oko.mp4"
+             data-src-mobile="assets/video/ochki-oko-m.mp4"></video>
+    </div>
   </div>
+  <p class="wrap ultra__cap">
+    <span class="work__client">Око · оптика</span>
+    <span class="work__kind">3D-анимация · 7680×1440, для экрана во всю стену</span>
+  </p>
+</section>
 
-  <div class="kf-section-pad" style="padding-bottom:var(--space-12)">
-    <div class="kf-prow">
-      <span class="kf-prow__index">01</span>
-      <span class="kf-prow__title">A form is found</span>
-      <span class="kf-prow__text">Fragments of forgotten ritual are gathered from the edge of the signal.</span>
-      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
-    </div>
+<!-- 11 · ТЕМП — две тёмные 3D-работы подряд. -->
+<section class="pair">
+  <div class="wrap grid2" data-sc-in data-sc-stagger="70">
 
-    <div class="kf-prow">
-      <span class="kf-prow__index">02</span>
-      <span class="kf-prow__title">A frame is cut</span>
-      <span class="kf-prow__text">Silhouette, material and armour are resolved until the form can hold weight.</span>
-      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
-    </div>
-
-    <div class="kf-prow">
-      <span class="kf-prow__index">03</span>
-      <span class="kf-prow__title">Memory awakens</span>
-      <span class="kf-prow__text">Each guardian receives a frequency, an origin and a reason to persist.</span>
-      <span class="kf-prow__arrow" aria-hidden="true">&#8599;</span>
-    </div>
-
-    <div class="kf-hairline" role="separator"></div>
-
-    <div class="kf-stats">
-      <div class="kf-stat">
-        <div class="kf-stat__caption">Archive pulse / live</div>
-        <svg class="kf-stat__spark" viewBox="0 0 220 130" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <path d="M4 118 C 26 116, 34 92, 56 88 C 76 84, 80 68, 100 62 C 116 57, 118 44, 136 40 C 154 36, 160 46, 176 34 C 192 22, 200 14, 216 8" fill="none" stroke="var(--kf-signal)" stroke-width="0.9" stroke-linecap="round"/>
-          <circle cx="136" cy="40" r="2.6" fill="var(--kf-signal)"/>
-        </svg>
-        <div class="kf-stat__foot">
-          <span class="kf-stat__value">87.4<span class="kf-stat__unit">hz</span></span>
-        </div>
+    <figure class="work" id="w-luxe-okna" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/luxe-okna.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/luxe-okna.mp4"></video>
       </div>
+      <figcaption class="work__cap">
+        <span class="work__client">Люкс Окна</span>
+        <span class="work__kind">производство окон · 3D-анимация</span>
+      </figcaption>
+    </figure>
 
-      <div class="kf-stat">
-        <div class="kf-stat__caption">Active forms</div>
-        <div class="kf-stat__foot">
-          <span class="kf-stat__value">05</span>
-          <span class="kf-stat__note">Five entities. Five transmissions.</span>
-        </div>
+    <figure class="work" id="w-svetofor" data-work>
+      <div class="work__frame">
+        <video poster="assets/img/svetofor.webp" width="1280" height="720"
+               muted loop playsinline preload="none" disablepictureinpicture
+               data-src="assets/video/svetofor.mp4"></video>
       </div>
+      <figcaption class="work__cap">
+        <span class="work__client">Novaya Era</span>
+        <span class="work__kind">наружная реклама · 3D-анимация</span>
+      </figcaption>
+    </figure>
 
-      <div class="kf-stat kf-stat--invert">
-        <div class="kf-stat__caption">Memory fragments</div>
-        <div class="kf-stat__foot">
-          <span class="kf-stat__value">&#8734;</span>
-          <span class="kf-stat__note">Every record keeps its own memory.</span>
-        </div>
-      </div>
+  </div>
+</section>
+
+<!-- 12 · КУЛЬМИНАЦИЯ КАРТИНКИ — scrub ②, последний. -->
+<section class="scrubact scrubact--dark" data-sc-act="scrub" data-sc-span="1.3">
+  <div data-sc-stage class="scrubact__stage" id="w-tv-ne" data-work>
+    <img class="sc-stage__poster" src="assets/img/tv-ne.webp" alt="">
+    <video data-sc-scrub data-sc-src="assets/video/tv-ne.mp4"
+           data-sc-src-mobile="assets/video/tv-ne-m.mp4" muted playsinline></video>
+    <div class="sc-scrim sc-scrim--trail" aria-hidden="true"></div>
+    <div class="sc-copy sc-copy--trail" data-sc-cue="0.04 0.96 0.18 0.18">
+      <p class="lbl lbl--sm">16 · Novaya Era · медиаэкраны</p>
+      <h2 class="scrubact__h">Включись<br>в новую эру</h2>
     </div>
   </div>
 </section>
 
-<!-- ============================================================== SIGNAL === -->
-<section class="kf-signal kf-grain" id="signal">
-  <img class="kf-signal__portrait" src="assets/img/signal-portrait.png" alt="Veiled Oracle transmission">
-  <div class="kf-signal__scrim" aria-hidden="true"></div>
-
-  <div class="kf-signal__body kf-section-pad">
-    <p class="kf-label"><span>The archive opens once per cycle</span></p>
-
-    <h2 class="kf-signal__type">
-      <span>The</span>
-      <span class="is-outline">Signal</span>
-    </h2>
-
-    <p class="kf-body kf-body--lg kf-signal__lead">
-      Enter your frequency and the archive will return the guardian that matches it.
-    </p>
-
-    <div class="kf-signal__actions">
-      <a class="kf-btn kf-btn--pill kf-btn--lg" href="#archive">
-        <span>Enter archive</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
-      </a>
-      <a class="kf-btn kf-btn--ghost kf-btn--lg" href="#manifesto"><span>Read manifesto</span></a>
-    </div>
+<!-- 13 · ДЕЛО — сухо, сразу после всего шума. -->
+<section id="services" class="svc" data-sc-act="flow">
+  <div class="wrap">
+    <p class="lbl lbl--ink">Услуги</p>
+    <dl class="svc__list" data-sc-in data-sc-stagger="60">
+      <div class="svc__row"><dt>Рекламный ролик</dt><dd class="is-todo">— заполнить: что входит, сколько длится, в какие сроки —</dd></div>
+      <div class="svc__row"><dt>2D-анимация</dt><dd class="is-todo">— заполнить —</dd></div>
+      <div class="svc__row"><dt>3D-анимация и заставки</dt><dd class="is-todo">— заполнить —</dd></div>
+    </dl>
   </div>
+</section>
 
-  <div class="kf-hairline" role="separator"></div>
+<!-- 14 · ТИШИНА — единственный экран, где не происходит ничего.
+     Это задумано: на странице из одних склеек остановка и есть самое громкое.
+     Пик идёт над ним, в закреплённой линейке. -->
+<section class="hush" data-sc-act="flow" data-hush></section>
 
-  <div class="kf-signal__foot kf-section-pad">
-    <p class="kf-label kf-label--sm"><span>Kuroframe &#8212; digital folklore archive</span></p>
-    <p class="kf-label kf-label--sm"><span>Transmission 00&#8212;05 &#183; &#35352;&#25014;</span></p>
+<!-- 15 · РЕЗ — жёсткая склейка в костяной, один контакт, футер внутри акта. -->
+<section id="contact" class="close" data-sc-act="flow">
+  <div class="close__in">
+    <h2 class="close__h" data-sc-cue="0.08" data-sc-kinetic="words">Нужен ролик?</h2>
+    <p class="close__cta is-todo" data-sc-cue="0.10">— заполнить: ссылка на WhatsApp или Telegram —</p>
+    <dl class="close__list" data-sc-cue="0.14">
+      <div><dt>Почта</dt><dd class="is-todo">— заполнить —</dd></div>
+      <div><dt>Город</dt><dd class="is-todo">— заполнить —</dd></div>
+    </dl>
+    <footer class="foot">
+      <span>TEPSUEV STUDIO</span>
+      <span>моушен-дизайн, 2D и 3D анимация</span>
+    </footer>
   </div>
 </section>
 
 </main>
 
-<!-- ============================================================== ЗАПИСЬ === -->
-<div class="kf-record" data-record hidden>
-  <div class="kf-record__dialog" role="dialog" aria-modal="true" aria-labelledby="record-name">
-    <img class="kf-record__img" data-record-img alt="">
-
-    <div class="kf-record__body">
-      <div class="kf-record__head">
-        <p class="kf-label">
-          <span class="kf-label__marker" aria-hidden="true"></span>
-          <span class="kf-label__index" data-record-index></span>
-          <span>Record open</span>
-        </p>
-        <button class="kf-record__close" type="button" data-close-record aria-label="Close record">&#10005;</button>
-      </div>
-
-      <h3 class="kf-record__name" id="record-name" data-record-name></h3>
-      <p class="kf-body" data-record-note></p>
-
-      <div class="kf-hairline" role="separator"></div>
-
-      <div class="kf-record__readouts">
-        <div class="kf-freq kf-freq--sm">
-          <span class="kf-freq__caption">Archive signal</span>
-          <span class="kf-freq__row">
-            <span class="kf-freq__value" data-record-frequency></span>
-            <span class="kf-freq__unit">hz</span>
-          </span>
-        </div>
-        <div>
-          <p class="kf-label kf-label--sm"><span>Archetype</span></p>
-          <div class="kf-title" style="margin-top:8px;font-size:18px" data-record-archetype></div>
-        </div>
-      </div>
-
-      <div class="kf-record__actions">
-        <button class="kf-btn kf-btn--pill kf-btn--sm" type="button">
-          <span>Transmit</span><span class="kf-btn__arrow" aria-hidden="true">&#8599;</span>
-        </button>
-        <button class="kf-btn kf-btn--ghost kf-btn--sm" type="button" data-close-record><span>Return</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="scrollcraft.js"></script>
+<script src="site.js"></script>
 </body>
 </html>

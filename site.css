@@ -1,0 +1,402 @@
+/* ===========================================================================
+   TEPSUEV STUDIO — оформление страницы.
+
+   Движок scrollcraft.css не трогается: он механизм. Здесь только тема
+   (шесть цветовых ролей и два шрифта) и собственные классы страницы.
+   ======================================================================== */
+
+:root{
+  /* Идентичность, перенесена из утверждённого макета без изменений */
+  --kf-void:#08080A;
+  --kf-bone:#F1F0EE;
+  --kf-signal:#E3121C;
+  --kf-panel:#111113;
+
+  /* Шесть ролей движка */
+  --sc-canvas:     var(--kf-void);
+  --sc-surface:    var(--kf-panel);
+  --sc-ink:        var(--kf-bone);
+  --sc-ink-soft:   #8E8D8A;
+  --sc-accent:     var(--kf-signal);
+  --sc-accent-ink: var(--kf-bone);
+
+  --sc-font-display:'Onest', system-ui, sans-serif;
+  --sc-font-text:   'Onest', system-ui, sans-serif;
+
+  --bar-h: 84px;
+  --rail-h: 3px;
+  --gut: clamp(20px, 4vw, 56px);
+  --ls-label: .18em;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ background:var(--kf-void); }
+
+body{
+  margin:0;
+  background:var(--sc-canvas);
+  color:var(--sc-ink);
+  font-family:var(--sc-font-text);
+  font-size:15px;
+  line-height:1.55;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3{ margin:0; font-family:var(--sc-font-display); font-weight:800; line-height:.92; letter-spacing:-.035em; }
+p,dl,dd,dt{ margin:0; }
+img,video{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+
+:focus-visible{ outline:2px solid var(--sc-accent); outline-offset:3px; }
+
+.wrap{ padding-inline:var(--gut); }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+
+.skip{
+  position:fixed; top:8px; left:8px; z-index:200;
+  padding:10px 16px; background:var(--kf-bone); color:var(--kf-void);
+  font-size:12px; letter-spacing:var(--ls-label); text-transform:uppercase;
+  transform:translateY(-200%);
+}
+.skip:focus{ transform:none; }
+
+/* Все цели перехода уезжают под закреплённую шапку, если не отодвинуть */
+[id]{ scroll-margin-top:calc(var(--bar-h) + var(--rail-h) + 8px); }
+
+/* Подписи-метки ------------------------------------------------------- */
+.lbl{
+  display:flex; align-items:center; gap:12px;
+  font-size:11px; line-height:1.2; font-weight:600;
+  letter-spacing:var(--ls-label); text-transform:uppercase;
+  color:var(--sc-ink-soft);
+}
+.lbl--sm{ font-size:9.5px; letter-spacing:.26em; }
+.lbl--ink{ color:#5D5D60; }
+.lbl i{ width:5px; height:5px; border-radius:99px; background:var(--sc-accent); }
+
+.is-todo{ color:var(--sc-accent); }
+/* Сигнальный красный на чёрном даёт 4,16:1 — для мелкой подписи мало.
+   На тёмных экранах заглушки идут осветлённым красным: 5,8:1. */
+.work__kind .is-todo,.lbl .is-todo{ color:#FF4049; }
+/* На костяном фоне сигнальный красный даёт 4,2:1 — ниже порога для текста.
+   Для светлых экранов берём притушенный, он проходит с запасом. */
+.say .is-todo,.svc .is-todo,.close .is-todo{ color:#A80C14; }
+.close__cta.is-todo{ background:#A80C14; color:var(--kf-bone); }
+
+/* ============================================================ ШАПКА ===== */
+.bar{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  height:var(--bar-h);
+  background:color-mix(in oklab, var(--kf-void) 82%, transparent);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.bar__row{
+  height:100%; padding-inline:var(--gut);
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
+}
+.bar__mark{
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+}
+.bar__nav{ display:flex; gap:40px; justify-content:center; }
+.bar__nav a{
+  font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
+  text-transform:uppercase; color:var(--sc-ink-soft);
+  transition:color 180ms cubic-bezier(.16,1,.3,1);
+}
+.bar__nav a:hover,.bar__nav a[aria-current="true"]{ color:var(--sc-ink); }
+.bar__cta{
+  justify-self:end;
+  padding:13px 26px; border-radius:999px;
+  background:var(--kf-bone); color:var(--kf-void);
+  font-size:11px; font-weight:600; letter-spacing:var(--ls-label); text-transform:uppercase;
+  transition:transform 180ms cubic-bezier(.16,1,.3,1);
+}
+.bar__cta:hover{ transform:translateY(-1px); }
+
+/* =================================================== МОНТАЖНАЯ ЛИНЕЙКА ===
+   Фирменный приём. Красная полоса из первого экрана не уезжает вместе с
+   ним: она остаётся под шапкой и оказывается таймлайном. Заполненная часть
+   не откатывается назад — это след там, где посетитель уже был. */
+.rail{
+  position:fixed; top:var(--bar-h); left:0; right:0; z-index:59;
+  height:var(--rail-h);
+  display:flex;
+  background:color-mix(in oklab, var(--kf-signal) 14%, transparent);
+}
+.rail__fill{
+  position:absolute; inset:0; transform-origin:0 50%;
+  transform:scaleX(var(--rail-seen,0));
+  background:var(--kf-signal);
+}
+.rail__head{
+  position:absolute; top:-2px; bottom:-2px; left:0; width:2px;
+  background:var(--kf-bone);
+  transform:translate3d(calc(var(--rail-p,0) * (100vw - 2px)),0,0);
+}
+.rail__cell{
+  position:relative; z-index:1; flex:1 1 0; height:100%;
+  border-right:1px solid color-mix(in oklab, var(--kf-void) 55%, transparent);
+}
+.rail__cell:last-child{ border-right:0; }
+.rail__cell::after{
+  /* область нажатия больше, чем три пикселя */
+  content:''; position:absolute; left:0; right:0; top:-7px; bottom:-9px;
+}
+.rail__cell:hover::after,.rail__cell:focus-visible::after{
+  background:color-mix(in oklab, var(--kf-bone) 22%, transparent);
+}
+
+/* --- Пик: линейка разворачивается во весь экран --------------------------
+   Акты под ней продолжают резать на полной скорости. Раскрытие идёт через
+   clip-path, а не через height: анимировать высоту запрещено, да и дешевле. */
+.panel{
+  position:fixed; top:calc(var(--bar-h) + var(--rail-h)); left:0; right:0;
+  height:calc(100svh - var(--bar-h) - var(--rail-h));
+  z-index:58;
+  background:var(--kf-void);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  display:grid; grid-template-rows:auto repeat(16, minmax(0,1fr));
+  clip-path:inset(0 0 calc((1 - var(--panel-open,0)) * 100%) 0);
+  pointer-events:none;
+}
+.panel[data-open]{ pointer-events:auto; }
+.panel__head{
+  padding:10px var(--gut); font-size:9.5px; letter-spacing:.26em;
+  text-transform:uppercase; color:var(--sc-ink-soft);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.panel__track{
+  display:grid; align-items:center;
+  grid-template-columns:4ch minmax(0,1fr) minmax(0,.8fr) clamp(90px,16vw,230px);
+  gap:clamp(10px,2vw,28px); padding-inline:var(--gut);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  font-size:clamp(10px,1.1vw,13px); line-height:1.15;
+  /* На низком экране шестнадцать дорожек делят высоту поровну, и
+     строка может не влезть в свою ячейку — подрезаем, а не наезжаем. */
+  overflow:hidden; min-height:0;
+  /* дорожка загорается, когда плейхед проходит по ней сверху вниз */
+  --lit:clamp(0, calc(var(--panel-sweep,0) * 16 - var(--i)), 1);
+  color:color-mix(in oklab, var(--kf-bone) calc(28% + var(--lit) * 72%), transparent);
+  background:color-mix(in oklab, var(--kf-signal) calc(var(--lit) * 9%), transparent);
+}
+.panel__n{ font-variant-numeric:tabular-nums; color:var(--kf-signal); font-weight:600; }
+.panel__name{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.panel__kind{ letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.panel__track img{ width:100%; height:100%; max-height:100%; object-fit:cover; opacity:calc(.35 + var(--lit) * .65); }
+
+/* ====================================================== ПЕРВЫЙ ЭКРАН ==== */
+.hero{
+  position:relative;
+  min-height:calc(100svh - var(--bar-h));
+  padding:calc(var(--bar-h) + 40px) var(--gut) 0;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.hero::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 40%, rgba(60,10,14,.22) 0%, rgba(8,8,10,0) 62%);
+}
+.hero__top{ position:relative; display:flex; justify-content:space-between; gap:24px; }
+.hero__type{
+  position:relative; flex:1;
+  display:grid; place-content:center;
+  font-size:clamp(42px, min(16vw, 26svh), 236px);
+  line-height:.82; letter-spacing:-.05em;
+  font-kerning:none; font-feature-settings:"kern" 0,"liga" 0,"calt" 0;
+  text-transform:uppercase;
+}
+.hero__type > span{ display:block; white-space:nowrap; }
+.hero__type .is-outline{
+  color:transparent;
+  -webkit-text-stroke:1.25px rgba(255,255,255,.75);
+}
+.hero__bottom{
+  position:relative;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:var(--gut);
+  padding-bottom:40px;
+}
+.hero__note{ font-size:13.5px; color:var(--sc-ink-soft); max-width:30ch; }
+.hero__down{
+  width:39px; height:39px; display:grid; place-items:center;
+  border:1px solid rgba(255,255,255,.20); border-radius:999px;
+  font-size:15px;
+  transition:border-color 180ms, color 180ms;
+}
+.hero__down:hover{ border-color:var(--sc-accent); color:var(--sc-accent); }
+/* Как в утверждённом макете: подпись слева от блока «Направления / 03»,
+   обе части прижаты к низу строки. */
+.hero__freq{ display:flex; align-items:flex-end; gap:clamp(20px,3vw,40px); }
+.hero__freq .lbl{ padding-bottom:6px; }
+.freq{ display:grid; justify-items:end; gap:2px; }
+.freq__cap{ display:block; text-align:right; font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--sc-ink-soft); }
+.freq__val{ display:block; text-align:right; font-family:var(--sc-font-display); font-weight:500; font-size:34px; line-height:1.05; font-variant-numeric:tabular-nums; }
+.hero__band{ position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--kf-signal); }
+
+/* ============================================================== ЗАЯВКА == */
+.trio{ padding:clamp(72px,9vw,128px) 0; }
+.trio__in{ display:flex; flex-wrap:wrap; gap:clamp(24px,5vw,80px); align-items:baseline; }
+.trio__w{
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:clamp(40px,9vw,128px); line-height:.9; letter-spacing:-.04em;
+  text-transform:uppercase;
+}
+.trio__w:nth-child(2){ color:var(--sc-accent); }
+.trio__w:nth-child(3){ color:transparent; -webkit-text-stroke:1.2px rgba(255,255,255,.7); }
+
+/* =============================================================== СКРАБ == */
+.scrubact{ background:#060607; }
+.scrubact--dark{ background:#050807; }
+/* Сцене НЕ задавать position/height/overflow: .sc-stage уже делает её липкой
+   с той же специфичностью, а site.css подключён позже и молча победил бы —
+   акт перестал бы закрепляться. Движок сам ставит класс и размеры. */
+.scrubact__h{ font-size:clamp(34px,6vw,88px); text-transform:uppercase; margin-top:12px; }
+
+/* ================================================================ СЕТКА = */
+.pair{ padding:clamp(40px,6vw,96px) 0; }
+.grid2{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(16px,2.4vw,32px); }
+
+.work__frame{
+  position:relative; aspect-ratio:16/9; overflow:hidden;
+  background:#1C1C1F; border-radius:4px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+}
+.work__frame video{ width:100%; height:100%; object-fit:cover; }
+.work__cap{ display:flex; flex-direction:column; gap:3px; padding-top:14px; }
+.work__client{ font-size:15px; font-weight:600; }
+.work__kind{ font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft); }
+
+/* ============================================================ БОКОВОЙ РЯД */
+.railrow{ padding:clamp(40px,6vw,96px) 0; }
+.railrow__cap{ margin-bottom:24px; }
+.railrow__window{ overflow:clip; }
+.railrow__strip{
+  display:flex; gap:clamp(16px,2.4vw,32px); width:max-content;
+  padding-inline:var(--gut);
+  transform:translate3d(calc(var(--sc-p,0) * -1 * var(--over,0px)),0,0);
+}
+.work--row{ width:clamp(260px,34vw,520px); flex:0 0 auto; }
+
+/* =============================================================== ТЕКСТ == */
+.say{
+  --sc-canvas:var(--kf-bone);
+  --sc-ink:#0B0B0C; --sc-ink-soft:#5D5D60;
+  background:var(--kf-bone); color:#0B0B0C;
+  padding:clamp(72px,9vw,128px) 0;
+}
+.say__h{ margin:24px 0 32px; font-size:clamp(32px,5.6vw,96px); line-height:.98; max-width:22ch; text-transform:uppercase; }
+.say__p{ font-size:clamp(15px,1.5vw,19px); max-width:52ch; }
+
+/* ================================================================ ЧИСЛО = */
+.scale{ padding:clamp(56px,7vw,112px) 0; }
+.scale__line{ display:flex; align-items:baseline; gap:clamp(16px,2.5vw,40px); flex-wrap:wrap; }
+.scale__n{
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:clamp(64px,12vw,180px); line-height:.86; letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums; color:var(--sc-accent);
+}
+.scale__t{ font-size:clamp(15px,1.6vw,21px); color:var(--sc-ink-soft); max-width:34ch; }
+
+/* ======================================================== СВЕРХШИРОКИЙ == */
+.ultra{ padding:clamp(40px,6vw,96px) 0; background:#0A0C10; }
+.ultra__window{ overflow:clip; }
+.ultra__strip{
+  width:max-content; height:clamp(180px,42vh,460px);
+  transform:translate3d(calc(var(--sc-p,0) * -1 * var(--over,0px)),0,0);
+}
+.ultra__strip video{ height:100%; width:auto; max-width:none; }
+.ultra__cap{ display:flex; flex-wrap:wrap; gap:4px 20px; align-items:baseline; padding-top:16px; }
+
+/* ============================================================== УСЛУГИ == */
+.svc{
+  --sc-canvas:var(--kf-bone);
+  --sc-ink:#0B0B0C; --sc-ink-soft:#5D5D60;
+  background:var(--kf-bone); color:#0B0B0C;
+  padding:clamp(72px,9vw,128px) 0;
+}
+.svc__list{ margin-top:32px; }
+.svc__row{
+  display:grid; grid-template-columns:minmax(220px,1fr) minmax(0,1.6fr);
+  gap:clamp(16px,3vw,56px);
+  padding:clamp(24px,3vw,40px) 0;
+  border-top:1px solid rgba(11,11,12,.12);
+}
+.svc__row dt{ font-family:var(--sc-font-display); font-weight:800; font-size:clamp(20px,2.4vw,34px); text-transform:uppercase; letter-spacing:-.02em; }
+.svc__row dd{ font-size:15px; color:#5D5D60; }
+.svc__row dd.is-todo{ color:#A80C14; }
+
+/* =============================================================== ТИШИНА = */
+/* Единственный экран, где не происходит ничего. Это задумано. */
+.hush{ height:130vh; background:var(--kf-void); }
+
+/* ================================================================= РЕЗ == */
+.close{
+  --sc-canvas:var(--kf-bone);
+  --sc-ink:#0B0B0C; --sc-ink-soft:#4A4A4D;
+  background:var(--kf-bone); color:#0B0B0C;
+  min-height:80svh; display:flex; align-items:center;
+}
+.close__in{ width:100%; padding:clamp(56px,8vw,120px) var(--gut); }
+.close__h{ font-size:clamp(44px,9vw,160px); text-transform:uppercase; }
+.close__cta{
+  display:inline-block; margin-top:32px;
+  padding:22px 44px; border-radius:999px;
+  background:var(--kf-void); color:var(--kf-bone);
+  font-size:13px; font-weight:600; letter-spacing:var(--ls-label); text-transform:uppercase;
+}
+/* Костяной текст на сигнальном красном даёт 4,4:1 — для подписи такого
+   кегля мало. Притушенный красный выводит на 6,9:1. */
+.close__cta.is-todo{ background:#A80C14; color:var(--kf-bone); }
+.close__list{ display:flex; flex-wrap:wrap; gap:8px 48px; margin-top:40px; }
+.close__list div{ display:flex; gap:10px; align-items:baseline; }
+.close__list dt{ font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase; color:#4A4A4D; }
+.foot{
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;
+  margin-top:clamp(56px,8vw,112px); padding-top:24px;
+  border-top:1px solid rgba(11,11,12,.12);
+  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:#4A4A4D;
+}
+
+/* ========================================================== УЗКИЕ ЭКРАНЫ */
+@media (max-width:900px){
+  :root{ --bar-h:64px; }
+  .bar__nav{ display:none; }
+  .bar__row{ grid-template-columns:1fr auto; }
+  .grid2{ grid-template-columns:1fr; }
+  .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
+  .hero__freq{ justify-items:start; text-align:left; }
+  .svc__row{ grid-template-columns:1fr; gap:8px; }
+  .work--row{ width:clamp(240px,72vw,420px); }
+  .hush{ height:100vh; }
+
+  /* На узком экране подпись скраб-ролика ложится на блик хромированной банки,
+     и контраст проваливается до 2,2:1. Угловое затемнение движка здесь уже
+     стало нижней полосой — делаем полосу плотнее, но только под текстом,
+     чтобы не плющить кадр целиком. */
+  .scrubact .sc-scrim--lead,.scrubact .sc-scrim--trail{
+    background:linear-gradient(to top,
+      color-mix(in oklab, var(--sc-canvas) 97%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 90%, transparent) 28%,
+      color-mix(in oklab, var(--sc-canvas) 48%, transparent) 50%,
+      transparent 76%);
+  }
+}
+
+/* ===================================================== СНИЖЕННАЯ АНИМАЦИЯ
+   Ролики не запускаются, боковые ряды отдают ход обратно прокрутке, линейка
+   нарисована целиком с первого кадра. Содержание остаётся на месте: приём,
+   выродившийся в пропавший блок, — это поломка, а не бережность. */
+@media (prefers-reduced-motion:reduce){
+  .railrow__window,.ultra__window{
+    overflow-x:auto; overflow-y:hidden;
+    overscroll-behavior-x:contain; scroll-snap-type:x proximity;
+  }
+  .railrow__strip,.ultra__strip{ transform:none !important; }
+  .work--row{ scroll-snap-align:start; }
+  .rail__fill{ transform:scaleX(1) !important; }
+  .rail__head{ display:none; }
+}
