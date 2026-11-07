@@ -26,7 +26,6 @@
      вместо шестнадцати и перестала бы совпадать с разметкой. */
   var SPEED = 70;                               // пикселей в секунду
   var strips = $$('[data-strip]');
-  var wides  = $$('[data-strip-wide]');
 
   function cloneRun(strip) {
     if (strip.getAttribute('data-looped')) return;
@@ -48,12 +47,6 @@
   strips.forEach(cloneRun);
 
   function measureStrips() {
-    /* Сверхширокая полоса осталась на прокрутке: там один кадр 7680×1440,
-       удваивать нечего, и «вдох» по методу должен слушаться колеса. */
-    wides.forEach(function (strip) {
-      var over = Math.max(strip.scrollWidth - strip.parentElement.clientWidth, 0);
-      strip.style.setProperty('--over', over + 'px');
-    });
     strips.forEach(function (strip) {
       var items = $$(':scope > *', strip);
       var run = parseInt(strip.getAttribute('data-run'), 10) || items.length / 2;

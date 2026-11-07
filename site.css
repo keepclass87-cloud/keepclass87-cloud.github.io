@@ -29,7 +29,7 @@
   /* Шов между сценами на тёмном фоне. Каждая сцена берёт половину сверху и
      половину снизу, поэтому соседние отступы в сумме дают ровно шов — а не
      удвоенный, как было: там складывались два по 96 и между работами зияло
-     почти двести пикселей. Сцены со своим фоном (.say, .ultra, .svc, .close)
+     почти двести пикселей. Сцены со своим фоном (.say, .svc, .close)
      сюда не входят: у них отступ внутренний, а не межсценный. */
   --seam: clamp(44px, 5vw, 96px);
   --ls-label: .18em;
@@ -362,7 +362,16 @@ a{ color:inherit; text-decoration:none; }
 /* Плитка бокового ряда подросла вместе с плитками сетки. Без этого ряд из
    трёх перестал бы вылезать за экран после снятия полей <figure> — строка
    уместилась бы целиком и никуда не поехала бы. */
-.work--row{ width:clamp(260px,36vw,660px); flex:0 0 auto; }
+/* Ширина плитки — одной переменной на дорожку. Сверхширокая работа должна
+   быть ровно втрое шире обычной, чтобы при своём соотношении 16:3 встать
+   той же высоты, что соседи 16:9. Если задать ей отдельный clamp, на узком
+   экране, где у обычной плитки свой clamp, высоты разойдутся. */
+.railrow__strip{ --tile-w:clamp(260px,36vw,660px); }
+.work--row{ width:var(--tile-w); flex:0 0 auto; }
+/* В кадре 16:9 сверхширокую пришлось бы обрезать — на Full HD срезало текст
+   по краям. Здесь она идёт целиком, своим соотношением. */
+.work--row.work--wide{ width:calc(var(--tile-w) * 3); }
+.work--wide .work__frame{ aspect-ratio:16/3; }
 
 /* =============================================================== ТЕКСТ == */
 .say{
@@ -392,16 +401,6 @@ a{ color:inherit; text-decoration:none; }
 }
 .scale__t{ font-size:clamp(16px,1.75vw,26px); line-height:1.4; color:var(--sc-ink-soft); max-width:32ch; }
 
-/* ======================================================== СВЕРХШИРОКИЙ == */
-.ultra{ padding:clamp(40px,6vw,96px) 0; background:#0A0C10; }
-.ultra__window{ overflow:clip; }
-.ultra__strip{
-  width:max-content; height:clamp(180px,42vh,460px);
-  transform:translate3d(calc(var(--sc-p,0) * -1 * var(--over,0px)),0,0);
-}
-.ultra__strip video{ height:100%; width:auto; max-width:none; }
-.ultra__cap{ display:flex; flex-wrap:wrap; gap:4px 20px; align-items:baseline; padding-top:16px; }
-
 /* ============================================================== УСЛУГИ == */
 .svc{
   --sc-canvas:var(--kf-bone);
@@ -424,13 +423,14 @@ a{ color:inherit; text-decoration:none; }
 /* Единственный экран, где не происходит ничего. Это задумано. */
 .hush{ height:130vh; background:var(--kf-void); }
 
-/* Сцены со своим фоном (.say — костяная вставка, .ultra — тёмная панель)
+/* Сцены со своим фоном (.say — костяная вставка, .trio — такая же, но
+   светлая)
    отступ держат внутри себя, поэтому пустоты перед ними не было бы вовсе.
    Отдаём им половину шва полем снаружи: чёрного между сценами везде ровно
    столько же, сколько между работами. .close сюда не входит — там рез
    встык задуман. Поле лежит снаружи бокса, offsetTop/offsetHeight его не
    видят, поэтому расчёт акта в движке не меняется. */
-.say, .ultra, .trio{ margin-block:calc(var(--seam) / 2); }
+.say, .trio{ margin-block:calc(var(--seam) / 2); }
 
 /* ================================================================= РЕЗ == */
 .close{
@@ -469,7 +469,7 @@ a{ color:inherit; text-decoration:none; }
   .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
   .hero__freq{ justify-items:start; text-align:left; }
   .svc__row{ grid-template-columns:1fr; gap:8px; }
-  .work--row{ width:clamp(240px,72vw,420px); }
+  .railrow__strip{ --tile-w:clamp(240px,72vw,420px); }
   .hush{ height:100vh; }
 
   /* Портретное кадрирование вытягивает надпись с банки в нижнюю треть,
@@ -486,11 +486,11 @@ a{ color:inherit; text-decoration:none; }
    нарисована целиком с первого кадра. Содержание остаётся на месте: приём,
    выродившийся в пропавший блок, — это поломка, а не бережность. */
 @media (prefers-reduced-motion:reduce){
-  .railrow__window,.ultra__window{
+  .railrow__window{
     overflow-x:auto; overflow-y:hidden;
     overscroll-behavior-x:contain; scroll-snap-type:x proximity;
   }
-  .railrow__strip,.ultra__strip{ transform:none !important; }
+  .railrow__strip{ transform:none !important; }
   /* Движение выключено — значит копии ленты не нужны: это те же работы
      второй раз, и в ручной прокрутке они только путают. */
   .railrow__strip{ animation:none !important; }
