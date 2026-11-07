@@ -226,10 +226,8 @@ a{ color:inherit; text-decoration:none; }
     linear-gradient(180deg, rgba(8,8,10,.95) 0%, rgba(8,8,10,.84) 30%,
                             rgba(8,8,10,.86) 66%, rgba(8,8,10,.96) 100%);
 }
-.hero::before{
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:2;
-  background:radial-gradient(120% 80% at 50% 40%, rgba(60,10,14,.22) 0%, rgba(8,8,10,0) 62%);
-}
+/* Красноватая дымка из прежней темы убрана: поверх видео она читалась как
+   грязный оттенок, а не как атмосфера. Затемняет только нейтральная вуаль. */
 .hero__top{ position:relative; z-index:3; display:flex; justify-content:space-between; gap:24px; }
 .hero__type{
   position:relative; z-index:3; flex:1;
