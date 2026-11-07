@@ -276,7 +276,9 @@ a{ color:inherit; text-decoration:none; }
    обе части прижаты к низу строки. */
 .hero__freq{ display:flex; align-items:flex-end; gap:clamp(20px,3vw,40px); }
 .hero__freq .lbl{ padding-bottom:6px; }
-.freq{ display:grid; justify-items:end; gap:2px; }
+/* В макете подпись стоит заметно выше числа: просвет — 0,7 высоты цифры.
+   При gap:2px выходило 0,42, и слово почти липло к «03». */
+.freq{ display:grid; justify-items:end; gap:10px; }
 .freq__cap{ display:block; text-align:right; font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--sc-ink-soft); }
 .freq__val{ display:block; text-align:right; font-family:var(--sc-font-display); font-weight:500; font-size:34px; line-height:1.05; font-variant-numeric:tabular-nums; }
 .hero__band{ position:absolute; z-index:3; left:0; right:0; bottom:0; height:3px; background:var(--kf-signal); }
@@ -343,7 +345,11 @@ a{ color:inherit; text-decoration:none; }
   background:var(--kf-bone); color:#0B0B0C;
   padding:clamp(72px,9vw,128px) 0;
 }
-.say__h{ margin:24px 0 32px; font-size:clamp(32px,5.6vw,96px); line-height:.98; max-width:22ch; text-transform:uppercase; }
+/* Абзаца под заголовком больше нет, поэтому кегль поднят, а нижний отступ
+   убран: при одинаковых отступах сцены сверху и снизу текст встаёт ровно в
+   середину блока. Ширина задана в ch, то есть переносы от кегля не зависят —
+   строк по-прежнему три. */
+.say__h{ margin:24px 0 0; font-size:clamp(36px,7.4vw,132px); line-height:.98; max-width:22ch; text-transform:uppercase; }
 .say__p{ font-size:clamp(15px,1.5vw,19px); max-width:52ch; }
 
 /* ================================================================ ЧИСЛО = */
