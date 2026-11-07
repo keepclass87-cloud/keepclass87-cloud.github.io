@@ -154,11 +154,25 @@
       panel.style.setProperty('--panel-open', open.toFixed(4));
       panel.style.setProperty('--panel-sweep', sweep.toFixed(4));
       if (open > 0.98) panel.setAttribute('data-open', ''); else panel.removeAttribute('data-open');
-      panel.setAttribute('aria-hidden', open > 0.5 ? 'false' : 'true');
+      var vis = open > 0.5 ? 'false' : 'true';
+      if (panel.getAttribute('aria-hidden') !== vis) panel.setAttribute('aria-hidden', vis);
+
+      var head = Math.floor(sweep * tracks.length);
+      if (head !== lastHead) {
+        for (var t = 0; t < tracks.length; t++) {
+          if (t < head) tracks[t].setAttribute('data-lit', '');
+          else tracks[t].removeAttribute('data-lit');
+          if (t === head && sweep > 0 && sweep < 1) tracks[t].setAttribute('data-head', '');
+          else tracks[t].removeAttribute('data-head');
+        }
+        lastHead = head;
+      }
     }
   }
   var cells = $$('.rail__cell', rail);
   var panel = document.querySelector('[data-panel]');
+  var tracks = $$('.panel__track');
+  var lastHead = -1;
   var hush = document.querySelector('[data-hush]');
 
   /* Обновляемся от прокрутки, а не только от кадров анимации. Бывают среды,

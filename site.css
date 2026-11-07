@@ -170,6 +170,7 @@ a{ color:inherit; text-decoration:none; }
   border-bottom:1px solid rgba(255,255,255,.10);
 }
 .panel__track{
+  position:relative;
   display:grid; align-items:center;
   grid-template-columns:4ch minmax(0,1fr) minmax(0,.8fr) clamp(90px,16vw,230px);
   gap:clamp(10px,2vw,28px); padding-inline:var(--gut);
@@ -178,16 +179,29 @@ a{ color:inherit; text-decoration:none; }
   /* На низком экране шестнадцать дорожек делят высоту поровну, и
      строка может не влезть в свою ячейку — подрезаем, а не наезжаем. */
   overflow:hidden; min-height:0;
-  /* дорожка загорается, когда плейхед проходит по ней сверху вниз */
-  --lit:clamp(0, calc(var(--panel-sweep,0) * 16 - var(--i)), 1);
-  color:color-mix(in oklab, var(--kf-bone) calc(28% + var(--lit) * 72%), transparent);
-  background:color-mix(in oklab, var(--kf-signal) calc(var(--lit) * 9%), transparent);
+  /* Дорожка загорается, когда плейхед проходит по ней сверху вниз.
+     Индекс считает JS и ставит атрибут. */
+  color:var(--sc-ink); opacity:.5;
+  transition:opacity 200ms cubic-bezier(.16,1,.3,1), background-color 200ms;
+}
+.panel__track[data-lit]{
+  opacity:1;
+  background:color-mix(in oklab, var(--kf-signal) 9%, transparent);
+}
+.panel__track[data-head]{
+  opacity:1;
+  background:color-mix(in oklab, var(--kf-signal) 20%, transparent);
+  box-shadow:inset 3px 0 0 var(--kf-bone);
 }
 .panel__n{ font-variant-numeric:tabular-nums; color:var(--kf-signal); font-weight:600; }
 .panel__name{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .panel__kind{ letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.panel__track img{ width:100%; height:100%; max-height:100%; object-fit:cover; opacity:calc(.35 + var(--lit) * .65); }
+/* Вне потока: иначе собственная пропорция картинки задаёт высоту строки. */
+.panel__track img{
+  position:absolute; top:0; right:0; bottom:0;
+  width:clamp(90px,16vw,230px); height:100%; object-fit:cover;
+}
 
 /* ====================================================== ПЕРВЫЙ ЭКРАН ==== */
 .hero{
