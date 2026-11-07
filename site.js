@@ -98,7 +98,6 @@
   var rail = document.querySelector('[data-rail]');
   var works = $$('[data-work]');
   var marks = [];
-  var seen = 0;
 
   function measureMarks() {
     var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
@@ -116,13 +115,12 @@
   function update() {
     var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     var p = clamp01(window.scrollY / max);
-    if (p > seen) seen = p;
 
     var i = -1;
     for (var n = 0; n < marks.length; n++) { if (marks[n] <= p + 0.004) i = n; }
 
     rail.style.setProperty('--rail-p', p.toFixed(4));
-    rail.style.setProperty('--rail-seen', (reduce ? 1 : seen).toFixed(4));
+    rail.style.setProperty('--rail-seen', (reduce ? 1 : p).toFixed(4));
 
     /* Проверочной оснастке отдаём нарисованные значения в пикселях, а не
        сырой прогресс: иначе проверка «мёртвой прокрутки» зеленеет сама
