@@ -293,25 +293,26 @@ a{ color:inherit; text-decoration:none; }
    расстояние до плиток задаётся здесь одним числом — иначе два отступа
    складывались и под «МОУШЕН» зияло больше двух сотен пикселей. */
 .trio + .pair{ padding-top:var(--seam); }
-.trio__in{ display:flex; flex-wrap:wrap; gap:clamp(24px,5vw,80px); align-items:baseline; }
+.trio__row{ display:flex; flex-wrap:wrap; gap:clamp(24px,5vw,80px); align-items:baseline; }
 .trio__w{
   font-family:var(--sc-font-display); font-weight:800;
   font-size:clamp(40px,9vw,128px); line-height:.9; letter-spacing:-.04em;
   text-transform:uppercase;
 }
-.trio__i:nth-child(2) .trio__w{ color:var(--sc-accent); }
-.trio__i:nth-child(3) .trio__w{ color:transparent; -webkit-text-stroke:1.2px rgba(255,255,255,.7); }
+.trio__w:nth-child(2){ color:var(--sc-accent); }
+.trio__w:nth-child(3){ color:transparent; -webkit-text-stroke:1.2px rgba(255,255,255,.7); }
 
-/* Подпись под каждым словом. Колонка живёт отдельным flex-элементом, а
-   выключка контейнера по базовой линии берёт базовую линию ПЕРВОЙ строки
-   колонки — то есть самого слова, так что МОУШЕН, 2D и 3D по-прежнему
-   стоят на одной линии. Ширина подписи в ch: 2D и 3D набраны вчетверо
-   уже своих подписей, и без ограничения они растащили бы ряд. */
-.trio__i{ display:flex; flex-direction:column; }
+/* Абзац под лок-апом: объясняет, в каких случаях берут 2D, а в каких 3D.
+   Ширина в ch, то есть считается от кегля: строка держится около ста с
+   небольшим знаков на любой ширине экрана, иначе на Full HD получилась бы
+   строка в двести с лишним знаков, которую не прочитать. Сами «2D» и «3D»
+   внутри абзаца набраны цветом основного текста — чтобы глаз цеплялся за
+   них при беглом просмотре. */
 .trio__sub{
-  margin-top:18px; max-width:24ch;
-  font-size:13.5px; line-height:1.45; color:var(--sc-ink-soft);
+  margin-top:clamp(18px,1.8vw,30px); max-width:104ch;
+  font-size:clamp(14px,1.05vw,17px); line-height:1.55; color:var(--sc-ink-soft);
 }
+.trio__sub b{ font-weight:600; color:var(--sc-ink); }
 
 /* =============================================================== СКРАБ == */
 .scrubact{ background:#060607; }
