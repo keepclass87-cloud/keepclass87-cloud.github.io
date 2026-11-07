@@ -86,7 +86,17 @@
 <!-- 1 · УДАР — имя во весь экран и тут же рез. Вход один раз, по входу в кадр:
      у flow-акта в начале документа p стартует с 0,53, и любое окно ниже
      этого значения отыграло бы до того, как посетитель тронул колесо. -->
-<section class="hero">
+<section class="hero" id="w-my-element" data-work>
+  <!-- Фон первого экрана: 3D-заставка My Element, обычной петлёй.
+       Отматывания колесом тут нет — экран должен стоять, а не играть
+       от прокрутки. -->
+  <video class="hero__bg" poster="assets/img/my-element.webp"
+         width="1920" height="1080"
+         muted loop playsinline preload="none" disablepictureinpicture
+         data-src="assets/video/my-element.mp4"
+         data-src-mobile="assets/video/my-element-m.mp4"></video>
+  <div class="hero__veil" aria-hidden="true"></div>
+
   <div class="hero__top">
     <p class="lbl"><i aria-hidden="true"></i>студия дизайна</p>
     <p class="lbl">портфолио — 2026</p>
@@ -117,23 +127,9 @@
   </div>
 </section>
 
-<!-- 3 · «СДЕЛАНО РУКАМИ» — scrub ① из двух. Кадры идут под колесом.
-     Без data-sc-dwell: грамматика «монтажного листа» держит его на нуле. -->
-<section id="works" class="scrubact" data-sc-act="scrub" data-sc-span="1.3">
-  <div data-sc-stage class="scrubact__stage" id="w-my-element" data-work>
-    <img class="sc-stage__poster" src="assets/img/my-element.webp" alt="">
-    <video data-sc-scrub data-sc-src="assets/video/my-element.mp4"
-           data-sc-src-mobile="assets/video/my-element-m.mp4" muted playsinline></video>
-    <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
-    <div class="sc-copy sc-copy--lead" data-sc-cue="0.04 0.96 0.18 0.18">
-      <p class="lbl lbl--sm">01 · My Element · энергетик</p>
-      <h2 class="scrubact__h">Заставка<br>в 3D</h2>
-    </div>
-  </div>
-</section>
-
-<!-- 4 · ТЕМП — две плитки, подписи заказчиков. -->
-<section class="pair">
+<!-- 3 · ТЕМП — две плитки, подписи заказчиков. Первая сцена с работами,
+     на неё указывают и кнопка в шапке, и стрелка с первого экрана. -->
+<section id="works" class="pair">
   <div class="wrap grid2" data-sc-in data-sc-stagger="70">
 
     <figure class="work" id="w-1785-coffee" data-work>

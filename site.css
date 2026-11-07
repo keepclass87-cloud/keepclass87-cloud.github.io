@@ -214,13 +214,25 @@ a{ color:inherit; text-decoration:none; }
   display:flex; flex-direction:column;
   overflow:hidden;
 }
+/* Слои первого экрана: ролик, затемнение, красноватая дымка, содержимое. */
+.hero__bg{
+  position:absolute; inset:0; z-index:0;
+  width:100%; height:100%; object-fit:cover;
+}
+.hero__veil{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  /* Банка хромированная, с бликами: под текстом нужно плотнее, чем по краям. */
+  background:
+    linear-gradient(180deg, rgba(8,8,10,.95) 0%, rgba(8,8,10,.84) 30%,
+                            rgba(8,8,10,.86) 66%, rgba(8,8,10,.96) 100%);
+}
 .hero::before{
-  content:''; position:absolute; inset:0; pointer-events:none;
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:2;
   background:radial-gradient(120% 80% at 50% 40%, rgba(60,10,14,.22) 0%, rgba(8,8,10,0) 62%);
 }
-.hero__top{ position:relative; display:flex; justify-content:space-between; gap:24px; }
+.hero__top{ position:relative; z-index:3; display:flex; justify-content:space-between; gap:24px; }
 .hero__type{
-  position:relative; flex:1;
+  position:relative; z-index:3; flex:1;
   display:grid; place-content:center;
   font-size:clamp(42px, min(16vw, 26svh), 236px);
   line-height:.82;
@@ -239,7 +251,7 @@ a{ color:inherit; text-decoration:none; }
   -webkit-text-stroke:1.25px rgba(255,255,255,.75);
 }
 .hero__bottom{
-  position:relative;
+  position:relative; z-index:3;
   display:flex; align-items:flex-end; justify-content:space-between; gap:var(--gut);
   padding-bottom:40px;
 }
@@ -258,7 +270,7 @@ a{ color:inherit; text-decoration:none; }
 .freq{ display:grid; justify-items:end; gap:2px; }
 .freq__cap{ display:block; text-align:right; font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--sc-ink-soft); }
 .freq__val{ display:block; text-align:right; font-family:var(--sc-font-display); font-weight:500; font-size:34px; line-height:1.05; font-variant-numeric:tabular-nums; }
-.hero__band{ position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--kf-signal); }
+.hero__band{ position:absolute; z-index:3; left:0; right:0; bottom:0; height:3px; background:var(--kf-signal); }
 
 /* ============================================================== ЗАЯВКА == */
 /* Отступ сверху был равен кеглю — на Full HD это 128 px пустоты между
@@ -399,6 +411,13 @@ a{ color:inherit; text-decoration:none; }
   .svc__row{ grid-template-columns:1fr; gap:8px; }
   .work--row{ width:clamp(240px,72vw,420px); }
   .hush{ height:100vh; }
+
+  /* Портретное кадрирование вытягивает надпись с банки в нижнюю треть,
+     где лежит подпись и стрелка. Низ затемняем раньше и плотнее. */
+  .hero__veil{
+    background:linear-gradient(180deg, rgba(8,8,10,.95) 0%, rgba(8,8,10,.84) 24%,
+                                       rgba(8,8,10,.92) 54%, rgba(8,8,10,.97) 100%);
+  }
 
   /* На узком экране подпись скраб-ролика ложится на блик хромированной банки,
      и контраст проваливается до 2,2:1. Угловое затемнение движка здесь уже
