@@ -35,8 +35,12 @@
      декодеров и нет. */
   var MAX_PLAYING = 4;
   var playing = [];
-  var mobile = window.matchMedia('(max-width: 860px)').matches ||
-               window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  /* Решает ширина, а не наличие пальца: (pointer: coarse) истинен и на
+     ноутбуке с сенсорным экраном, и в headless-браузере, где указателя нет
+     вовсе — такой посетитель получал бы мобильный ролик на экране 1440. */
+  var narrow = window.matchMedia('(max-width: 860px)');
+  var mobile = narrow.matches;
+  if (narrow.addEventListener) narrow.addEventListener('change', function (e) { mobile = e.matches; });
 
   function source(v) {
     return (mobile && v.getAttribute('data-src-mobile')) || v.getAttribute('data-src');
