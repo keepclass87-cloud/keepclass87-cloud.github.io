@@ -12,8 +12,12 @@
 <meta property="og:image" content="assets/img/my-element.webp">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2308080A'/><rect x='4' y='14' width='24' height='4' fill='%23E3121C'/></svg>">
 
-<link rel="preload" href="assets/fonts/onest-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/onest-latin-800.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Четыре начертания, которые видны на первом экране: заголовок, разрядки,
+     меню и кнопка. Roman 400 подтянется обычным порядком. -->
+<link rel="preload" href="assets/fonts/hnc-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/hnc-300.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/hnc-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/hnc-700.woff2" as="font" type="font/woff2" crossorigin>
 
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="scrollcraft.css">
@@ -109,7 +113,7 @@
 
   <div class="hero__bottom">
     <p class="hero__note">Моушен дизайн, 2D&nbsp;&amp;&nbsp;3D<br>Подробно можно ознакомиться внизу</p>
-    <a class="hero__down" href="#works" aria-label="К работам">&#8595;</a>
+    <a class="hero__down" href="#works" aria-label="К работам"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.5v13M3 9.5l5 5 5-5"/></svg></a>
     <div class="hero__freq">
       <p class="lbl lbl--sm">Моушен · 2D · 3D</p>
       <span class="freq"><span class="freq__cap">Направления</span><span class="freq__val">03</span></span>

@@ -20,8 +20,11 @@
   --sc-accent:     var(--kf-signal);
   --sc-accent-ink: var(--kf-bone);
 
-  --sc-font-display:'Onest', system-ui, sans-serif;
-  --sc-font-text:   'Onest', system-ui, sans-serif;
+  /* Гарнитура из макета Affinity. Начертания подобраны по нему же:
+     Light 300 — разрядки, Roman 400 — абзацы, Medium 500 — меню,
+     Bold 700 — кнопка и «03», Heavy 800 — крупные заголовки. */
+  --sc-font-display:'HelveticaNeueCyr', Helvetica, Arial, sans-serif;
+  --sc-font-text:   'HelveticaNeueCyr', Helvetica, Arial, sans-serif;
 
   --bar-h: 84px;
   --rail-h: 3px;
@@ -50,7 +53,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-h1,h2,h3{ margin:0; font-family:var(--sc-font-display); font-weight:800; line-height:.92; letter-spacing:-.035em; }
+h1,h2,h3{ margin:0; font-family:var(--sc-font-display); font-weight:800; line-height:.92; letter-spacing:-.025em; }
 p,dl,dd,dt{ margin:0; }
 /* У <figure> браузер по умолчанию ставит margin: 1em 40px. Эти 40 пикселей
    сдвигали каждую плитку внутрь от колонки, и ролики не вставали на ту же
@@ -79,7 +82,7 @@ a{ color:inherit; text-decoration:none; }
 /* Подписи-метки ------------------------------------------------------- */
 .lbl{
   display:flex; align-items:center; gap:12px;
-  font-size:11px; line-height:1.2; font-weight:600;
+  font-size:11px; line-height:1.2; font-weight:300;
   letter-spacing:var(--ls-label); text-transform:uppercase;
   color:var(--sc-ink-soft);
 }
@@ -114,7 +117,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .bar__nav{ display:flex; gap:40px; justify-content:center; }
 .bar__nav a{
-  font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
+  font-size:11px; font-weight:500; letter-spacing:var(--ls-label);
   text-transform:uppercase; color:var(--sc-ink-soft);
   transition:color 180ms cubic-bezier(.16,1,.3,1);
 }
@@ -123,7 +126,7 @@ a{ color:inherit; text-decoration:none; }
   justify-self:end;
   padding:13px 26px; border-radius:999px;
   background:var(--kf-bone); color:var(--kf-void);
-  font-size:11px; font-weight:600; letter-spacing:var(--ls-label); text-transform:uppercase;
+  font-size:11px; font-weight:700; letter-spacing:var(--ls-label); text-transform:uppercase;
   transition:transform 180ms cubic-bezier(.16,1,.3,1);
 }
 .bar__cta:hover{ transform:translateY(-1px); }
@@ -204,8 +207,8 @@ a{ color:inherit; text-decoration:none; }
   background:color-mix(in oklab, var(--kf-signal) 20%, transparent);
   box-shadow:inset 3px 0 0 var(--kf-bone);
 }
-.panel__n{ font-variant-numeric:tabular-nums; color:var(--kf-signal); font-weight:600; }
-.panel__name{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.panel__n{ font-variant-numeric:tabular-nums; color:var(--kf-signal); font-weight:500; }
+.panel__name{ font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .panel__kind{ letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 /* Вне потока: иначе собственная пропорция картинки задаёт высоту строки. */
@@ -264,7 +267,9 @@ a{ color:inherit; text-decoration:none; }
   display:flex; align-items:flex-end; justify-content:space-between; gap:var(--gut);
   padding-bottom:40px;
 }
-.hero__note{ font-size:13.5px; color:var(--sc-ink-soft); max-width:30ch; }
+/* 30ch было подобрано под Onest; у Helvetica Neue цифра уже, поэтому ch
+   сжался и вторая строка переносилась на третью. Считаем от кегля. */
+.hero__note{ font-size:13.5px; color:var(--sc-ink-soft); max-width:19em; }
 .hero__down{
   width:39px; height:39px; display:grid; place-items:center;
   border:1px solid rgba(255,255,255,.20); border-radius:999px;
@@ -278,7 +283,7 @@ a{ color:inherit; text-decoration:none; }
 .hero__freq .lbl{ padding-bottom:6px; }
 .freq{ display:grid; justify-items:end; gap:2px; }
 .freq__cap{ display:block; text-align:right; font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--sc-ink-soft); }
-.freq__val{ display:block; text-align:right; font-family:var(--sc-font-display); font-weight:500; font-size:34px; line-height:1.05; font-variant-numeric:tabular-nums; }
+.freq__val{ display:block; text-align:right; font-family:var(--sc-font-display); font-weight:700; font-size:34px; line-height:1.05; font-variant-numeric:tabular-nums; }
 .hero__band{ position:absolute; z-index:3; left:0; right:0; bottom:0; height:3px; background:var(--kf-signal); }
 
 /* ============================================================== ЗАЯВКА == */
@@ -319,7 +324,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .work__frame video{ width:100%; height:100%; object-fit:cover; }
 .work__cap{ display:flex; flex-direction:column; gap:3px; padding-top:14px; }
-.work__client{ font-size:15px; font-weight:600; }
+.work__client{ font-size:15px; font-weight:500; }
 .work__kind{ font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft); }
 
 /* ============================================================ БОКОВОЙ РЯД */
@@ -411,7 +416,7 @@ a{ color:inherit; text-decoration:none; }
   display:inline-block; margin-top:32px;
   padding:22px 44px; border-radius:999px;
   background:var(--kf-void); color:var(--kf-bone);
-  font-size:13px; font-weight:600; letter-spacing:var(--ls-label); text-transform:uppercase;
+  font-size:13px; font-weight:700; letter-spacing:var(--ls-label); text-transform:uppercase;
 }
 /* Костяной текст на сигнальном красном даёт 4,4:1 — для подписи такого
    кегля мало. Притушенный красный выводит на 6,9:1. */
