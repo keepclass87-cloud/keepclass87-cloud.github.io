@@ -347,11 +347,21 @@ a{ color:inherit; text-decoration:none; }
 .railrow{ padding:calc(var(--seam) / 2) 0; }
 .railrow__cap{ margin-bottom:24px; }
 .railrow__window{ overflow:clip; }
+/* Дорожка идёт сама. --loop и --dur считает site.js: сдвиг равен ширине
+   первого набора плиток вместе с просветом, поэтому в конце цикла копия
+   стоит ровно там же, где стоял оригинал, и возврата не видно. */
 .railrow__strip{
   display:flex; gap:clamp(16px,2.4vw,32px); width:max-content;
   padding-inline:var(--gut);
-  transform:translate3d(calc(var(--sc-p,0) * -1 * var(--over,0px)),0,0);
+  animation:railrun var(--dur,40s) linear infinite;
 }
+@keyframes railrun{
+  from{ transform:translate3d(0,0,0); }
+  to  { transform:translate3d(calc(var(--loop,0px) * -1),0,0); }
+}
+/* Под курсором дорожка встаёт: иначе работу нельзя рассмотреть. */
+.railrow:hover .railrow__strip,
+.railrow:focus-within .railrow__strip{ animation-play-state:paused; }
 /* Плитка бокового ряда подросла вместе с плитками сетки. Без этого ряд из
    трёх перестал бы вылезать за экран после снятия полей <figure> — строка
    уместилась бы целиком и никуда не поехала бы. */
@@ -484,6 +494,10 @@ a{ color:inherit; text-decoration:none; }
     overscroll-behavior-x:contain; scroll-snap-type:x proximity;
   }
   .railrow__strip,.ultra__strip{ transform:none !important; }
+  /* Движение выключено — значит копии ленты не нужны: это те же работы
+     второй раз, и в ручной прокрутке они только путают. */
+  .railrow__strip{ animation:none !important; }
+  .railrow__strip > [aria-hidden="true"]{ display:none; }
   .work--row{ scroll-snap-align:start; }
   .rail__fill{ transform:scaleX(1) !important; }
   .rail__head{ display:none; }

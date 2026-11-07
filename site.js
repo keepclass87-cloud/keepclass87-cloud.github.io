@@ -2,8 +2,8 @@
    TEPSUEV STUDIO — собственный код страницы.
 
    Движок scrollcraft.js не трогается. Здесь четыре вещи, которых он не даёт:
-   монтажная линейка, боковые ряды от --sc-p, ленивый запуск шестнадцати
-   роликов и подсветка раздела в шапке.
+   монтажная линейка, самодвижущиеся боковые ряды, ленивый запуск
+   шестнадцати роликов и подсветка раздела в шапке.
    ======================================================================== */
 
 (function () {
@@ -15,15 +15,56 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* --------------------------------------------------- боковые ряды ----
-     Закреплённый акт при коротком пролёте не годится: при span 1.1 у него
-     остаётся 0,1 высоты экрана хода, и весь ряд проехал бы за 90 пикселей.
-     Поэтому ряд живёт в обычном flow-акте, а сдвиг считается от --sc-p,
-     который движок пишет и туда. --over — это то, что не влезло в экран. */
-  var strips = $$('[data-strip], [data-strip-wide]');
+     Ряды едут сами, а не от прокрутки: дорожка идёт ровно, пока посетитель
+     читает, и не замирает, если он остановился. Чтобы шов не был виден,
+     набор плиток удваивается, а лента сдвигается ровно на ширину первого
+     набора — в этот момент копия стоит там же, где стоял оригинал, и
+     возврат к нулю не читается.
+
+     Копии помечаются aria-hidden и лишаются id и data-work: они не работы,
+     а продолжение ленты. Иначе линейка насчитала бы двадцать четыре работы
+     вместо шестнадцати и перестала бы совпадать с разметкой. */
+  var SPEED = 70;                               // пикселей в секунду
+  var strips = $$('[data-strip]');
+  var wides  = $$('[data-strip-wide]');
+
+  function cloneRun(strip) {
+    if (strip.getAttribute('data-looped')) return;
+    var items = $$(':scope > *', strip);
+    if (!items.length) return;
+    strip.setAttribute('data-run', items.length);
+    var frag = document.createDocumentFragment();
+    items.forEach(function (el) {
+      var c = el.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.removeAttribute('id');
+      c.removeAttribute('data-work');
+      $$('[id]', c).forEach(function (n) { n.removeAttribute('id'); });
+      frag.appendChild(c);
+    });
+    strip.appendChild(frag);
+    strip.setAttribute('data-looped', '1');
+  }
+  strips.forEach(cloneRun);
+
   function measureStrips() {
-    strips.forEach(function (strip) {
+    /* Сверхширокая полоса осталась на прокрутке: там один кадр 7680×1440,
+       удваивать нечего, и «вдох» по методу должен слушаться колеса. */
+    wides.forEach(function (strip) {
       var over = Math.max(strip.scrollWidth - strip.parentElement.clientWidth, 0);
       strip.style.setProperty('--over', over + 'px');
+    });
+    strips.forEach(function (strip) {
+      var items = $$(':scope > *', strip);
+      var run = parseInt(strip.getAttribute('data-run'), 10) || items.length / 2;
+      var gap = parseFloat(getComputedStyle(strip).columnGap) || 0;
+      var dist = 0;
+      for (var i = 0; i < run && i < items.length; i++) {
+        dist += items[i].getBoundingClientRect().width + gap;
+      }
+      if (dist <= 0) return;
+      strip.style.setProperty('--loop', dist.toFixed(1) + 'px');
+      strip.style.setProperty('--dur', (dist / SPEED).toFixed(1) + 's');
     });
   }
 
