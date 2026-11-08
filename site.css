@@ -332,37 +332,30 @@ a{ color:inherit; text-decoration:none; }
 }
 .close__in{ width:100%; padding:clamp(56px,8vw,120px) var(--gut); }
 .close__h{ font-size:clamp(44px,9vw,160px); text-transform:uppercase; }
-/* Закрытие по правилу грамматики: «the last cut is the CTA, at full bleed»
-   (uniqueness.md, Rhythmic cutlist). И по feel.md §2: страница, которая
-   сползает в футер, перечёркивает всё, что было до него, — а разрешиться
-   она должна тем, что набор садится до самого тихого своего состояния.
-
-   Поэтому здесь ровно две вещи: адрес во всю ширину колонки как последний
-   рез, и одна строка мелким под ним. Колонок ссылок больше нет: три
-   столбика мелкого текста — это и есть тот самый футер, который метод
-   запрещает. */
-.close__mail{
-  display:block; margin-top:clamp(20px,2.4vw,36px);
-  font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(26px,8.5vw,168px); line-height:.94; letter-spacing:-.035em;
-  text-transform:lowercase;
-  transition:color 160ms cubic-bezier(.16,1,.3,1);
-  overflow-wrap:anywhere;          /* адрес длинный, на телефоне рвём его */
-}
-.close__mail:hover,.close__mail:focus-visible{ color:#A80C14; }
-
+/* Обычный футер колонками — по прямому указанию заказчика, после пяти
+   попыток придумать «интересное». Телефона здесь нет намеренно: он
+   дублировал ссылку WhatsApp, которая и так ведёт на wa.me с номером.
+   Крупного адреса под заголовком тоже нет — адрес из 22 символов не
+   фраза, и крупный набор его только уродует. */
 .foot{
-  display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 32px;
-  margin-top:clamp(48px,7vw,104px); padding-top:20px;
+  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:clamp(24px,4vw,64px);
+  margin-top:clamp(40px,5vw,80px); padding-top:clamp(20px,2.4vw,32px);
   border-top:1px solid rgba(11,11,12,.12);
 }
-.foot__line{
-  display:flex; flex-wrap:wrap; gap:4px 26px;
-  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:#4A4A4D;
+.foot__cap{
+  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:#4A4A4D; margin-bottom:14px;
 }
-.foot__line a{ color:#0B0B0C; transition:color 160ms cubic-bezier(.16,1,.3,1); }
-.foot__line a:hover,.foot__line a:focus-visible{ color:#A80C14; }
-.foot__line a:last-child{ font-variant-numeric:tabular-nums; }
+.foot__col ul{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.foot__col li{ font-size:13px; line-height:1.35; color:#4A4A4D; }
+.foot__col a{
+  display:inline-flex; align-items:center; gap:9px; color:#0B0B0C;
+  transition:color 160ms cubic-bezier(.16,1,.3,1);
+  overflow-wrap:anywhere;          /* адрес длинный, на узком рвём его */
+}
+.foot__col a:hover,.foot__col a:focus-visible{ color:#A80C14; }
+.foot__ico{ flex:0 0 auto; }
 
 /* ========================================================== УЗКИЕ ЭКРАНЫ */
 @media (max-width:900px){
@@ -372,7 +365,7 @@ a{ color:inherit; text-decoration:none; }
   .grid2{ grid-template-columns:1fr; }
   .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
   .hero__freq{ justify-items:start; text-align:left; }
-  .foot{ flex-direction:column; gap:14px; }
+  .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 24px; }
   .railrow__strip{ --tile-w:clamp(240px,72vw,420px); }
 
   /* Портретное кадрирование вытягивает надпись с банки в нижнюю треть,
