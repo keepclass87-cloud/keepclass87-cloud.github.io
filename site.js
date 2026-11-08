@@ -2,8 +2,8 @@
    TEPSUEV STUDIO — собственный код страницы.
 
    Движок scrollcraft.js не трогается. Здесь четыре вещи, которых он не даёт:
-   самодвижущиеся боковые ряды, круг работ, ленивый запуск шестнадцати
-   роликов и подсветка раздела в шапке.
+   монтажная линейка, самодвижущиеся боковые ряды, ленивый запуск
+   шестнадцати роликов и подсветка раздела в шапке.
    ======================================================================== */
 
 (function () {
@@ -124,80 +124,104 @@
     tiles.forEach(function (v) { arm(v); start(v); });
   }
 
-  /* ------------------------------------------------------- круг работ ----
-     Пришёл на место монтажного листа. Кольцо вращает CSS — это композитная
-     анимация, основной поток она не трогает. Отсюда меняется только то,
-     чего CSS не умеет: какая работа сейчас наверху и что написано в ядре.
+  /* ------------------------------------------------ монтажная линейка ----
+     Движок не публикует прогресс всей страницы: --sc-p пишется поактно,
+     а [data-sc-progress] получает inline-трансформацию, а не переменную.
+     Поэтому свой кадровый цикл. Заполненная часть не откатывается назад —
+     это след там, где посетитель уже был. */
+  var rail = document.querySelector('[data-rail]');
+  var works = $$('[data-work]');
+  var marks = [];
 
-     Фазу берём у самой анимации (Animation.currentTime), а не у своего
-     таймера: иначе за десятки оборотов опрос и анимация разойдутся, и
-     подпись начнёт отставать от кольца. */
-  var dial = document.querySelector('[data-dial]');
-  if (dial) {
-    var ring = dial.querySelector('[data-ring]');
-    var slots = $$('.dial__slot', ring);
-    var out = {
-      n: dial.querySelector('[data-dial-n]'),
-      name: dial.querySelector('[data-dial-name]'),
-      kind: dial.querySelector('[data-dial-kind]'),
-      go: dial.querySelector('[data-dial-go]')
-    };
-    /* Данные берём из самой разметки: подпись слота и есть «NN Название»,
-       а вид работы лежит в title ссылки. Второго списка не заводим. */
-    var items = slots.map(function (li) {
-      var a = li.querySelector('a');
-      var sr = li.querySelector('.sr').textContent.trim();
-      return { href: a.getAttribute('href'), n: sr.slice(0, 2), name: sr.slice(3),
-               kind: li.getAttribute('data-kind') || '' };
+  function measureMarks() {
+    var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    marks = works.map(function (el) {
+      return (el.getBoundingClientRect().top + window.scrollY) / max;
     });
-
-    var active = -1;
-    function paint(i) {
-      if (slots[active]) slots[active].removeAttribute('data-active');
-      slots[i].setAttribute('data-active', '');
-      active = i;
-      var it = items[i];
-      /* Жёсткий рез, без затухания: так режет вся остальная страница. */
-      out.n.textContent = it.n;
-      out.name.textContent = it.name;
-      out.kind.textContent = it.kind;
-      out.go.setAttribute('href', it.href);
-    }
-
-    if (reduce) {
-      paint(0);
-    } else {
-      var dur = 0;
-      var anim = null;
-      function tick() {
-        if (!anim) {
-          var list = ring.getAnimations ? ring.getAnimations() : [];
-          if (!list.length) { paint(active < 0 ? 0 : active); return; }
-          anim = list[0];
-          dur = (anim.effect && anim.effect.getTiming().duration) || 56000;
-        }
-        var t = Number(anim.currentTime) || 0;
-        /* Кольцо едет против часовой, поэтому наверх приходит слот с
-           НАРАСТАЮЩИМ номером: доля оборота и есть индекс. */
-        var i = Math.round((t / dur) * slots.length) % slots.length;
-        if (i !== active) paint(i);
-      }
-      paint(0);
-      tick();
-      setInterval(tick, 200);
-    }
-
-    /* Оснастке отдаём прогресс ПРОКРУТКИ, а не фазу вращения: иначе
-       проверка «мёртвой прокрутки» зеленела бы сама по себе. */
-    var lastP = '';
-    function verify() {
-      var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      var v = 'p:' + Math.round((window.scrollY / max) * 1000);
-      if (v !== lastP) { dial.setAttribute('data-sc-verify-state', v); lastP = v; }
-    }
-    window.addEventListener('scroll', verify, { passive: true });
-    verify();
   }
+
+  function remeasure() { measureStrips(); measureMarks(); }
+  remeasure();
+  window.addEventListener('resize', remeasure, { passive: true });
+  window.addEventListener('load', remeasure);
+
+  var lastState = '';
+  function update() {
+    var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    var p = clamp01(window.scrollY / max);
+
+    var i = -1;
+    for (var n = 0; n < marks.length; n++) { if (marks[n] <= p + 0.004) i = n; }
+
+    rail.style.setProperty('--rail-p', p.toFixed(4));
+    rail.style.setProperty('--rail-seen', (reduce ? 1 : p).toFixed(4));
+
+    /* Проверочной оснастке отдаём нарисованные значения в пикселях, а не
+       сырой прогресс: иначе проверка «мёртвой прокрутки» зеленеет сама
+       по себе и перестаёт что-либо значить. */
+    var state = 'x:' + Math.round(p * rail.offsetWidth) + '|i:' + i;
+    if (state !== lastState) { rail.setAttribute('data-sc-verify-state', state); lastState = state; }
+
+    for (var c = 0; c < cells.length; c++) {
+      cells[c].setAttribute('aria-current', c === i ? 'true' : 'false');
+    }
+
+    /* ---- пик: разворот линейки --------------------------------------
+       Движок не публикует прогресс всей страницы, но --sc-p он пишет на
+       элемент акта как inline-стиль. Читаем его у акта тишины: шапка не
+       принадлежит ни одному акту и поэтому может пережить тот, в котором
+       началась. */
+    if (panel && hush) {
+      /* Панель привязана к акту в обоих режимах: закреплённый блок,
+         раскрытый всегда, перекрыл бы страницу целиком. При сниженной
+         анимации гаснет только проезд плейхеда — дорожки горят сразу,
+         то есть содержание остаётся, пропадает движение. */
+      var o = parseFloat(hush.style.getPropertyValue('--sc-p')) || 0;
+      var unfurl = clamp01(o / 0.30);
+      var sweep  = reduce ? 1 : clamp01((o - 0.30) / 0.45);
+      var shut   = clamp01((o - 0.82) / 0.18);
+      var open   = Math.max(unfurl - shut, 0);
+      rail.style.setProperty('--panel-open', open.toFixed(4));
+      rail.style.setProperty('--panel-sweep', sweep.toFixed(4));
+      panel.style.setProperty('--panel-open', open.toFixed(4));
+      panel.style.setProperty('--panel-sweep', sweep.toFixed(4));
+      if (open > 0.98) panel.setAttribute('data-open', ''); else panel.removeAttribute('data-open');
+      var vis = open > 0.5 ? 'false' : 'true';
+      if (panel.getAttribute('aria-hidden') !== vis) panel.setAttribute('aria-hidden', vis);
+
+      var head = Math.floor(sweep * tracks.length);
+      if (head !== lastHead) {
+        for (var t = 0; t < tracks.length; t++) {
+          if (t < head) tracks[t].setAttribute('data-lit', '');
+          else tracks[t].removeAttribute('data-lit');
+          if (t === head && sweep > 0 && sweep < 1) tracks[t].setAttribute('data-head', '');
+          else tracks[t].removeAttribute('data-head');
+        }
+        lastHead = head;
+      }
+    }
+  }
+  var cells = $$('.rail__cell', rail);
+  var panel = document.querySelector('[data-panel]');
+  var tracks = $$('.panel__track');
+  var lastHead = -1;
+  var hush = document.querySelector('[data-hush]');
+
+  /* Обновляемся от прокрутки, а не только от кадров анимации. Бывают среды,
+     где requestAnimationFrame не идёт вовсе — скрытая панель предпросмотра,
+     фоновая вкладка, съёмка в headless. Линейка — навигация, она не имеет
+     права замереть вместе с кадрами, поэтому у неё есть запасной путь. */
+  var pending = false;
+  function schedule() {
+    if (pending) return;
+    pending = true;
+    var ran = false;
+    requestAnimationFrame(function () { ran = true; pending = false; update(); });
+    setTimeout(function () { if (!ran) { pending = false; update(); } }, 32);
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  schedule();
 
   /* ------------------------------------------------ переходы по якорю ----
      scrollcraft.css включает плавную прокрутку, и клик по дальней ячейке

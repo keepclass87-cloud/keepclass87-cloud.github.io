@@ -24,6 +24,7 @@
   --sc-font-text:   'Onest', system-ui, sans-serif;
 
   --bar-h: 84px;
+  --rail-h: 3px;
   --gut: clamp(20px, 4vw, 56px);
   /* Шов между сценами на тёмном фоне. Каждая сцена берёт половину сверху и
      половину снизу, поэтому соседние отступы в сумме дают ровно шов — а не
@@ -73,7 +74,7 @@ a{ color:inherit; text-decoration:none; }
 .skip:focus{ transform:none; }
 
 /* Все цели перехода уезжают под закреплённую шапку, если не отодвинуть */
-[id]{ scroll-margin-top:calc(var(--bar-h) + 8px); }
+[id]{ scroll-margin-top:calc(var(--bar-h) + var(--rail-h) + 8px); }
 
 /* Подписи-метки ------------------------------------------------------- */
 .lbl{
@@ -126,6 +127,92 @@ a{ color:inherit; text-decoration:none; }
   transition:transform 180ms cubic-bezier(.16,1,.3,1);
 }
 .bar__cta:hover{ transform:translateY(-1px); }
+
+/* =================================================== МОНТАЖНАЯ ЛИНЕЙКА ===
+   Фирменный приём. Красная полоса из первого экрана не уезжает вместе с
+   ним: она остаётся под шапкой и оказывается таймлайном. Заполненная часть
+   не откатывается назад — это след там, где посетитель уже был. */
+.rail{
+  position:fixed; top:var(--bar-h); left:0; right:0; z-index:59;
+  height:var(--rail-h);
+  display:flex;
+  background:color-mix(in oklab, var(--kf-signal) 14%, transparent);
+}
+.rail__fill{
+  position:absolute; inset:0; transform-origin:0 50%;
+  transform:scaleX(var(--rail-seen,0));
+  background:var(--kf-signal);
+}
+.rail__head{
+  position:absolute; top:-2px; bottom:-2px; left:0; width:2px;
+  background:var(--kf-bone);
+  transform:translate3d(calc(var(--rail-p,0) * (100vw - 2px)),0,0);
+}
+.rail__cell{
+  position:relative; z-index:1; flex:1 1 0; height:100%;
+  border-right:1px solid color-mix(in oklab, var(--kf-void) 55%, transparent);
+}
+.rail__cell:last-child{ border-right:0; }
+.rail__cell::after{
+  /* область нажатия больше, чем три пикселя */
+  content:''; position:absolute; left:0; right:0; top:-7px; bottom:-9px;
+}
+.rail__cell:hover::after,.rail__cell:focus-visible::after{
+  background:color-mix(in oklab, var(--kf-bone) 22%, transparent);
+}
+
+/* --- Пик: линейка разворачивается во весь экран --------------------------
+   Акты под ней продолжают резать на полной скорости. Раскрытие идёт через
+   clip-path, а не через height: анимировать высоту запрещено, да и дешевле. */
+.panel{
+  position:fixed; top:calc(var(--bar-h) + var(--rail-h)); left:0; right:0;
+  height:calc(100svh - var(--bar-h) - var(--rail-h));
+  z-index:58;
+  background:var(--kf-void);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  display:grid; grid-template-rows:auto repeat(16, minmax(0,1fr));
+  clip-path:inset(0 0 calc((1 - var(--panel-open,0)) * 100%) 0);
+  pointer-events:none;
+}
+.panel[data-open]{ pointer-events:auto; }
+.panel__head{
+  padding:10px var(--gut); font-size:9.5px; letter-spacing:.26em;
+  text-transform:uppercase; color:var(--sc-ink-soft);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.panel__track{
+  position:relative;
+  display:grid; align-items:center;
+  grid-template-columns:4ch minmax(0,1fr) minmax(0,.8fr) clamp(90px,16vw,230px);
+  gap:clamp(10px,2vw,28px); padding-inline:var(--gut);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  font-size:clamp(10px,1.1vw,13px); line-height:1.15;
+  /* На низком экране шестнадцать дорожек делят высоту поровну, и
+     строка может не влезть в свою ячейку — подрезаем, а не наезжаем. */
+  overflow:hidden; min-height:0;
+  /* Дорожка загорается, когда плейхед проходит по ней сверху вниз.
+     Индекс считает JS и ставит атрибут. */
+  color:var(--sc-ink); opacity:.5;
+  transition:opacity 200ms cubic-bezier(.16,1,.3,1), background-color 200ms;
+}
+.panel__track[data-lit]{
+  opacity:1;
+  background:color-mix(in oklab, var(--kf-signal) 9%, transparent);
+}
+.panel__track[data-head]{
+  opacity:1;
+  background:color-mix(in oklab, var(--kf-signal) 20%, transparent);
+  box-shadow:inset 3px 0 0 var(--kf-bone);
+}
+.panel__n{ font-variant-numeric:tabular-nums; color:var(--kf-signal); font-weight:600; }
+.panel__name{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.panel__kind{ letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--sc-ink-soft);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* Вне потока: иначе собственная пропорция картинки задаёт высоту строки. */
+.panel__track img{
+  position:absolute; top:0; right:0; bottom:0;
+  width:clamp(90px,16vw,230px); height:100%; object-fit:cover;
+}
 
 /* ====================================================== ПЕРВЫЙ ЭКРАН ==== */
 .hero{
@@ -332,119 +419,9 @@ a{ color:inherit; text-decoration:none; }
 .svc__row dd{ font-size:15px; color:#5D5D60; }
 .svc__row dd.is-todo{ color:#A80C14; }
 
-/* ========================================================= КРУГ РАБОТ ===
-   Пришёл на место монтажного листа. Тот перечислял шестнадцать работ
-   строками во весь экран; круг показывает их все сразу и ведёт себя как
-   настройка частоты: кольцо идёт само, наверху — выбранная работа.
-
-   Пропорции сняты с макета Affinity (артборд archive) и заданы в долях
-   внешнего кольца: второе 0.939, кольцо миниатюр 0.680, свечение 0.434,
-   миниатюра 0.091, выбранная ×1.14. */
-.dial{
-  background:var(--kf-void);
-  min-height:120svh;
-  display:flex; flex-direction:column; justify-content:center;
-  padding:calc(var(--seam) / 2) 0;
-  overflow:clip;                      /* кольцо шире колонки, края не нужны */
-}
-.dial__cap{ margin-bottom:clamp(16px,2vw,32px); }
-.dial__stage{
-  --d:min(88vw, 74svh, 880px);
-  /* В макете на кольце пять миниатюр, у нас шестнадцать: при радиусе 0.34
-     длина окружности даёт 107 px на слот при ширине кадра 129 — кадры
-     наезжали друг на друга наверху и внизу. Радиус 0.42 даёт 132 px на
-     слот и 26 px воздуха. */
-  --r:calc(var(--d) * 0.42);
-  position:relative; width:var(--d); height:var(--d);
-  margin-inline:auto; flex:0 0 auto;
-}
-
-/* --- кольца и свечение --- */
-.dial__rings{ position:absolute; inset:0; }
-.dial__rings span{
-  position:absolute; top:50%; left:50%; border-radius:50%;
-  transform:translate(-50%,-50%);
-}
-.dial__ring-o{ width:100%; height:100%; border:1px solid rgba(255,255,255,.06); }
-.dial__ring-m{ width:84%;  height:84%;  border:1px solid rgba(255,255,255,.10); }  /* кольцо миниатюр */
-.dial__ring-i{ width:50%;  height:50%;  border:1px solid rgba(255,255,255,.05); }
-.dial__glow{
-  width:40%; height:40%;
-  background:radial-gradient(circle,
-    color-mix(in oklab, var(--kf-signal) 26%, transparent) 0%,
-    transparent 70%);
-}
-
-/* --- кольцо миниатюр --- */
-.dial__ring{
-  position:absolute; inset:0; margin:0; padding:0; list-style:none;
-  animation:dialspin var(--dial-dur,56s) linear infinite;
-}
-@keyframes dialspin{ to{ transform:rotate(-360deg); } }
-
-.dial__slot{
-  position:absolute; top:50%; left:50%;
-  width:calc(var(--d) * 0.075 * 16 / 9);   /* кадры 16:9, не квадраты макета */
-  margin:0;
-  transform:translate(-50%,-50%)
-            rotate(calc(var(--i) * 22.5deg))
-            translateY(calc(var(--r) * -1));
-}
-/* Кадр надо развернуть обратно ДВАЖДЫ. Ссылка гасит вращение кольца — та
-   же длительность и linear, обе анимации стартуют вместе и не расходятся.
-   Картинка гасит собственный угол слота: без него каждая миниатюра стояла
-   бы наклонённой на свои i × 22,5°, просто наклон не менялся бы со
-   временем, и это легко принять за норму. Сумма углов всегда ноль. */
-.dial__slot > a{
-  display:block; position:relative;
-  animation:dialspin-rev var(--dial-dur,56s) linear infinite;
-}
-@keyframes dialspin-rev{ to{ transform:rotate(360deg); } }
-.dial__slot img{
-  width:100%; height:auto; aspect-ratio:16/9; object-fit:cover;
-  transform:rotate(calc(var(--i) * -22.5deg));
-  border-radius:3px; background:#1C1C1F;
-  opacity:.5; transition:opacity 120ms linear;
-  /* Рамка выбранной сидит на КАРТИНКЕ: ссылка вращается вместе с кольцом,
-     и рамка на ней ехала бы косым четырёхугольником. */
-  outline:1px solid transparent; outline-offset:3px;
-}
-.dial__slot[data-active] img{ outline-color:var(--kf-signal); }
-.dial__slot[data-active] img{ opacity:1; }
-/* Выбранная крупнее — в макете 122 против 107 */
-.dial__slot[data-active]{
-  transform:translate(-50%,-50%)
-            rotate(calc(var(--i) * 22.5deg))
-            translateY(calc(var(--r) * -1))
-            scale(1.14);
-}
-.dial__slot > a:hover img,.dial__slot > a:focus-visible img{ opacity:1; }
-
-/* --- ядро --- */
-.dial__core{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:min(62%, 520px); text-align:center;
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-}
-.dial__n{
-  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--kf-signal); font-variant-numeric:tabular-nums;
-}
-.dial__name{
-  font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(24px,3.4vw,54px); line-height:.98; letter-spacing:-.03em;
-  text-transform:uppercase; text-wrap:balance;
-}
-.dial__kind{
-  font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
-  color:var(--sc-ink-soft);
-}
-.dial__go{
-  margin-top:14px; font-size:11px; font-weight:600;
-  letter-spacing:var(--ls-label); text-transform:uppercase;
-  color:var(--kf-bone); border-bottom:1px solid var(--kf-signal); padding-bottom:4px;
-}
-.dial__go:hover{ color:var(--kf-signal); }
+/* =============================================================== ТИШИНА = */
+/* Единственный экран, где не происходит ничего. Это задумано. */
+.hush{ height:130vh; background:var(--kf-void); }
 
 /* Сцены со своим фоном (.say — костяная вставка, .trio — такая же, но
    светлая)
@@ -493,8 +470,7 @@ a{ color:inherit; text-decoration:none; }
   .hero__freq{ justify-items:start; text-align:left; }
   .svc__row{ grid-template-columns:1fr; gap:8px; }
   .railrow__strip{ --tile-w:clamp(240px,72vw,420px); }
-  .dial{ min-height:100svh; }
-  .dial__stage{ --d:min(94vw, 66svh, 520px); }
+  .hush{ height:100vh; }
 
   /* Портретное кадрирование вытягивает надпись с банки в нижнюю треть,
      где лежит подпись и стрелка. Низ затемняем раньше и плотнее. */
@@ -520,8 +496,6 @@ a{ color:inherit; text-decoration:none; }
   .railrow__strip{ animation:none !important; }
   .railrow__strip > [aria-hidden="true"]{ display:none; }
   .work--row{ scroll-snap-align:start; }
-  /* Кольцо стоит, выбранной остаётся первая работа. Все шестнадцать
-     миниатюр видны и кликабельны — указатель работает как раньше. */
-  .dial__ring,.dial__slot > a{ animation:none !important; }
-  .dial__slot img{ opacity:1; }
+  .rail__fill{ transform:scaleX(1) !important; }
+  .rail__head{ display:none; }
 }
