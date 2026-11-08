@@ -332,58 +332,37 @@ a{ color:inherit; text-decoration:none; }
 }
 .close__in{ width:100%; padding:clamp(56px,8vw,120px) var(--gut); }
 .close__h{ font-size:clamp(44px,9vw,160px); text-transform:uppercase; }
-/* Контакты — три чёрных плитки на костяном. Прежде это были строки
-   сеткой 1fr / 2.4fr / auto: на Full HD колонка метки получала 500 px при
-   занятых 90, и выходили три островка с двумя дырами между ними. Плитка
-   занимает свою треть целиком, а чёрное на костяном читается кнопкой, а
-   не таблицей. Отдельной кнопки «Написать в WhatsApp» больше нет: она
-   вела ровно туда же, куда первая плитка. */
-.close__cards{
-  list-style:none; margin:clamp(40px,5vw,72px) 0 0; padding:0;
-  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:clamp(12px,1.6vw,24px);
-}
-.close__cards a{
-  display:flex; flex-direction:column; justify-content:space-between;
-  gap:clamp(28px,4vw,64px);
-  min-height:clamp(150px,13vw,210px);
-  padding:clamp(20px,2vw,32px);
-  background:var(--kf-void); color:var(--kf-bone);
-  border-radius:4px;
-  transition:background 160ms cubic-bezier(.16,1,.3,1),
-             transform 180ms cubic-bezier(.16,1,.3,1);
-}
-/* На наведении — притушенный красный, не сигнальный. Костяное на #E3121C
-   даёт 4,22:1: крупному аккаунту хватает, а метке в 11 px нет. #A80C14 —
-   тот же красный для светлых фонов, что уже стоит на заглушках, и выводит
-   обе строки на 6,8:1. */
-.close__cards a:hover,.close__cards a:focus-visible{
-  background:#A80C14; transform:translateY(-2px);
-}
-.close__top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.close__where{
-  font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
-  color:#9A9A98;
-}
-/* На красном приглушённая метка не проходит по контрасту — отдаём ей
-   полный костяной. */
-.close__cards a:hover .close__where,
-.close__cards a:focus-visible .close__where{ color:var(--kf-bone); }
-.close__who{
+/* Финал набран как обычный футер: одна крупная ссылка-действие и три
+   колонки мелким текстом. Три чёрные плитки, стоявшие тут раньше, спорили
+   с заголовком — два тяжёлых элемента на одном экране. */
+.close__mail{
+  display:inline-block; margin-top:clamp(24px,3vw,44px);
   font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(20px,2vw,30px); line-height:1.05; letter-spacing:-.02em;
+  font-size:clamp(22px,3.4vw,56px); line-height:1.05; letter-spacing:-.025em;
+  border-bottom:2px solid rgba(11,11,12,.18); padding-bottom:6px;
+  transition:color 160ms cubic-bezier(.16,1,.3,1),
+             border-color 160ms cubic-bezier(.16,1,.3,1);
+  overflow-wrap:anywhere;          /* адрес длинный, на телефоне рвём его */
 }
-.close__go{ flex:0 0 auto; }
+.close__mail:hover,.close__mail:focus-visible{
+  color:#A80C14; border-bottom-color:#A80C14;
+}
+
 .foot{
-  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;
-  margin-top:clamp(56px,8vw,112px); padding-top:24px;
+  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:clamp(24px,4vw,64px);
+  margin-top:clamp(56px,8vw,120px); padding-top:clamp(24px,2.6vw,40px);
   border-top:1px solid rgba(11,11,12,.12);
-  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:#4A4A4D;
 }
-/* Телефон в служебной строке — для тех, кто домотал до самого низа и
-   хочет просто позвонить. tel: на телефоне открывает набор. */
-.foot__tel a{ color:#0B0B0C; font-variant-numeric:tabular-nums; }
-.foot__tel a:hover{ color:#A80C14; }
+.foot__cap{
+  font-size:9.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:#4A4A4D; margin-bottom:14px;
+}
+.foot__col ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.foot__col li{ font-size:13px; line-height:1.35; color:#4A4A4D; }
+.foot__col a{ color:#0B0B0C; transition:color 160ms cubic-bezier(.16,1,.3,1); }
+.foot__col a:hover,.foot__col a:focus-visible{ color:#A80C14; }
+.foot__col li:last-child a{ font-variant-numeric:tabular-nums; }
 
 /* ========================================================== УЗКИЕ ЭКРАНЫ */
 @media (max-width:900px){
@@ -393,7 +372,7 @@ a{ color:inherit; text-decoration:none; }
   .grid2{ grid-template-columns:1fr; }
   .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
   .hero__freq{ justify-items:start; text-align:left; }
-  .close__cards{ grid-template-columns:1fr; }
+  .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 24px; }
   .railrow__strip{ --tile-w:clamp(240px,72vw,420px); }
 
   /* Портретное кадрирование вытягивает надпись с банки в нижнюю треть,
