@@ -323,6 +323,44 @@ a{ color:inherit; text-decoration:none; }
    видят, поэтому расчёт акта в движке не меняется. */
 .say, .trio{ margin-block:calc(var(--seam) / 2); }
 
+/* ============================================================== УСЛУГИ == */
+/* Плашки на тёмном грунте страницы, а не костяная вставка: костяная
+   слилась бы с финальным экраном, и рез в кость в конце пропал бы. */
+.svc{ padding:calc(var(--seam) / 2) 0; }
+.svc__lead{
+  margin-top:14px; max-width:46ch;
+  font-size:clamp(14px,1.05vw,17px); line-height:1.5; color:var(--sc-ink-soft);
+}
+.svc__list{
+  list-style:none; margin:clamp(28px,3.4vw,52px) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:clamp(12px,1.6vw,24px);
+}
+.svc__card{
+  display:flex; flex-direction:column; justify-content:space-between;
+  gap:clamp(28px,4vw,56px);
+  min-height:clamp(150px,13vw,210px); padding:clamp(20px,2vw,32px);
+  background:var(--kf-panel); border-radius:4px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.svc__kind{
+  font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
+  color:var(--sc-ink-soft);
+}
+.svc__price{
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:clamp(26px,2.9vw,44px); line-height:1; letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+}
+/* «от» мельче и тише самой суммы: это оговорка, а не часть числа.
+   Сигнальный красный на панели даёт около 4:1 — хватает крупному набору,
+   но не этой подписи, поэтому она приглушённым костяным. */
+.svc__price span{
+  display:block; margin-bottom:10px;
+  font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
+  text-transform:uppercase; color:var(--sc-ink-soft);
+}
+
 /* ================================================================= РЕЗ == */
 .close{
   --sc-canvas:var(--kf-bone);
@@ -371,6 +409,7 @@ a{ color:inherit; text-decoration:none; }
   .bar__nav{ display:none; }
   .bar__row{ grid-template-columns:1fr auto; }
   .grid2{ grid-template-columns:1fr; }
+  .svc__list{ grid-template-columns:1fr; }
   .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
   .hero__freq{ justify-items:start; text-align:left; }
   .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 24px; }
