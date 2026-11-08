@@ -332,7 +332,7 @@ a{ color:inherit; text-decoration:none; }
   /* Высота была 80svh под крупный заголовок. Заголовок убран, и секция
      осталась бы костяным полем в 864 px с футером в 222 посередине. */
 }
-.close__in{ width:100%; padding:clamp(56px,8vw,120px) var(--gut); }
+.close__in{ width:100%; padding:clamp(36px,3.8vw,64px) var(--gut); }
 /* Обычный футер колонками — по прямому указанию заказчика, после пяти
    попыток придумать «интересное». Телефона здесь нет намеренно: он
    дублировал ссылку WhatsApp, которая и так ведёт на wa.me с номером.
@@ -341,7 +341,7 @@ a{ color:inherit; text-decoration:none; }
 .foot{
   display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
   gap:clamp(24px,4vw,64px);
-  margin-top:clamp(40px,5vw,80px); padding-top:clamp(20px,2.4vw,32px);
+  margin-top:0; padding-top:clamp(20px,2.4vw,32px);
   border-top:1px solid rgba(11,11,12,.12);
 }
 .foot__cap{
@@ -357,6 +357,13 @@ a{ color:inherit; text-decoration:none; }
 }
 .foot__col a:hover,.foot__col a:focus-visible{ color:#A80C14; }
 .foot__ico{ flex:0 0 auto; }
+/* Последняя колонка прижата к правому краю: иначе футер висит тремя
+   левыми столбиками, а справа остаётся хвост пустоты, и блок перестаёт
+   держать ширину страницы. На узком экране колонок две и столбик встаёт
+   слева, прижимать там нечего. */
+@media (min-width:901px){
+  .foot__col:last-child{ justify-items:end; text-align:right; }
+}
 
 /* ========================================================== УЗКИЕ ЭКРАНЫ */
 @media (max-width:900px){
