@@ -329,18 +329,28 @@ a{ color:inherit; text-decoration:none; }
    переключать нечего. Палитра: чёрная плашка, костяной набор, красный
    только акцентом — кольцо и бейдж у выделенной услуги. */
 .svc{ padding:calc(var(--seam) / 2) 0; }
+/* Ширина группы ограничена нарочно. Растянутые на всю колонку в 1808 px
+   карточки выходят 585 px в ширину при высоте около 300 — то есть
+   лежачими. В образце они стоячие, и единственный способ это получить —
+   сузить колонку: 330 px при высоте за 430. Поэтому группа центрируется,
+   и метка секции над ней тоже. */
+.svc__cap{ justify-content:center; }
 .svc__list{
-  list-style:none; margin:clamp(28px,3.4vw,52px) 0 0; padding:0;
+  list-style:none; margin:clamp(26px,3vw,44px) auto 0; padding:0;
+  max-width:clamp(320px, 52vw, 980px);
   display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:clamp(14px,1.8vw,26px);
-  align-items:start;
+  gap:clamp(14px,1.4vw,22px);
+  align-items:stretch;
 }
 .svc__card{
   position:relative; display:flex; flex-direction:column;
-  padding:clamp(22px,2.2vw,34px);
+  padding:clamp(26px,2vw,34px);
   background:var(--kf-panel); border-radius:14px;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
 }
+/* Кнопка прижата к низу карточки: у выделенной есть бейдж, и без этого
+   три кнопки встали бы на разной высоте. */
+.svc__cta{ margin-top:auto; }
 /* Выделенная: красное кольцо вместо волосяной линии. Кольцо декоративно,
    текста на нём нет, поэтому можно брать сигнальный красный. */
 .svc__card--pick{
@@ -359,28 +369,33 @@ a{ color:inherit; text-decoration:none; }
   font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
   color:var(--sc-ink-soft);
 }
+/* Цена занимает свою строку целиком, «за ролик» уходит под неё: в узкой
+   колонке они в строку не помещаются, а перенос посреди суммы недопустим. */
 .svc__price{
-  display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px;
-  margin-top:clamp(18px,2vw,30px);
+  display:flex; flex-direction:column; align-items:flex-start; gap:0;
+  margin-top:clamp(24px,2vw,32px);
   font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(28px,2.9vw,44px); line-height:1; letter-spacing:-.03em;
-  font-variant-numeric:tabular-nums;
+  font-size:clamp(26px,2.1vw,36px); line-height:1.05; letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
 }
 /* «от» — оговорка, а не часть числа: ставим над суммой и мельче. */
 .svc__from{
-  flex:0 0 100%; margin-bottom:10px;
+  margin-bottom:10px;
   font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
   text-transform:uppercase; color:var(--sc-ink-soft);
 }
 .svc__per{
+  margin-top:8px;
   font-family:var(--sc-font-text); font-size:13px; font-weight:400;
   letter-spacing:0; color:var(--sc-ink-soft);
 }
 .svc__note{
-  margin-top:10px; font-size:12px; line-height:1.4; color:var(--sc-ink-soft);
+  margin-top:20px; padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  font-size:12px; line-height:1.5; color:var(--sc-ink-soft);
 }
 .svc__cta{
-  margin-top:clamp(20px,2.2vw,32px);
+  margin-top:clamp(24px,2.2vw,34px);
   display:block; text-align:center; border-radius:999px;
   padding:15px 22px;
   font-size:12px; font-weight:600; letter-spacing:var(--ls-label);
@@ -450,7 +465,7 @@ a{ color:inherit; text-decoration:none; }
   .bar__nav{ display:none; }
   .bar__row{ grid-template-columns:1fr auto; }
   .grid2{ grid-template-columns:1fr; }
-  .svc__list{ grid-template-columns:1fr; }
+  .svc__list{ grid-template-columns:1fr; max-width:none; }
   .hero__bottom{ flex-direction:column; align-items:flex-start; gap:24px; }
   .hero__freq{ justify-items:start; text-align:left; }
   .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 24px; }
