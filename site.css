@@ -362,6 +362,30 @@ a{ color:inherit; text-decoration:none; }
   font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
   text-transform:uppercase;
 }
+/* Вход карточек: прозрачность, сдвиг и размытие. Движок даёт только первые
+   два ([data-sc-stagger] > * — opacity и translate), размытие и увеличенный
+   ход добавляем своим правилом. Селектор из двух классов перебивает его по
+   специфичности, сам движок при этом не трогаем.
+
+   Класс .sc-in движок ставит сам, по очереди, с задержкой из
+   data-sc-stagger — поэтому карточки проявляются одна за другой.
+
+   filter даёт элементу свой слой и контекст наложения; бейдж внутри
+   карточки абсолютный, и ему это не мешает. */
+.svc__list > .svc__card{
+  filter:blur(12px);
+  transform:translate3d(0,34px,0) scale(.97);
+  transition:opacity 760ms var(--sc-ease-out),
+             transform 760ms var(--sc-ease-out),
+             filter 760ms var(--sc-ease-out);
+  will-change:opacity, transform, filter;
+}
+.svc__list > .svc__card.sc-in{
+  filter:blur(0);
+  transform:none;
+  will-change:auto;
+}
+
 .svc__kind{
   font-family:var(--sc-font-display); font-weight:800;
   font-size:clamp(20px,1.8vw,30px); line-height:1.05; letter-spacing:-.02em;
@@ -493,4 +517,8 @@ a{ color:inherit; text-decoration:none; }
   .railrow__strip{ animation:none !important; }
   .railrow__strip > [aria-hidden="true"]{ display:none; }
   .work--row{ scroll-snap-align:start; }
+
+  /* Размытие на входе выключаем вместе со сдвигом: это такая же анимация,
+     и для тех, кому движение мешает, она не лучше. */
+  .svc__list > .svc__card{ filter:none; transform:none; }
 }
