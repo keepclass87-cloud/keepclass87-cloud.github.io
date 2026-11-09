@@ -329,28 +329,25 @@ a{ color:inherit; text-decoration:none; }
    переключать нечего. Палитра: чёрная плашка, костяной набор, красный
    только акцентом — кольцо и бейдж у выделенной услуги. */
 .svc{ padding:calc(var(--seam) / 2) 0; }
-/* Ширина группы ограничена нарочно. Растянутые на всю колонку в 1808 px
-   карточки выходят 585 px в ширину при высоте около 300 — то есть
-   лежачими. В образце они стоячие, и единственный способ это получить —
-   сузить колонку: 330 px при высоте за 430. Поэтому группа центрируется,
-   и метка секции над ней тоже. */
-.svc__cap{ justify-content:center; }
+/* Карточки стоят по общим краям страницы — на той же линии, что плитки
+   работ и заголовки. Вертикальную пропорцию при ширине 585 px держит уже
+   не узкая колонка, а собственная высота: кегли подняты, и у карточки
+   задан min-height. Воздух между примечанием и кнопкой — то место, куда
+   встанет список «что входит», когда заказчик пришлёт строки. */
 .svc__list{
-  list-style:none; margin:clamp(26px,3vw,44px) auto 0; padding:0;
-  max-width:clamp(320px, 52vw, 980px);
+  list-style:none; margin:clamp(26px,3vw,44px) 0 0; padding:0;
   display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:clamp(14px,1.4vw,22px);
+  gap:clamp(14px,1.6vw,26px);
   align-items:stretch;
 }
 .svc__card{
   position:relative; display:flex; flex-direction:column;
-  padding:clamp(26px,2vw,34px);
-  background:var(--kf-panel); border-radius:14px;
+  min-height:clamp(380px,31vw,600px);
+  padding:clamp(28px,2.4vw,46px);
+  background:var(--kf-panel); border-radius:16px;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
 }
-/* Кнопка прижата к низу карточки: у выделенной есть бейдж, и без этого
-   три кнопки встали бы на разной высоте. */
-.svc__cta{ margin-top:auto; }
+
 /* Выделенная: красное кольцо вместо волосяной линии. Кольцо декоративно,
    текста на нём нет, поэтому можно брать сигнальный красный. */
 .svc__card--pick{
@@ -358,7 +355,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .svc__badge{
   position:absolute; top:0; left:50%; transform:translate(-50%,-50%);
-  white-space:nowrap; border-radius:999px; padding:5px 12px;
+  white-space:nowrap; border-radius:999px; padding:6px 14px;
   /* Костяное на сигнальном даёт 4,4:1 — подписи в 11 px мало.
      Притушенный выводит на 6,8:1. */
   background:#A80C14; color:var(--kf-bone);
@@ -366,16 +363,17 @@ a{ color:inherit; text-decoration:none; }
   text-transform:uppercase;
 }
 .svc__kind{
-  font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
-  color:var(--sc-ink-soft);
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:clamp(20px,1.8vw,30px); line-height:1.05; letter-spacing:-.02em;
+  text-transform:uppercase;
 }
 /* Цена занимает свою строку целиком, «за ролик» уходит под неё: в узкой
    колонке они в строку не помещаются, а перенос посреди суммы недопустим. */
 .svc__price{
   display:flex; flex-direction:column; align-items:flex-start; gap:0;
-  margin-top:clamp(24px,2vw,32px);
+  margin-top:clamp(26px,2.4vw,40px);
   font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(26px,2.1vw,36px); line-height:1.05; letter-spacing:-.03em;
+  font-size:clamp(34px,3.9vw,68px); line-height:1; letter-spacing:-.035em;
   font-variant-numeric:tabular-nums; white-space:nowrap;
 }
 /* «от» — оговорка, а не часть числа: ставим над суммой и мельче. */
@@ -385,20 +383,20 @@ a{ color:inherit; text-decoration:none; }
   text-transform:uppercase; color:var(--sc-ink-soft);
 }
 .svc__per{
-  margin-top:8px;
-  font-family:var(--sc-font-text); font-size:13px; font-weight:400;
+  margin-top:10px;
+  font-family:var(--sc-font-text); font-size:14px; font-weight:400;
   letter-spacing:0; color:var(--sc-ink-soft);
 }
 .svc__note{
-  margin-top:20px; padding-top:20px;
+  margin-top:24px; margin-bottom:clamp(28px,2.4vw,40px); padding-top:24px;
   border-top:1px solid rgba(255,255,255,.08);
-  font-size:12px; line-height:1.5; color:var(--sc-ink-soft);
+  font-size:13px; line-height:1.5; color:var(--sc-ink-soft);
 }
 .svc__cta{
-  margin-top:clamp(24px,2.2vw,34px);
+  margin-top:auto;
   display:block; text-align:center; border-radius:999px;
-  padding:15px 22px;
-  font-size:12px; font-weight:600; letter-spacing:var(--ls-label);
+  padding:19px 24px;
+  font-size:13px; font-weight:600; letter-spacing:var(--ls-label);
   text-transform:uppercase;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
   transition:background 160ms cubic-bezier(.16,1,.3,1),
