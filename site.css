@@ -93,7 +93,6 @@ a{ color:inherit; text-decoration:none; }
 /* На костяном фоне сигнальный красный даёт 4,2:1 — ниже порога для текста.
    Для светлых экранов берём притушенный, он проходит с запасом. */
 .say .is-todo,.close .is-todo{ color:#A80C14; }
-.close__cta.is-todo{ background:#A80C14; color:var(--kf-bone); }
 
 /* ============================================================ ШАПКА ===== */
 .bar{
@@ -447,45 +446,60 @@ a{ color:inherit; text-decoration:none; }
 }
 
 /* ================================================================= РЕЗ == */
+/* Финал чёрный по решению заказчика: костяной вставки на странице больше
+   нет вовсе, и последний рез теперь не по цвету, а по ритму — после
+   карточек идёт узкая колонка по центру. */
 .close{
-  --sc-canvas:var(--kf-bone);
-  --sc-ink:#0B0B0C; --sc-ink-soft:#4A4A4D;
-  background:var(--kf-bone); color:#0B0B0C;
+  background:var(--kf-void); color:var(--kf-bone);
   display:flex; align-items:center;
-  /* Высота была 80svh под крупный заголовок. Заголовок убран, и секция
-     осталась бы костяным полем в 864 px с футером в 222 посередине. */
 }
-.close__in{ width:100%; padding:clamp(36px,3.8vw,64px) var(--gut); }
-/* Обычный футер колонками — по прямому указанию заказчика, после пяти
-   попыток придумать «интересное». Телефона здесь нет намеренно: он
-   дублировал ссылку WhatsApp, которая и так ведёт на wa.me с номером.
-   Крупного адреса под заголовком тоже нет — адрес из 22 символов не
-   фраза, и крупный набор его только уродует. */
+.close__in{
+  width:100%; max-width:calc(896px + var(--gut) * 2);
+  margin-inline:auto; padding:clamp(56px,6vw,80px) var(--gut);
+}
 .foot{
-  display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:clamp(24px,4vw,64px);
-  margin-top:0; padding-top:clamp(20px,2.4vw,32px);
-  border-top:1px solid rgba(11,11,12,.12);
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(22px,2.4vw,32px);
 }
-.foot__cap{
-  font-size:11px; letter-spacing:.26em; text-transform:uppercase;
-  color:#4A4A4D; margin-bottom:20px;
+/* Знак: красная полоса из первого экрана, уменьшенная до строки. */
+.foot__mark{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--sc-font-display); font-weight:800;
+  font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--kf-bone);
 }
-.foot__col ul{ list-style:none; margin:0; padding:0; display:grid; gap:14px; }
-.foot__col li{ font-size:17px; line-height:1.35; color:#4A4A4D; }
-.foot__col a{
-  display:inline-flex; align-items:center; gap:12px; color:#0B0B0C;
+.foot__bar{
+  width:22px; height:6px; border-radius:1px;
+  background:var(--kf-signal); flex:0 0 auto;
+}
+.foot__nav{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:8px clamp(18px,2vw,28px);
+}
+.foot__nav a{
+  font-size:13px; color:var(--sc-ink-soft);
   transition:color 160ms cubic-bezier(.16,1,.3,1);
-  overflow-wrap:anywhere;          /* адрес длинный, на узком рвём его */
 }
-.foot__col a:hover,.foot__col a:focus-visible{ color:#A80C14; }
+.foot__nav a:hover,.foot__nav a:focus-visible{ color:var(--kf-bone); }
+.foot__soc{ display:flex; align-items:center; gap:10px; }
+.foot__soc a{
+  display:grid; place-items:center;
+  width:38px; height:38px; border-radius:999px;
+  color:var(--sc-ink-soft);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  transition:color 160ms cubic-bezier(.16,1,.3,1),
+             background 160ms cubic-bezier(.16,1,.3,1);
+}
+.foot__soc a:hover,.foot__soc a:focus-visible{
+  color:var(--kf-void); background:var(--kf-bone);
+}
 .foot__ico{ flex:0 0 auto; }
-/* Последняя колонка прижата к правому краю: иначе футер висит тремя
-   левыми столбиками, а справа остаётся хвост пустоты, и блок перестаёт
-   держать ширину страницы. На узком экране колонок две и столбик встаёт
-   слева, прижимать там нечего. */
-@media (min-width:901px){
-  .foot__col:last-child{ justify-items:end; text-align:right; }
+.foot__rule{
+  width:100%; height:1px; background:rgba(255,255,255,.12);
+}
+.foot__fine{
+  text-align:center; font-size:11px; line-height:1.6;
+  letter-spacing:.06em; color:var(--sc-ink-soft);
 }
 
 /* ========================================================== УЗКИЕ ЭКРАНЫ */
