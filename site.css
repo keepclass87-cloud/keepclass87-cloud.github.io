@@ -342,7 +342,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .svc__card{
   position:relative; display:flex; flex-direction:column;
-  min-height:clamp(380px,31vw,600px);
+  min-height:clamp(430px,36vw,700px);
   padding:clamp(28px,2.4vw,46px);
   background:var(--kf-panel); border-radius:16px;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
@@ -386,12 +386,11 @@ a{ color:inherit; text-decoration:none; }
    перенос идёт по пробелам между словами. */
 .say__h .rise{ display:inline-block; }
 
-/* Карточки услуг — тот же приём, только с размытием и большим ходом. */
-.svc__list > .svc__card{
-  --rise-from:.06; --rise-step:.07; --rise-span:.20; --rise-y:34px;
-  filter:blur(calc((1 - var(--k)) * 12px));
-  will-change:opacity, transform, filter;
-}
+/* Карточки услуг идут ровно тем же ходом, что слова «Моушен · 2D · 3D»:
+   те же --rise-* по умолчанию, тот же сдвиг, без размытия. Раньше у них
+   был свой набор и блюр — получались две разные анимации на одной
+   странице. */
+.svc__list > .svc__card{ will-change:opacity, transform; }
 
 .svc__kind{
   font-family:var(--sc-font-display); font-weight:800;
@@ -400,6 +399,14 @@ a{ color:inherit; text-decoration:none; }
 }
 /* Цена занимает свою строку целиком, «за ролик» уходит под неё: в узкой
    колонке они в строку не помещаются, а перенос посреди суммы недопустим. */
+/* Описание услуги. У ИИ-ролика его пока нет — заказчик текста не давал,
+   а придумывать, что входит в услугу, нельзя. Карточки от этого не
+   разъезжаются: кнопка прижата к низу, высота у всех общая. */
+.svc__desc{
+  margin-top:14px; max-width:26ch;
+  font-size:14px; line-height:1.45; color:var(--sc-ink-soft);
+}
+
 .svc__price{
   display:flex; flex-direction:column; align-items:flex-start; gap:0;
   margin-top:clamp(26px,2.4vw,40px);
@@ -528,5 +535,4 @@ a{ color:inherit; text-decoration:none; }
   /* Движение выключено — элементы просто стоят на месте и видны. Без
      этого --k остался бы на нуле и они бы не появились вовсе. */
   .rise{ --k:1; opacity:1; transform:none; }
-  .svc__list > .svc__card{ filter:none; }
 }
