@@ -324,41 +324,82 @@ a{ color:inherit; text-decoration:none; }
 .say, .trio{ margin-block:calc(var(--seam) / 2); }
 
 /* ============================================================== УСЛУГИ == */
-/* Плашки на тёмном грунте страницы, а не костяная вставка: костяная
-   слилась бы с финальным экраном, и рез в кость в конце пропал бы. */
+/* Карточка тарифа: бейдж, название, цена, примечание, кнопка во всю
+   ширину. Переключателя периодов из образца нет — у нас не подписка, и
+   переключать нечего. Палитра: чёрная плашка, костяной набор, красный
+   только акцентом — кольцо и бейдж у выделенной услуги. */
 .svc{ padding:calc(var(--seam) / 2) 0; }
-.svc__lead{
-  margin-top:14px; max-width:46ch;
-  font-size:clamp(14px,1.05vw,17px); line-height:1.5; color:var(--sc-ink-soft);
-}
 .svc__list{
   list-style:none; margin:clamp(28px,3.4vw,52px) 0 0; padding:0;
   display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:clamp(12px,1.6vw,24px);
+  gap:clamp(14px,1.8vw,26px);
+  align-items:start;
 }
 .svc__card{
-  display:flex; flex-direction:column; justify-content:space-between;
-  gap:clamp(28px,4vw,56px);
-  min-height:clamp(150px,13vw,210px); padding:clamp(20px,2vw,32px);
-  background:var(--kf-panel); border-radius:4px;
+  position:relative; display:flex; flex-direction:column;
+  padding:clamp(22px,2.2vw,34px);
+  background:var(--kf-panel); border-radius:14px;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+/* Выделенная: красное кольцо вместо волосяной линии. Кольцо декоративно,
+   текста на нём нет, поэтому можно брать сигнальный красный. */
+.svc__card--pick{
+  box-shadow:inset 0 0 0 1px var(--kf-signal), 0 0 0 1px var(--kf-signal);
+}
+.svc__badge{
+  position:absolute; top:0; left:50%; transform:translate(-50%,-50%);
+  white-space:nowrap; border-radius:999px; padding:5px 12px;
+  /* Костяное на сигнальном даёт 4,4:1 — подписи в 11 px мало.
+     Притушенный выводит на 6,8:1. */
+  background:#A80C14; color:var(--kf-bone);
+  font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
+  text-transform:uppercase;
 }
 .svc__kind{
   font-size:11px; letter-spacing:var(--ls-label); text-transform:uppercase;
   color:var(--sc-ink-soft);
 }
 .svc__price{
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px;
+  margin-top:clamp(18px,2vw,30px);
   font-family:var(--sc-font-display); font-weight:800;
-  font-size:clamp(26px,2.9vw,44px); line-height:1; letter-spacing:-.03em;
+  font-size:clamp(28px,2.9vw,44px); line-height:1; letter-spacing:-.03em;
   font-variant-numeric:tabular-nums;
 }
-/* «от» мельче и тише самой суммы: это оговорка, а не часть числа.
-   Сигнальный красный на панели даёт около 4:1 — хватает крупному набору,
-   но не этой подписи, поэтому она приглушённым костяным. */
-.svc__price span{
-  display:block; margin-bottom:10px;
+/* «от» — оговорка, а не часть числа: ставим над суммой и мельче. */
+.svc__from{
+  flex:0 0 100%; margin-bottom:10px;
   font-size:11px; font-weight:600; letter-spacing:var(--ls-label);
   text-transform:uppercase; color:var(--sc-ink-soft);
+}
+.svc__per{
+  font-family:var(--sc-font-text); font-size:13px; font-weight:400;
+  letter-spacing:0; color:var(--sc-ink-soft);
+}
+.svc__note{
+  margin-top:10px; font-size:12px; line-height:1.4; color:var(--sc-ink-soft);
+}
+.svc__cta{
+  margin-top:clamp(20px,2.2vw,32px);
+  display:block; text-align:center; border-radius:999px;
+  padding:15px 22px;
+  font-size:12px; font-weight:600; letter-spacing:var(--ls-label);
+  text-transform:uppercase;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+  transition:background 160ms cubic-bezier(.16,1,.3,1),
+             color 160ms cubic-bezier(.16,1,.3,1),
+             transform 180ms cubic-bezier(.16,1,.3,1);
+}
+.svc__cta:hover,.svc__cta:focus-visible{
+  background:var(--kf-bone); color:var(--kf-void); transform:translateY(-1px);
+}
+/* У выделенной кнопка залита костяным сразу: белое на чёрном — предел по
+   контрасту, и красный остаётся акцентом, а не фоном под текстом. */
+.svc__cta--pick{
+  background:var(--kf-bone); color:var(--kf-void); box-shadow:none;
+}
+.svc__cta--pick:hover,.svc__cta--pick:focus-visible{
+  background:#fff; color:var(--kf-void);
 }
 
 /* ================================================================= РЕЗ == */
